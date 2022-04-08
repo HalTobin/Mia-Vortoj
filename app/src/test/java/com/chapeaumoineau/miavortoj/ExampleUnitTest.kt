@@ -1,4 +1,4 @@
-package com.plcoding.cleanarchitecturenoteapp
+package com.chapeaumoineau.miavortoj
 
 import org.junit.Test
 
