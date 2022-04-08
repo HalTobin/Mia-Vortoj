@@ -1,4 +1,4 @@
-package com.chapeaumoineau.miavortoj
+package com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnary_list
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
