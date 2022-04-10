@@ -3,6 +3,7 @@
     package="com.chapeaumoineau.miavortoj">
 
     <application
+        android:name=".VortojApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -10,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CleanArchitectureNoteApp">
         <activity
-            android:name="com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnary_list.MainActivity"
+            android:name="com.chapeaumoineau.miavortoj.feature.words.presentation.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.CleanArchitectureNoteApp">
