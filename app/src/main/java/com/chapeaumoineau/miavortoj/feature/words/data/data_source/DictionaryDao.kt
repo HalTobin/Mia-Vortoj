@@ -7,10 +7,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface DictionaryDao {
 
-    @Query("SELECT * FROM vocabulary")
+    @Query("SELECT * FROM dictionary")
     fun getDictionaries(): Flow<List<Dictionary>>
 
-    @Query("SELECT * FROM vocabulary WHERE id = :id")
+    @Query("SELECT * FROM dictionary WHERE id = :id")
     suspend fun getDictionaryById(id: Int): Dictionary?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -5,10 +5,7 @@ import androidx.room.Room
 import com.chapeaumoineau.miavortoj.feature.words.data.data_source.VocabularyDatabase
 import com.chapeaumoineau.miavortoj.feature.words.data.repository.DictionaryRepositoryImpl
 import com.chapeaumoineau.miavortoj.feature.words.domain.repository.DictionaryRepository
-import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.AddDictionaryUseCase
-import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.DeleteDictionaryUseCase
-import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.DictionaryUseCases
-import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.GetDictionariesUseCase
+import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,6 +31,6 @@ class AppModule {
     @Provides
     @Singleton
     fun provideDictionaryUseCases(repository: DictionaryRepository): DictionaryUseCases {
-        return DictionaryUseCases(getDictionaries = GetDictionariesUseCase(repository), deleteDictionary = DeleteDictionaryUseCase(repository), addDictionary = AddDictionaryUseCase(repository))
+        return DictionaryUseCases(getDictionaries = GetDictionariesUseCase(repository), deleteDictionary = DeleteDictionaryUseCase(repository), addDictionary = AddDictionaryUseCase(repository), getDictionary = GetDictionaryUseCase(repository))
     }
 }

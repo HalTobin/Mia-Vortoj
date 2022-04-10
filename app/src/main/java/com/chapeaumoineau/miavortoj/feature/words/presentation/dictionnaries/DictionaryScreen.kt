@@ -18,8 +18,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.components.DictionaryItem
 import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.components.OrderSection
+import com.chapeaumoineau.miavortoj.feature.words.presentation.util.Screen
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewModel = hiltViewModel()) {
     val state = viewModel.state.value
@@ -28,7 +30,7 @@ fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewM
 
     Scaffold(floatingActionButton = {
         FloatingActionButton(onClick = {
-
+            navController.navigate(Screen.AddEditDictionaryScreen.route)
         }, backgroundColor = MaterialTheme.colors.primary) {
             Icon(imageVector = Icons.Default.Add, contentDescription = "Add dictionary")
         }
@@ -61,7 +63,7 @@ fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewM
                     DictionaryItem(
                         dictionary = dictionary,
                         modifier = Modifier.fillMaxWidth().clickable {
-
+                            navController.navigate(Screen.AddEditDictionaryScreen.route + "?dictionaryId=${dictionary.id}&dictionaryLanguage=${dictionary.language}")
                     },
                         onDeleteClick = {
                             viewModel.onEvent(DictionariesEvent.DeleteDictionary(dictionary))

@@ -2,10 +2,11 @@ package com.chapeaumoineau.miavortoj.feature.words.data.data_source
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Vocabulary
 
 @Database(
-    entities = [Vocabulary::class],
+    entities = [Dictionary::class],
     version = 1
 )
 abstract class VocabularyDatabase: RoomDatabase() {
