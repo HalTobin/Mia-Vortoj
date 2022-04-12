@@ -24,7 +24,7 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
     private val _dictionaryDescription = mutableStateOf(DictionaryTextFieldState(hint = "Enter a description..."))
     val dictionaryDescription: State<DictionaryTextFieldState> = _dictionaryDescription
 
-    private val _dictionaryLanguage = mutableStateOf<Int>(0)
+    private val _dictionaryLanguage = mutableStateOf(0)
     val dictionaryLanguage: State<Int> = _dictionaryLanguage
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
@@ -33,7 +33,7 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
     private var currentDictionaryId: Int? = null
 
     init {
-        savedStateHandle.get<Int>("dicitonaryId")?.let {dictionaryId ->
+        savedStateHandle.get<Int>("dictionaryId")?.let {dictionaryId ->
             if(dictionaryId != -1) {
                 viewModelScope.launch {
                     dictionaryUseCases.getDictionary(dictionaryId)?.also { dictionary ->
@@ -62,7 +62,7 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
                 _dictionaryDescription.value = dictionaryDescription.value.copy(text = event.value)
             }
             is AddEditDictionaryEvent.ChangeDescriptionFocus -> {
-                _dictionaryDescription.value = dictionaryDescription.value.copy(isHintVisible = !event.focusState.isFocused && dictionaryTitle.value.text.isBlank())
+                _dictionaryDescription.value = dictionaryDescription.value.copy(isHintVisible = !event.focusState.isFocused && dictionaryDescription.value.text.isBlank())
             }
 
             is AddEditDictionaryEvent.ChangeLanguage -> {
