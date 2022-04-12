@@ -1,18 +1,12 @@
 package com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.components
 
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,14 +21,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
-import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryEvent
-import kotlinx.coroutines.launch
 
 @Composable
 fun DictionaryItem(dictionary: Dictionary,
                    modifier: Modifier = Modifier,
-                   cornerRadius: Dp = 10.dp,
-                   onDeleteClick: () -> Unit) {
+                   cornerRadius: Dp = 10.dp) {
     Box(modifier = modifier) {
         Canvas(modifier = Modifier.matchParentSize()) {
             val clipPath = Path().apply {
@@ -75,10 +66,5 @@ fun DictionaryItem(dictionary: Dictionary,
                         shape = CircleShape)
             )
         }
-
-        //Image(painter = painterResource(Dictionary.flags_simple[dictionary.language]), contentDescription = "")
-        /*IconButton(onClick = onDeleteClick, modifier = Modifier.align(Alignment.BottomEnd) ) {
-            Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete dictionary")
-        }*/
     }
 }

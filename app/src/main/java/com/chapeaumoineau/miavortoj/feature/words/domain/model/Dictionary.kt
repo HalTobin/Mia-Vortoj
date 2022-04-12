@@ -53,7 +53,7 @@ data class Dictionary (
             Color(0xFFFFE282),
             Color(0xFF49946D),
             //Color(0xFFDD6969),
-            Color(0xFF44458F),
+            Color(0xFF515292),
             Color(0xFF4669AD),
             Color(0xFFFFFFFF))
     }

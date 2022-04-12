@@ -1,7 +1,9 @@
 package com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries
 
 import androidx.compose.animation.*
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -21,7 +23,7 @@ import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.com
 import com.chapeaumoineau.miavortoj.feature.words.presentation.util.Screen
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(ExperimentalAnimationApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewModel = hiltViewModel()) {
     val state = viewModel.state.value
@@ -62,18 +64,23 @@ fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewM
                 items(state.dictionaries) { dictionary ->
                     DictionaryItem(
                         dictionary = dictionary,
-                        modifier = Modifier.fillMaxWidth().clickable {
-                            navController.navigate(Screen.AddEditDictionaryScreen.route + "?dictionaryId=${dictionary.id}&dictionaryLanguage=${dictionary.language}")
-                    },
-                        onDeleteClick = {
-                            viewModel.onEvent(DictionariesEvent.DeleteDictionary(dictionary))
-                            scope.launch {
-                                val result = scaffoldState.snackbarHostState.showSnackbar(message = "Dictionary deleted", actionLabel = "Undo")
-                                if(result == SnackbarResult.ActionPerformed) {
-                                    viewModel.onEvent(DictionariesEvent.RestoreDictionary)
-                                }
-                            }
-                        }
+                        modifier = Modifier.
+                        fillMaxWidth()
+                            .combinedClickable(
+                                onClick = {
+                                    //navController.
+                                    navController.navigate(Screen.AddEditDictionaryScreen.route + "?dictionaryId=${dictionary.id}&dictionaryLanguage=${dictionary.language}")
+                                },
+                                onLongClick = {
+                                    viewModel.onEvent(DictionariesEvent.DeleteDictionary(dictionary))
+                                    scope.launch {
+                                        val result = scaffoldState.snackbarHostState.showSnackbar(message = "Dictionary deleted", actionLabel = "Undo")
+                                        if(result == SnackbarResult.ActionPerformed) {
+                                            viewModel.onEvent(DictionariesEvent.RestoreDictionary)
+                                        }
+                                    }
+                                },
+                            )
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                 }

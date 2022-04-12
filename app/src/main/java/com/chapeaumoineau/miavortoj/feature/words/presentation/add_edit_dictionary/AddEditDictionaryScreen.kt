@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
@@ -29,7 +30,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @Composable
-fun AddEditDictionaryScreen(navController: NavController, dictionaryLanguage: Int, viewModel: AddEditDictionaryViewModel = hiltViewModel()) {
+fun AddEditDictionaryScreen(navController: NavController,
+                            dictionaryLanguage: Int,
+                            viewModel: AddEditDictionaryViewModel = hiltViewModel()) {
     val titleState = viewModel.dictionaryTitle.value
     val descriptionState = viewModel.dictionaryDescription.value
 
@@ -61,7 +64,7 @@ fun AddEditDictionaryScreen(navController: NavController, dictionaryLanguage: In
             Icon(imageVector = Icons.Default.Save, contentDescription = "Save dictionary")
         }
     },
-    scaffoldState = scaffoldState) {
+        scaffoldState = scaffoldState) {
         Column(modifier = Modifier
             .fillMaxSize()
             .background(dictionaryBackgroundAnimated.value)
@@ -126,6 +129,5 @@ fun AddEditDictionaryScreen(navController: NavController, dictionaryLanguage: In
                 singleLine = true,
                 textStyle = MaterialTheme.typography.h5,
                 modifier = Modifier.fillMaxHeight())
-        }
-    }
+        }    }
 }
