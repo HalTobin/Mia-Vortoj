@@ -56,11 +56,7 @@ class MainActivity : ComponentActivity() {
                             },
                             )
                         ) {
-                            val dictionaryName = it.arguments?.getString("dictionaryName")
-                            val language = it.arguments?.getInt("dictionaryLanguage") ?: -1
-                            if (dictionaryName != null) {
-                                WordsScreen(navController = navController, dictionaryName = dictionaryName,dictionaryLanguage = language)
-                            }
+                            WordsScreen(navController = navController)
                         }
                     }
                 }

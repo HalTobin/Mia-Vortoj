@@ -112,7 +112,7 @@ fun AddEditDictionaryScreen(navController: NavController,
                 },
                 isHintVisible = titleState.isHintVisible,
                 singleLine = true,
-                textStyle = MaterialTheme.typography.h5)
+                textStyle = MaterialTheme.typography.h4)
 
             Spacer(modifier = Modifier.height(16.dp))
             TransparentHintTextField(text = descriptionState.text,
@@ -125,7 +125,7 @@ fun AddEditDictionaryScreen(navController: NavController,
                 },
                 isHintVisible = descriptionState.isHintVisible,
                 singleLine = true,
-                textStyle = MaterialTheme.typography.h5,
+                textStyle = MaterialTheme.typography.h6,
                 modifier = Modifier.fillMaxHeight())
         }    }
 }
