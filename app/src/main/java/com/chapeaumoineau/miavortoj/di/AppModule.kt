@@ -4,8 +4,15 @@ import android.app.Application
 import androidx.room.Room
 import com.chapeaumoineau.miavortoj.feature.words.data.data_source.VocabularyDatabase
 import com.chapeaumoineau.miavortoj.feature.words.data.repository.DictionaryRepositoryImpl
+import com.chapeaumoineau.miavortoj.feature.words.data.repository.WordRepositoryImpl
 import com.chapeaumoineau.miavortoj.feature.words.domain.repository.DictionaryRepository
+import com.chapeaumoineau.miavortoj.feature.words.domain.repository.WordRepository
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.*
+import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.dictionary.AddDictionaryUseCase
+import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.dictionary.DeleteDictionaryUseCase
+import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.dictionary.GetDictionariesUseCase
+import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.dictionary.GetDictionaryUseCase
+import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.word.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,5 +39,17 @@ class AppModule {
     @Singleton
     fun provideDictionaryUseCases(repository: DictionaryRepository): DictionaryUseCases {
         return DictionaryUseCases(getDictionaries = GetDictionariesUseCase(repository), deleteDictionary = DeleteDictionaryUseCase(repository), addDictionary = AddDictionaryUseCase(repository), getDictionary = GetDictionaryUseCase(repository))
+    }
+
+    @Provides
+    @Singleton
+    fun provideWordRepository(db: VocabularyDatabase): WordRepository {
+        return WordRepositoryImpl(db.wordDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideWordUseCases(repository: WordRepository): WordUseCases {
+        return WordUseCases(getWords = GetWordsUseCase(repository), getWordsFromDictionary = GetWordsFromDictionaryUseCase(repository),deleteWord = DeleteWordUseCase(repository), addWord = AddWordUseCase(repository), getWord = GetWordUseCase(repository))
     }
 }

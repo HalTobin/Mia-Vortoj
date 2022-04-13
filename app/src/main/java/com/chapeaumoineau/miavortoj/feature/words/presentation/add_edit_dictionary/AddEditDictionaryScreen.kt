@@ -20,10 +20,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.chapeaumoineau.miavortoj.R
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.components.TransparentHintTextField
 import kotlinx.coroutines.flow.collectLatest
@@ -33,16 +34,13 @@ import kotlinx.coroutines.launch
 fun AddEditDictionaryScreen(navController: NavController,
                             dictionaryLanguage: Int,
                             viewModel: AddEditDictionaryViewModel = hiltViewModel()) {
-    val titleState = viewModel.dictionaryTitle.value
-    val descriptionState = viewModel.dictionaryDescription.value
-
-    println("CUSTOM_MESSAGE - From Screen : " + titleState.text)
-    println("CUSTOM_MESSAGE - From Screen : " + descriptionState.text)
+    val titleState = viewModel.title.value
+    val descriptionState = viewModel.description.value
 
     val scaffoldState = rememberScaffoldState()
 
     val dictionaryBackgroundAnimated = remember {
-        Animatable(if(dictionaryLanguage != -1) Dictionary.colors[dictionaryLanguage] else Color(0xFFFFFFFF))
+        Animatable(if(dictionaryLanguage != -1) Dictionary.colors[dictionaryLanguage] else Dictionary.colors[0])
     }
     val scope = rememberCoroutineScope()
 
@@ -105,7 +103,7 @@ fun AddEditDictionaryScreen(navController: NavController,
             }
             Spacer(modifier = Modifier.height(16.dp))
             TransparentHintTextField(text = titleState.text,
-                hint = titleState.hint,
+                hint = stringResource(R.string.add_edit_dictionary_screen_title_hint),
                 onValueChange = {
                     viewModel.onEvent(AddEditDictionaryEvent.EnteredTitle(it))
                 },
@@ -118,7 +116,7 @@ fun AddEditDictionaryScreen(navController: NavController,
 
             Spacer(modifier = Modifier.height(16.dp))
             TransparentHintTextField(text = descriptionState.text,
-                hint = descriptionState.hint,
+                hint = stringResource(R.string.add_edit_dictionary_screen_description_hint),
                 onValueChange = {
                     viewModel.onEvent(AddEditDictionaryEvent.EnteredDescription(it))
                 },

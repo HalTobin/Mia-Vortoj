@@ -1,4 +1,4 @@
-package com.chapeaumoineau.miavortoj.feature.words.domain.use_case
+package com.chapeaumoineau.miavortoj.feature.words.domain.use_case.dictionary
 
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
 import com.chapeaumoineau.miavortoj.feature.words.domain.repository.DictionaryRepository

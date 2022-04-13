@@ -15,9 +15,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.chapeaumoineau.miavortoj.R
 import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.components.DictionaryItem
 import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.components.OrderSection
 import com.chapeaumoineau.miavortoj.feature.words.presentation.util.Screen
@@ -43,10 +45,10 @@ fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewM
             Row(modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically) {
-                Text(text = "Your dictionary",
+                Text(text = stringResource(R.string.dictionary_screen_title),
                     style = MaterialTheme.typography.h4)
                 IconButton(onClick = {
-                    viewModel.onEvent(DictionariesEvent.ToggleDeleteButton)
+                    viewModel.onEvent(DictionariesEvent.ToggleOrderSection)
                 }) {
                     Icon(imageVector = Icons.Default.Sort,
                         contentDescription = "Sort")
@@ -68,8 +70,7 @@ fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewM
                         fillMaxWidth()
                             .combinedClickable(
                                 onClick = {
-                                    //navController.
-                                    navController.navigate(Screen.AddEditDictionaryScreen.route + "?dictionaryId=${dictionary.id}&dictionaryLanguage=${dictionary.language}")
+                                    navController.navigate(Screen.WordsScreen.route + "?dictionaryId=${dictionary.id}&dictionaryName=${dictionary.title}&dictionaryLanguage=${dictionary.language}")
                                 },
                                 onLongClick = {
                                     viewModel.onEvent(DictionariesEvent.DeleteDictionary(dictionary))

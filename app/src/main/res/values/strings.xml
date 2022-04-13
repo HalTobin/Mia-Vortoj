@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">CleanArchitectureNoteApp</string>
+    <string name="app_name">Kartoj</string>
+    <string name="dictionary_screen_title">Vos dictionnaires</string>
+
+    <string name="add_edit_dictionary_screen_title_hint">Entrez un titre</string>
+    <string name="add_edit_dictionary_screen_description_hint">Entrez une description</string>
 </resources>

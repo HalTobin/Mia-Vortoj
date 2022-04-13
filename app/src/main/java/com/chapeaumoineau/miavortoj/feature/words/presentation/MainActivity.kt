@@ -14,6 +14,7 @@ import androidx.navigation.navArgument
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryScreen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.DictionariesScreen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.util.Screen
+import com.chapeaumoineau.miavortoj.feature.words.presentation.words.WordsScreen
 import com.chapeaumoineau.miavortoj.ui.theme.VortojAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -43,6 +44,23 @@ class MainActivity : ComponentActivity() {
                         ) {
                             val language = it.arguments?.getInt("dictionaryLanguage") ?: -1
                             AddEditDictionaryScreen(navController = navController, dictionaryLanguage = language)
+                        }
+                        composable(route = Screen.WordsScreen.route + "?dictionaryId={dictionaryId}&dictionaryLanguage={dictionaryLanguage}",
+                            arguments = listOf(navArgument(name = "dictionaryId") {
+                                type = NavType.IntType
+                                defaultValue = -1
+                            },
+                            navArgument(name = "dictionaryLanguage") {
+                                type = NavType.IntType
+                                defaultValue = -1
+                            },
+                            )
+                        ) {
+                            val dictionaryName = it.arguments?.getString("dictionaryName")
+                            val language = it.arguments?.getInt("dictionaryLanguage") ?: -1
+                            if (dictionaryName != null) {
+                                WordsScreen(navController = navController, dictionaryName = dictionaryName,dictionaryLanguage = language)
+                            }
                         }
                     }
                 }

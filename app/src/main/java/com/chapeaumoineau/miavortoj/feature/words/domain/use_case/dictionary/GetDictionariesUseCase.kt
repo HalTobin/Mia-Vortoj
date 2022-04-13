@@ -1,4 +1,4 @@
-package com.chapeaumoineau.miavortoj.feature.words.domain.use_case
+package com.chapeaumoineau.miavortoj.feature.words.domain.use_case.dictionary
 
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
 import com.chapeaumoineau.miavortoj.feature.words.domain.repository.DictionaryRepository
@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.map
 
 class GetDictionariesUseCase(private val repository: DictionaryRepository) {
 
-    operator fun invoke(dictionaryOrder: DictionaryOrder = DictionaryOrder.Language(OrderType.Descending)): Flow<List<Dictionary>> {
+    operator fun invoke(dictionaryOrder: DictionaryOrder = DictionaryOrder.Language(OrderType.Ascending)): Flow<List<Dictionary>> {
         return repository.getDictionaries().map {
                 dictionaries -> when(dictionaryOrder.orderType) {
                     is OrderType.Ascending -> {
