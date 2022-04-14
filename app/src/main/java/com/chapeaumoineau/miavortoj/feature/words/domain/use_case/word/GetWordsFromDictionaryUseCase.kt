@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class GetWordsFromDictionaryUseCase(private val repository: WordRepository) {
-    suspend operator fun invoke(dictionaryId: Int, wordOrder: WordOrder = WordOrder.TargetWord(OrderType.Ascending)): Flow<List<Word>> {
+    operator fun invoke(dictionaryId: Int, wordOrder: WordOrder = WordOrder.TargetWord(OrderType.Ascending)): Flow<List<Word>> {
         return repository.getWordsFromDictionary(dictionaryId).map {
                 words -> when(wordOrder.orderType) {
             is OrderType.Ascending -> {

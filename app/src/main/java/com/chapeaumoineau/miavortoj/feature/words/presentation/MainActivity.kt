@@ -59,13 +59,17 @@ class MainActivity : ComponentActivity() {
                         ) {
                             WordsScreen(navController = navController)
                             }
-                        composable(route = Screen.AddEditWordScreen.route + "?dictionaryLanguage={dictionaryLanguage}", arguments = listOf(
+                        composable(route = Screen.AddEditWordScreen.route + "?dictionaryId={dictionaryId}&dictionaryLanguage={dictionaryLanguage}", arguments = listOf(
                             navArgument(name = "dictionaryId") {
                                 type = NavType.IntType
                                 defaultValue = -1
-                            })) {
+                            },
+                            navArgument(name = "dictionaryLanguage") {
+                                type = NavType.IntType
+                                defaultValue = -1
+                            },)) {
                             val language = it.arguments?.getInt("dictionaryLanguageIdState") ?: -1
-                            AddEditWordScreen(navController = navController, dictionaryLanguage = language)
+                            AddEditWordScreen(navController = navController)
                         }
                     }
                 }

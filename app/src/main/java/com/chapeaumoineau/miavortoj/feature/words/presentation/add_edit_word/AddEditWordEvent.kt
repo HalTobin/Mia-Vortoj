@@ -7,9 +7,7 @@ sealed class AddEditWordEvent{
     data class ChangeSourceFocus(val focusState: FocusState): AddEditWordEvent()
     data class EnteredTarget(val value: String): AddEditWordEvent()
     data class ChangeTargetFocus(val focusState: FocusState): AddEditWordEvent()
-
     data class EnteredDescription(val value: String): AddEditWordEvent()
     data class ChangeDescriptionFocus(val focusState: FocusState): AddEditWordEvent()
-    data class ChangeLanguage(val language: Int): AddEditWordEvent()
     object SaveDictionary: AddEditWordEvent()
 }

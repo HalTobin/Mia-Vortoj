@@ -1,5 +1,6 @@
 package com.chapeaumoineau.miavortoj.feature.words.presentation.words
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
@@ -11,7 +12,6 @@ import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.WordUseCases
 import com.chapeaumoineau.miavortoj.feature.words.domain.util.OrderType
 import com.chapeaumoineau.miavortoj.feature.words.domain.util.WordOrder
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryViewModel
-import com.chapeaumoineau.miavortoj.feature.words.presentation.components.TextFieldState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -33,11 +33,14 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
 
     private var getWordsJob: Job? = null
 
-    private val _dictionaryTitle = mutableStateOf(TextFieldState(hint = "Enter title..."))
-    val title: State<TextFieldState> = _dictionaryTitle
+    private val _dictionaryId = mutableStateOf(0)
+    val dictionaryId: State<Int> = _dictionaryId
 
-    private val _dictionaryDescription = mutableStateOf(TextFieldState(hint = "Enter a description..."))
-    val description: State<TextFieldState> = _dictionaryDescription
+    private val _dictionaryTitle = mutableStateOf("")
+    val title: MutableState<String> = _dictionaryTitle
+
+    private val _dictionaryDescription = mutableStateOf("")
+    val description: MutableState<String> = _dictionaryDescription
 
     private val _dictionaryLanguage = mutableStateOf(0)
     val dictionaryLanguage: State<Int> = _dictionaryLanguage
@@ -48,20 +51,20 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
     private var currentDictionaryId: Int? = null
 
     init {
-        getWords(WordOrder.SourceWord(OrderType.Descending))
-
         savedStateHandle.get<Int>("dictionaryId")?.let {dictionaryId ->
             if(dictionaryId != -1) {
+                currentDictionaryId = dictionaryId
                 viewModelScope.launch {
                     dictionaryUseCases.getDictionary(dictionaryId)?.also { dictionary ->
-                        currentDictionaryId = dictionary.id
-                        _dictionaryTitle.value = title.value.copy(text = dictionary.title, isHintVisible = false)
-                        _dictionaryDescription.value = description.value.copy(text = dictionary.description, isHintVisible = false)
+                        _dictionaryId.value = dictionaryId
+                        _dictionaryTitle.value = dictionary.title
+                        _dictionaryDescription.value = dictionary.description
                         _dictionaryLanguage.value = dictionary.language
                     }
                 }
             }
         }
+        getWords(currentDictionaryId, WordOrder.SourceWord(OrderType.Descending))
     }
 
     fun onEvent(event: WordsEvent) {
@@ -70,7 +73,7 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
                 if(state.value.wordOrder::class == event.wordOrder::class && state.value.wordOrder.orderType == event.wordOrder.orderType) {
                     return
                 }
-                getWords(event.wordOrder)
+                getWords(currentDictionaryId, WordOrder.SourceWord(OrderType.Descending))
             }
             is WordsEvent.DeleteWord -> {
                 viewModelScope.launch {
@@ -93,10 +96,12 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
         }
     }
 
-    private fun getWords(wordOrder: WordOrder) {
+    private fun getWords(id: Int?, wordOrder: WordOrder) {
         getWordsJob?.cancel()
-        getWordsJob = wordUseCases.getWords(wordOrder).onEach {
+        getWordsJob = id?.let {
+            wordUseCases.getWordsFromDictionary(it, wordOrder).onEach {
                 words -> _state.value = state.value.copy(words = words, wordOrder = wordOrder)
-        }.launchIn(viewModelScope)
+            }.launchIn(viewModelScope)
+        }
     }
 }

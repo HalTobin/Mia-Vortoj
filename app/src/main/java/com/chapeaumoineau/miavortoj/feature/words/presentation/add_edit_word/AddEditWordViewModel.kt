@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.InvalidDictionaryException
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Word
+import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.DictionaryUseCases
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.WordUseCases
 import com.chapeaumoineau.miavortoj.feature.words.presentation.components.TextFieldState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,6 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUseCases,
+                                               private val dictionaryUseCases: DictionaryUseCases,
                                                savedStateHandle: SavedStateHandle): ViewModel() {
 
     private val _wordSource = mutableStateOf(TextFieldState(hint = "Enter title..."))
@@ -28,8 +30,8 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
     private val _wordNotes = mutableStateOf(TextFieldState(hint = "Enter a description..."))
     val notes: State<TextFieldState> = _wordNotes
 
-    private val _dictionaryLanguage = mutableStateOf(0)
-    val dictionaryLanguage: State<Int> = _dictionaryLanguage
+    private val _language = mutableStateOf(0)
+    val language: State<Int> = _language
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
@@ -37,15 +39,26 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
     private var currentDictionaryId: Int? = null
 
     init {
-        savedStateHandle.get<Int>("dictionaryId")?.let {dictionaryId ->
-            if(dictionaryId != -1) {
+        savedStateHandle.get<Int>("dictionaryId")?.let { dictionaryId ->
+            if (dictionaryId != -1) {
+                currentDictionaryId = dictionaryId
                 viewModelScope.launch {
-                    wordUseCases.getWord(dictionaryId)?.also { word ->
-                        currentDictionaryId = word.id
-                        _wordSource.value = source.value.copy(text = word.sourceWord, isHintVisible = false)
-                        _wordTarget.value = target.value.copy(text = word.targetWord, isHintVisible = false)
-                        _wordNotes.value = notes.value.copy(text = word.notes, isHintVisible = false)
-                        //_dictionaryLanguage.value = word.language
+                    dictionaryUseCases.getDictionary(dictionaryId)?.also { dictionary ->
+                        _language.value = dictionary.language
+                    }
+                }
+            }
+        }
+        savedStateHandle.get<Int>("wordId")?.let { wordId ->
+            if (wordId != 1) {
+                viewModelScope.launch {
+                    wordUseCases.getWord(wordId)?.also { word ->
+                        _wordSource.value =
+                            source.value.copy(text = word.sourceWord, isHintVisible = false)
+                        _wordTarget.value =
+                            target.value.copy(text = word.targetWord, isHintVisible = false)
+                        _wordNotes.value =
+                            notes.value.copy(text = word.notes, isHintVisible = false)
                     }
                 }
             }
@@ -78,10 +91,6 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
                 _wordNotes.value = notes.value.copy(isHintVisible = !event.focusState.isFocused && notes.value.text.isBlank())
             }
 
-            is AddEditWordEvent.ChangeLanguage -> {
-                _dictionaryLanguage.value = event.language
-            }
-
             is AddEditWordEvent.SaveDictionary -> {
                 viewModelScope.launch {
                     try {
@@ -91,10 +100,10 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
                             notes = notes.value.text,
                             themeId = 0,
                             mastery = 0,
-                            dictionaryId = 0))
-                        _eventFlow.emit(UiEvent.SaveDictionary)
+                            dictionaryId = currentDictionaryId!!))
+                        _eventFlow.emit(UiEvent.SaveWord)
                     } catch(e: InvalidDictionaryException) {
-                        _eventFlow.emit(UiEvent.ShowSnackBar(message = e.message ?: "Couldn't saved dictionary"))
+                        _eventFlow.emit(UiEvent.ShowSnackBar(message = e.message ?: "Couldn't saved word"))
                     }
                 }
             }
@@ -103,7 +112,7 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
 
     sealed class UiEvent {
         data class ShowSnackBar(val message: String): UiEvent()
-        object SaveDictionary: UiEvent()
+        object SaveWord: UiEvent()
     }
 
 }

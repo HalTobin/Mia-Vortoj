@@ -32,29 +32,30 @@ fun WordsScreen(navController: NavController,
 
     val state = viewModel.state.value
 
+    val dictionaryId = viewModel.dictionaryId.value
     val dictionaryTitle = viewModel.title.value
     val dictionaryDescription = viewModel.description.value
-    val dictionaryLanguageIdState = viewModel.dictionaryLanguage.value
+    val dictionaryLanguageId = viewModel.dictionaryLanguage.value
 
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
     Scaffold(floatingActionButton = {
         FloatingActionButton(onClick = {
-            navController.navigate(Screen.AddEditWordScreen.route)
+            navController.navigate(Screen.AddEditWordScreen.route + "?dictionaryId=${dictionaryId}&dictionaryLanguage=${dictionaryLanguageId}")
         }, backgroundColor = MaterialTheme.colors.primary) {
             Icon(imageVector = Icons.Default.Add, contentDescription = "Add word")
         }
     }, scaffoldState = scaffoldState) {
         Column(modifier = Modifier
             .fillMaxSize()
-            .background(Dictionary.colors[dictionaryLanguageIdState])) {
+            .background(Dictionary.colors[dictionaryLanguageId])) {
             Row(modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically) {
-                Image(painter = painterResource(Dictionary.flags_simple[dictionaryLanguageIdState]),
+                Image(painter = painterResource(Dictionary.flags_simple[dictionaryLanguageId]),
                     contentDescription = "",
                     modifier = Modifier
                         .size(65.dp)
@@ -67,10 +68,10 @@ fun WordsScreen(navController: NavController,
                         )
                 )
                 Column(modifier = Modifier.padding(start = 16.dp)) {
-                    Text(text = dictionaryTitle.text,
+                    Text(text = dictionaryTitle,
                         style = MaterialTheme.typography.h5,
                         color = Color.Black)
-                    Text(text = dictionaryDescription.text,
+                    Text(text = dictionaryDescription,
                         style = MaterialTheme.typography.subtitle1,
                         color = Color.Black,
                         maxLines = 3)
