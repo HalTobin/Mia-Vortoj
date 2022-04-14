@@ -11,6 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.AddEditWordScreen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryScreen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.DictionariesScreen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.util.Screen
@@ -57,6 +58,14 @@ class MainActivity : ComponentActivity() {
                             )
                         ) {
                             WordsScreen(navController = navController)
+                            }
+                        composable(route = Screen.AddEditWordScreen.route + "?dictionaryLanguage={dictionaryLanguage}", arguments = listOf(
+                            navArgument(name = "dictionaryId") {
+                                type = NavType.IntType
+                                defaultValue = -1
+                            })) {
+                            val language = it.arguments?.getInt("dictionaryLanguageIdState") ?: -1
+                            AddEditWordScreen(navController = navController, dictionaryLanguage = language)
                         }
                     }
                 }

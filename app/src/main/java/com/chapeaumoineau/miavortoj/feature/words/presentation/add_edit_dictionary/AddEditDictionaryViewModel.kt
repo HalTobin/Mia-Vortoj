@@ -19,10 +19,10 @@ import javax.inject.Inject
 class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCases: DictionaryUseCases,
                                                      savedStateHandle: SavedStateHandle): ViewModel() {
 
-    private val _dictionaryTitle = mutableStateOf(TextFieldState(hint = "Enter title..."))
+    private val _dictionaryTitle = mutableStateOf(TextFieldState(hint = ""))
     val title: State<TextFieldState> = _dictionaryTitle
 
-    private val _dictionaryDescription = mutableStateOf(TextFieldState(hint = "Enter a description..."))
+    private val _dictionaryDescription = mutableStateOf(TextFieldState(hint = ""))
     val description: State<TextFieldState> = _dictionaryDescription
 
     private val _dictionaryLanguage = mutableStateOf(0)

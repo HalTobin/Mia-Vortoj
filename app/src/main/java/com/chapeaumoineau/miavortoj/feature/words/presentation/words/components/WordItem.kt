@@ -16,6 +16,7 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.clipPath
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -23,31 +24,25 @@ import com.chapeaumoineau.miavortoj.feature.words.domain.model.Word
 
 @Composable
 fun WordItem(word: Word,
-             modifier: Modifier = Modifier,
-             cornerRadius: Dp = 10.dp) {
+             isFromSource: Boolean,
+             modifier: Modifier = Modifier) {
     Box(modifier = modifier) {
-        Canvas(modifier = Modifier.matchParentSize()) {
-            val clipPath = Path().apply {
-                lineTo(size.width, 0f)
-                lineTo(size.width, size.height)
-                lineTo(0f, size.height)
-                lineTo(0f, 0f)
-                close()
-            }
-
-            clipPath(clipPath) {
-                drawRoundRect(
-                    color = Color(0x00000000),
-                    size = size,
-                    cornerRadius = CornerRadius(cornerRadius.toPx())
-                )
-            }
-        }
         Column(modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
-            .padding(end = 32.dp)) {
-            Text(text = word.sourceWord, style = MaterialTheme.typography.h6, color = MaterialTheme.colors.onSurface, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            .padding(start = 16.dp,
+                top = 4.dp,
+                bottom = 4.dp)) {
+            Text(text = if(isFromSource) word.sourceWord else word.targetWord,
+                style = MaterialTheme.typography.subtitle1,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colors.onSurface,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis)
+            Text(text = if(isFromSource) word.targetWord else word.sourceWord,
+                style = MaterialTheme.typography.subtitle2,
+                color = MaterialTheme.colors.onSurface,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis)
         }
 
     }

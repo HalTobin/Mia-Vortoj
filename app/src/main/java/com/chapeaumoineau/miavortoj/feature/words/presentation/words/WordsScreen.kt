@@ -4,6 +4,7 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -42,7 +43,7 @@ fun WordsScreen(navController: NavController,
 
     Scaffold(floatingActionButton = {
         FloatingActionButton(onClick = {
-            //navController.navigate(Screen.AddEditDictionaryScreen.route)
+            navController.navigate(Screen.AddEditWordScreen.route)
         }, backgroundColor = MaterialTheme.colors.primary) {
             Icon(imageVector = Icons.Default.Add, contentDescription = "Add word")
         }
@@ -73,7 +74,8 @@ fun WordsScreen(navController: NavController,
                         color = Color.Black)
                     Text(text = dictionaryDescription.text,
                         style = MaterialTheme.typography.subtitle1,
-                        color = Color.Black)
+                        color = Color.Black,
+                        maxLines = 3)
                 }
                 IconButton(onClick = {
                     //viewModel.onEvent(WordsEvent.ToggleOrderSection)
@@ -84,9 +86,10 @@ fun WordsScreen(navController: NavController,
                 }
             }
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(state.words) { word ->
+                itemsIndexed(state.words) { index, word ->
                     WordItem(
                         word = word,
+                        isFromSource = true,
                         modifier = Modifier
                             .fillMaxWidth()
                             .combinedClickable(
@@ -107,8 +110,8 @@ fun WordsScreen(navController: NavController,
                                 },
                             )
                     )
-                    Spacer(modifier = Modifier.height(16.dp))
-                }
+                    if (index < state.words.lastIndex)
+                        Divider(color = Color.Black, thickness = 1.dp)                }
             }
         }
     }

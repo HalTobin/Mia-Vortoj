@@ -10,6 +10,7 @@ import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -23,7 +24,11 @@ fun TransparentHintTextField(text: String,
                              onFocusChange: (FocusState) -> Unit) {
 
     Box(modifier = modifier) {
-        BasicTextField(value = text, onValueChange = onValueChange, singleLine = singleLine, textStyle = textStyle, modifier = Modifier.fillMaxWidth().onFocusChanged { onFocusChange(it) })
+        BasicTextField(value = text,
+            onValueChange = onValueChange,
+            singleLine = singleLine,
+            textStyle = textStyle,
+            modifier = Modifier.fillMaxWidth().onFocusChanged { onFocusChange(it) })
         if(isHintVisible) Text(text = hint, style = textStyle, color = Color.DarkGray)
     }
 
