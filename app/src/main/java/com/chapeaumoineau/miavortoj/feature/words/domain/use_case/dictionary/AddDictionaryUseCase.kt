@@ -11,7 +11,7 @@ class AddDictionaryUseCase(private val repository: DictionaryRepository) {
         if(dictionary.title.isBlank()) {
             throw InvalidDictionaryException("The title of the dictionary can't be empty.")
         }
-        if(dictionary.language == null) {
+        if(dictionary.languageIso.isBlank()) {
             throw InvalidDictionaryException("The language of the dictionary can't be undetermined.")
         }
         repository.insertDictionary(dictionary)

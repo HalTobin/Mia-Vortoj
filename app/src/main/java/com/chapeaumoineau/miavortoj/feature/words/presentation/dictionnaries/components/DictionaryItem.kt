@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
+import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
 
 @Composable
 fun DictionaryItem(dictionary: Dictionary,
@@ -38,7 +39,7 @@ fun DictionaryItem(dictionary: Dictionary,
 
             clipPath(clipPath) {
                 drawRoundRect(
-                    color = Dictionary.colors[dictionary.language],
+                    color = Language.getLanguageByIso(dictionary.languageIso).getColor(),
                     size = size,
                     cornerRadius = CornerRadius(cornerRadius.toPx())
                 )
@@ -54,7 +55,7 @@ fun DictionaryItem(dictionary: Dictionary,
         Column(modifier = Modifier
             .padding(end = 16.dp)
             .align(Alignment.CenterEnd)) {
-            Image(painter = painterResource(Dictionary.flags_simple[dictionary.language]),
+            Image(painter = painterResource(Language.getLanguageByIso(dictionary.languageIso).flag),
                 contentDescription = "",
                 modifier = Modifier
                     .size(50.dp)

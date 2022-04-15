@@ -35,7 +35,10 @@ fun WordsScreen(navController: NavController,
     val dictionaryId = viewModel.dictionaryId.value
     val dictionaryTitle = viewModel.title.value
     val dictionaryDescription = viewModel.description.value
-    val dictionaryLanguageId = viewModel.dictionaryLanguage.value
+    val dictionaryLanguageId = viewModel.dictionaryLanguageIso.value
+
+    val color = viewModel.color.value
+    val flag = viewModel.flag.value
 
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
@@ -49,13 +52,13 @@ fun WordsScreen(navController: NavController,
     }, scaffoldState = scaffoldState) {
         Column(modifier = Modifier
             .fillMaxSize()
-            .background(Dictionary.colors[dictionaryLanguageId])) {
+            .background(color)) {
             Row(modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically) {
-                Image(painter = painterResource(Dictionary.flags_simple[dictionaryLanguageId]),
+                Image(painter = painterResource(flag),
                     contentDescription = "",
                     modifier = Modifier
                         .size(65.dp)

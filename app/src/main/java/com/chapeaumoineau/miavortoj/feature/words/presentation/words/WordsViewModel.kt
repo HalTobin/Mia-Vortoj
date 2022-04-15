@@ -3,9 +3,11 @@ package com.chapeaumoineau.miavortoj.feature.words.presentation.words
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Word
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.DictionaryUseCases
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.WordUseCases
@@ -42,8 +44,14 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
     private val _dictionaryDescription = mutableStateOf("")
     val description: MutableState<String> = _dictionaryDescription
 
-    private val _dictionaryLanguage = mutableStateOf(0)
-    val dictionaryLanguage: State<Int> = _dictionaryLanguage
+    private val _dictionaryLanguageIso = mutableStateOf(Language.getDefault().iso)
+    val dictionaryLanguageIso: State<String> = _dictionaryLanguageIso
+
+    private val _dictionaryColor = mutableStateOf(Language.getDefault().getColor())
+    val color: State<Color> = _dictionaryColor
+
+    private val _dictionaryFlag = mutableStateOf(Language.getDefault().flag)
+    val flag: State<Int> = _dictionaryFlag
 
     private val _eventFlow = MutableSharedFlow<AddEditDictionaryViewModel.UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
@@ -56,10 +64,13 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
                 currentDictionaryId = dictionaryId
                 viewModelScope.launch {
                     dictionaryUseCases.getDictionary(dictionaryId)?.also { dictionary ->
+                        val language = Language.getLanguageByIso(dictionary.languageIso)
                         _dictionaryId.value = dictionaryId
                         _dictionaryTitle.value = dictionary.title
                         _dictionaryDescription.value = dictionary.description
-                        _dictionaryLanguage.value = dictionary.language
+                        _dictionaryLanguageIso.value = dictionary.languageIso
+                        _dictionaryColor.value = language.getColor()
+                        _dictionaryFlag.value = language.flag
                     }
                 }
             }

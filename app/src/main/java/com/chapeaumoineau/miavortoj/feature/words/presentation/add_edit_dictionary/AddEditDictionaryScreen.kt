@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,6 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.R
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
+import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.components.TransparentHintTextField
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -37,10 +39,14 @@ fun AddEditDictionaryScreen(navController: NavController,
     val titleState = viewModel.title.value
     val descriptionState = viewModel.description.value
 
+    val languageIsoState = viewModel.dictionaryLanguageIso.value
+    val colorState = viewModel.dictionaryLanguageColor.value
+    val flagsState = viewModel.flags.value
+
     val scaffoldState = rememberScaffoldState()
 
     val dictionaryBackgroundAnimated = remember {
-        Animatable(if(dictionaryLanguage != -1) Dictionary.colors[dictionaryLanguage] else Dictionary.colors[0])
+        Animatable(colorState)
     }
     val scope = rememberCoroutineScope()
 
@@ -70,6 +76,53 @@ fun AddEditDictionaryScreen(navController: NavController,
             Row(modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+
+                for (c in 0..4) {
+                    if(c!=4) {
+                        val myLanguage = Language.getLanguageByIso(Language.DUMB_FAV[c])
+                        Image(painter = painterResource(flagsState[c]),
+                            contentDescription = "",
+                            modifier = Modifier
+                                .size(50.dp)
+                                .shadow(15.dp, CircleShape)
+                                .clip(CircleShape)
+                                .border(
+                                    width = 3.dp,
+                                    color = if (viewModel.dictionaryLanguageIso.value == myLanguage.iso) {
+                                        Color.Black
+                                    } else Color.Transparent,
+                                    shape = CircleShape
+                                )
+                                .clickable {
+                                    scope.launch {
+                                        dictionaryBackgroundAnimated.animateTo(
+                                            targetValue = myLanguage.getColor(),
+                                            animationSpec = tween(durationMillis = 500)
+                                        )
+                                    }
+                                    viewModel.onEvent(
+                                        AddEditDictionaryEvent.ChangeLanguage(
+                                            myLanguage.iso
+                                        )
+                                    )
+                                }
+                        )
+                    }
+                    else Icon(imageVector = Icons.Default.MoreHoriz,
+                        contentDescription = "",
+                        tint = Color.Black,
+                        modifier = Modifier
+                            .size(50.dp)
+                            .shadow(15.dp, CircleShape)
+                            .clip(CircleShape)
+                            .background(Color.White)
+                            .clickable {
+                                viewModel.onEvent(AddEditDictionaryEvent.MoreLanguage)
+                            }
+                    )
+                }
+
+                /*
                 Dictionary.languages.forEach { language ->
                     val languageIndex = Dictionary.languages.indexOf(language)
                     Image(painter = painterResource(Dictionary.flags_simple[languageIndex]),
@@ -80,7 +133,7 @@ fun AddEditDictionaryScreen(navController: NavController,
                             .clip(CircleShape)
                             .border(
                                 width = 3.dp,
-                                color = if (viewModel.dictionaryLanguage.value == languageIndex) {
+                                color = if (viewModel.dictionaryLanguage.value == language) {
                                     Color.Black
                                 } else Color.Transparent,
                                 shape = CircleShape
@@ -100,6 +153,7 @@ fun AddEditDictionaryScreen(navController: NavController,
                             }
                     )
                 }
+                */
             }
             Spacer(modifier = Modifier.height(16.dp))
             TransparentHintTextField(text = titleState.text,

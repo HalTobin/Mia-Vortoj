@@ -15,13 +15,13 @@ class GetDictionariesUseCase(private val repository: DictionaryRepository) {
                     is OrderType.Ascending -> {
                         when(dictionaryOrder) {
                             is DictionaryOrder.Language -> dictionaries.sortedBy { it.title.lowercase() }
-                            is DictionaryOrder.Title -> dictionaries.sortedBy { it.language }
+                            is DictionaryOrder.Title -> dictionaries.sortedBy { it.languageIso }
                         }
                     }
                     is OrderType.Descending -> {
                         when(dictionaryOrder) {
                             is DictionaryOrder.Language -> dictionaries.sortedByDescending { it.title.lowercase() }
-                            is DictionaryOrder.Title -> dictionaries.sortedByDescending { it.language }
+                            is DictionaryOrder.Title -> dictionaries.sortedByDescending { it.languageIso }
                         }
                     }
             }

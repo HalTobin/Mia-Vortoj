@@ -70,7 +70,7 @@ fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewM
                         fillMaxWidth()
                             .combinedClickable(
                                 onClick = {
-                                    navController.navigate(Screen.WordsScreen.route + "?dictionaryId=${dictionary.id}&dictionaryName=${dictionary.title}&dictionaryLanguage=${dictionary.language}")
+                                    navController.navigate(Screen.WordsScreen.route + "?dictionaryId=${dictionary.id}&dictionaryName=${dictionary.title}&dictionaryLanguage=${dictionary.languageIso}")
                                 },
                                 onLongClick = {
                                     viewModel.onEvent(DictionariesEvent.DeleteDictionary(dictionary))

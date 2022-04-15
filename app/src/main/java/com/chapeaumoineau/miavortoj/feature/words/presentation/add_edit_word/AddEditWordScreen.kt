@@ -24,7 +24,7 @@ fun AddEditWordScreen(navController: NavController,
     val sourceState = viewModel.source.value
     val targetState = viewModel.target.value
     val notesState = viewModel.notes.value
-    val languageState = viewModel.language.value
+    val colorState = viewModel.color.value
 
     val scaffoldState = rememberScaffoldState()
 
@@ -51,7 +51,7 @@ fun AddEditWordScreen(navController: NavController,
         scaffoldState = scaffoldState) {
         Column(modifier = Modifier
             .fillMaxSize()
-            .background(Dictionary.colors[languageState])
+            .background(colorState)
             .padding(16.dp)) {
 
             Spacer(modifier = Modifier.height(16.dp))

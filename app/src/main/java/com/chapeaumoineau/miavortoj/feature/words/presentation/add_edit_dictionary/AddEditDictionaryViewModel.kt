@@ -2,11 +2,14 @@ package com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_diction
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chapeaumoineau.miavortoj.R
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.InvalidDictionaryException
+import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.DictionaryUseCases
 import com.chapeaumoineau.miavortoj.feature.words.presentation.components.TextFieldState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,8 +28,14 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
     private val _dictionaryDescription = mutableStateOf(TextFieldState(hint = ""))
     val description: State<TextFieldState> = _dictionaryDescription
 
-    private val _dictionaryLanguage = mutableStateOf(0)
-    val dictionaryLanguage: State<Int> = _dictionaryLanguage
+    private val _dictionaryLanguageIso = mutableStateOf(Language.getDefault().iso)
+    val dictionaryLanguageIso: State<String> = _dictionaryLanguageIso
+
+    private val _dictionaryLanguageColor = mutableStateOf(Language.getDefault().getColor())
+    val dictionaryLanguageColor: State<Color> = _dictionaryLanguageColor
+
+    private val _lastFlags = mutableStateOf(Language.getFlagsFromIsos(Language.DUMB_FAV))
+    val flags: State<List<Int>> = _lastFlags
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
@@ -41,7 +50,9 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
                         currentDictionaryId = dictionary.id
                         _dictionaryTitle.value = title.value.copy(text = dictionary.title, isHintVisible = false)
                         _dictionaryDescription.value = description.value.copy(text = dictionary.description, isHintVisible = false)
-                        _dictionaryLanguage.value = dictionary.language
+                        _dictionaryLanguageIso.value = dictionary.languageIso
+                        _dictionaryLanguageColor.value = Language.getLanguageByIso(dictionary.languageIso).getColor()
+                        _lastFlags.value = Language.getFlagsFromIsos(Language.DUMB_FAV)
                     }
                 }
             }
@@ -67,13 +78,18 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
             }
 
             is AddEditDictionaryEvent.ChangeLanguage -> {
-                _dictionaryLanguage.value = event.language
+                _dictionaryLanguageIso.value = event.language
+                _dictionaryLanguageColor.value = Language.getLanguageByIso(event.language).getColor()
+            }
+
+            is AddEditDictionaryEvent.MoreLanguage -> {
+                /* TODO */
             }
 
             is AddEditDictionaryEvent.SaveDictionary -> {
                 viewModelScope.launch {
                     try {
-                        dictionaryUseCases.addDictionary(Dictionary(title = title.value.text, description = description.value.text, language = dictionaryLanguage.value, id = currentDictionaryId))
+                        dictionaryUseCases.addDictionary(Dictionary(title = title.value.text, description = description.value.text, languageIso = dictionaryLanguageIso.value, id = currentDictionaryId))
                         _eventFlow.emit(UiEvent.SaveDictionary)
                     } catch(e: InvalidDictionaryException) {
                         _eventFlow.emit(UiEvent.ShowSnackBar(message = e.message ?: "Couldn't saved dictionary"))
