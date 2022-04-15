@@ -2,21 +2,20 @@ package com.chapeaumoineau.miavortoj.feature.words.data.data_source
 
 import androidx.room.*
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.FavoriteLanguage
-import com.chapeaumoineau.miavortoj.feature.words.domain.model.Word
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FavoriteLanguageDao {
 
     @Query("SELECT * FROM favoriteLanguage")
-    fun getWords(): Flow<List<FavoriteLanguage>>
+    fun getFavoriteLanguages(): Flow<List<FavoriteLanguage>>
 
     @Query("SELECT * FROM word WHERE id = :id")
-    suspend fun getWordById(id: Int): Word?
+    suspend fun getFavoriteLanguageById(id: Int): FavoriteLanguage?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertWord(word: Word)
+    suspend fun insertFavoriteLanguage(favoriteLanguage: FavoriteLanguage)
 
     @Delete
-    suspend fun deleteWord(word: Word)
+    suspend fun deleteFavoriteLanguage(favoriteLanguage: FavoriteLanguage)
 }
