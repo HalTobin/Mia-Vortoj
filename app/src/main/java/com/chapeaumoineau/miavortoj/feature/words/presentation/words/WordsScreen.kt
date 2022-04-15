@@ -113,7 +113,8 @@ fun WordsScreen(navController: NavController,
                             )
                     )
                     if (index < state.words.lastIndex)
-                        Divider(color = Color.Black, thickness = 1.dp)                }
+                        Divider(color = Color.Black, thickness = 1.dp)
+                }
             }
         }
     }

@@ -100,11 +100,15 @@ fun AddEditDictionaryScreen(navController: NavController,
                                             animationSpec = tween(durationMillis = 500)
                                         )
                                     }
-                                    viewModel.onEvent(
-                                        AddEditDictionaryEvent.ChangeLanguage(
-                                            myLanguage.iso
+                                    if(c!=4) {
+                                        viewModel.onEvent(
+                                            AddEditDictionaryEvent.ChangeLanguage(
+                                                myLanguage.iso
+                                            )
                                         )
-                                    )
+                                    } else {
+                                        viewModel.onEvent(AddEditDictionaryEvent.MoreLanguage)
+                                    }
                                 }
                         )
                     }
