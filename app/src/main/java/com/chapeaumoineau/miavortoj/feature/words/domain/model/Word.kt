@@ -10,15 +10,8 @@ data class Word (
     val emote: String,
     val notes: String,
     val mastery: Int,
+    val timestamp: Long,
     val dictionaryId: Int,
     val themeId: Int,
     @PrimaryKey val id: Int? = null
-) {
-    companion object {
-        val themes = listOf(
-            "Chiffres",
-            "Maison",
-            "Nourriture",
-            "Salutations / Aurevoire")
-    }
-}
+) {}

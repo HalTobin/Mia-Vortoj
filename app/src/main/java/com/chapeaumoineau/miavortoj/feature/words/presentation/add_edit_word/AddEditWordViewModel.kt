@@ -102,7 +102,8 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
                             notes = notes.value.text,
                             themeId = 0,
                             mastery = 0,
-                            dictionaryId = currentDictionaryId!!))
+                            dictionaryId = currentDictionaryId!!,
+                            timestamp = System.currentTimeMillis()))
                         _eventFlow.emit(UiEvent.SaveWord)
                     } catch(e: InvalidDictionaryException) {
                         _eventFlow.emit(UiEvent.ShowSnackBar(message = e.message ?: "Couldn't saved word"))
