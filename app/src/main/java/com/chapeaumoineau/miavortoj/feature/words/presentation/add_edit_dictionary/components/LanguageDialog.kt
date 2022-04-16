@@ -17,14 +17,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.chapeaumoineau.miavortoj.R
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
 import com.chapeaumoineau.miavortoj.feature.words.domain.util.DictionaryOrder
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryEvent
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryViewModel
+import com.chapeaumoineau.miavortoj.feature.words.presentation.components.TransparentHintTextField
 import com.chapeaumoineau.miavortoj.feature.words.presentation.util.Screen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.words.WordsEvent
 import com.chapeaumoineau.miavortoj.feature.words.presentation.words.components.WordItem
@@ -36,8 +39,19 @@ fun LanguageDialog(isVisible: Boolean, viewModel: AddEditDictionaryViewModel = h
         Column(modifier = Modifier
             .fillMaxSize()
             .background(Color.DarkGray)) {
+            Row(modifier = Modifier.fillMaxWidth()) {
+                TextField(value = viewModel.search.value,
+                    onValueChange = {
+                        viewModel.onEvent(AddEditDictionaryEvent.EnteredSearch(it))
+                    },
+                    label = {
+                        Text(text = stringResource(R.string.add_edit_dictionary_language_dialog_search_hint))
+                    },
+                    maxLines = 1
+                )
+            }
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                itemsIndexed(Language.languagesList) { index, language ->
+                itemsIndexed(viewModel.languageList.value) { index, language ->
                     DialogLanguageItem(
                         language = language,
                         modifier = Modifier

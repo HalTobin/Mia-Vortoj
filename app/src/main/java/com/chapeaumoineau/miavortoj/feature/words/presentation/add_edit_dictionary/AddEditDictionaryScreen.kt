@@ -38,11 +38,8 @@ fun AddEditDictionaryScreen(navController: NavController,
                             viewModel: AddEditDictionaryViewModel = hiltViewModel()) {
     val titleState = viewModel.title.value
     val descriptionState = viewModel.description.value
-
     val languageSelection = viewModel.dictionaryLanguage.value
-
     val languagesState = viewModel.languages.value
-
     val dialogState = viewModel.dialog.value
 
     val scaffoldState = rememberScaffoldState()
@@ -109,7 +106,6 @@ fun AddEditDictionaryScreen(navController: NavController,
                                         )
                                     } else {
                                         viewModel.onEvent(AddEditDictionaryEvent.MoreLanguage)
-                                        //viewModel.onEvent(AddEditDictionaryEvent.MoreLanguage)
                                     }
                                 }
                         )
@@ -128,38 +124,6 @@ fun AddEditDictionaryScreen(navController: NavController,
                     )
                 }
 
-                /*
-                Dictionary.languages.forEach { language ->
-                    val languageIndex = Dictionary.languages.indexOf(language)
-                    Image(painter = painterResource(Dictionary.flags_simple[languageIndex]),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .size(50.dp)
-                            .shadow(15.dp, CircleShape)
-                            .clip(CircleShape)
-                            .border(
-                                width = 3.dp,
-                                color = if (viewModel.dictionaryLanguage.value == language) {
-                                    Color.Black
-                                } else Color.Transparent,
-                                shape = CircleShape
-                            )
-                            .clickable {
-                                scope.launch {
-                                    dictionaryBackgroundAnimated.animateTo(
-                                        targetValue = Dictionary.colors[languageIndex],
-                                        animationSpec = tween(durationMillis = 500)
-                                    )
-                                }
-                                viewModel.onEvent(
-                                    AddEditDictionaryEvent.ChangeLanguage(
-                                        languageIndex
-                                    )
-                                )
-                            }
-                    )
-                }
-                */
             }
             Spacer(modifier = Modifier.height(16.dp))
             TransparentHintTextField(text = titleState.text,

@@ -28,12 +28,12 @@ abstract class VocabularyDatabase: RoomDatabase() {
 
                 val contentValues = ContentValues()
                 contentValues.put("id", 1)
-                contentValues.put("iso", "EPO")
+                contentValues.put("iso", "DEU")
                 contentValues.put("timestamp", 1)
                 db.insert("favoriteLanguage", OnConflictStrategy.IGNORE, contentValues)
 
                 contentValues.put("id", 2)
-                contentValues.put("iso", "ENG")
+                contentValues.put("iso", "FRA")
                 contentValues.put("timestamp", 2)
                 db.insert("favoriteLanguage", OnConflictStrategy.IGNORE, contentValues)
 
@@ -43,7 +43,7 @@ abstract class VocabularyDatabase: RoomDatabase() {
                 db.insert("favoriteLanguage", OnConflictStrategy.IGNORE, contentValues)
 
                 contentValues.put("id", 4)
-                contentValues.put("iso", "FRA")
+                contentValues.put("iso", "ENG")
                 contentValues.put("timestamp", 4)
                 db.insert("favoriteLanguage", OnConflictStrategy.IGNORE, contentValues)
             }

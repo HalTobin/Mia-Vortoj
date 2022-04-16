@@ -30,6 +30,9 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
     private val _dictionaryDescription = mutableStateOf(TextFieldState(hint = ""))
     val description: State<TextFieldState> = _dictionaryDescription
 
+    private val _languageSearch = mutableStateOf("")
+    val search: State<String> = _languageSearch
+
     private val _dictionaryLanguage = mutableStateOf(Language.getDefault())
     val dictionaryLanguage: State<Language> = _dictionaryLanguage
 
@@ -41,6 +44,9 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
+
+    private val _languagesList = mutableStateOf(Language.getSortedLanguageList())
+    val languageList: State<List<Language>> = _languagesList
 
     private var nextLanguageRemoveFromFavorite: FavoriteLanguage? = null
 
@@ -84,6 +90,12 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
             }
             is AddEditDictionaryEvent.ChangeDescriptionFocus -> {
                 _dictionaryDescription.value = description.value.copy(isHintVisible = !event.focusState.isFocused && description.value.text.isBlank())
+            }
+
+            //EVENT FOR SEARCH FIELD
+            is AddEditDictionaryEvent.EnteredSearch -> {
+                _languageSearch.value = event.value
+                _languagesList.value = Language.getSortedLanguageList().filter { l -> l.name.contains(event.value) || l.iso.contains(event.value)}
             }
 
             is AddEditDictionaryEvent.ChangeLanguage -> {

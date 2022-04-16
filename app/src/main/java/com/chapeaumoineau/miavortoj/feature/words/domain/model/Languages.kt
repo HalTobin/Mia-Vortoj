@@ -18,7 +18,7 @@ data class Language(
 
     companion object {
         val languagesList = listOf(
-            Language("Aucun", "N/A", R.drawable.globe, 0xFF5AB8A4, false, 0),
+            Language("Aucun / Autre", "0_N/A", R.drawable.globe, 0xFF5AB8A4, false, 0),
             Language("Esperanto", "EPO", R.drawable.flag_simple_eo, 0xFF649964, false, 1),
             Language("English", "ENG", R.drawable.flag_simple_gb, 0xFF49946D, false, 2),
             Language("Français", "FRA", R.drawable.flag_simple_fr, 0xFF2C4594, false, 3),
@@ -58,10 +58,12 @@ data class Language(
 
         val defaultList = listOf(getDefault(), getDefault(), getDefault(), getDefault())
 
-        val DUMB_FAV = listOf("EPO", "KOR", "UKR", "EST")
-
         fun getDefault(): Language {
             return languagesList[0]
+        }
+
+        fun getSortedLanguageList(): List<Language> {
+            return languagesList.sortedBy { it.iso }
         }
 
         fun getLanguagesFromIsos(isos: List<String>): ArrayList<Language> {
