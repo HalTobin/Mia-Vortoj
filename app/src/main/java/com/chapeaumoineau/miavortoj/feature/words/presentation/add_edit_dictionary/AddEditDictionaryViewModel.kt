@@ -64,7 +64,6 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
         getFavoriteLanguagesJob?.cancel()
         getFavoriteLanguagesJob = favoriteLanguageUseCases.getFavoriteLanguages().onEach { languages ->
             _displayedLanguages.value = Language.getLanguagesFromIsos(FavoriteLanguage.getIsos(languages))
-            _dictionaryLanguage.value = Language.getLanguageByIso(languages[0].iso)
             nextLanguageRemoveFromFavorite = languages[0]
         }.launchIn(viewModelScope)
     }
@@ -105,6 +104,10 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
                 }
                 _isLanguageDialogVisible.value = false
                 _dictionaryLanguage.value = Language.getLanguageByIso(event.language)
+            }
+
+            is AddEditDictionaryEvent.DismissLanguageDialog -> {
+                _isLanguageDialogVisible.value = false
             }
 
             is AddEditDictionaryEvent.SaveDictionary -> {

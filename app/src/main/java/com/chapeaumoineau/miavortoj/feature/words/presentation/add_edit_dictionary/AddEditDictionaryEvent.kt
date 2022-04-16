@@ -10,5 +10,6 @@ sealed class AddEditDictionaryEvent{
     data class ChangeLanguage(val language: String): AddEditDictionaryEvent()
     object MoreLanguage: AddEditDictionaryEvent()
     data class OnNewLanguageSelected(val language: String): AddEditDictionaryEvent()
+    object DismissLanguageDialog: AddEditDictionaryEvent()
     object SaveDictionary: AddEditDictionaryEvent()
 }

@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun LanguageDialog(isVisible: Boolean, viewModel: AddEditDictionaryViewModel = hiltViewModel()) {
-    if(isVisible) Dialog(onDismissRequest = { /* TODO */ }){
+    if(isVisible) Dialog(onDismissRequest = { viewModel.onEvent(AddEditDictionaryEvent.DismissLanguageDialog) }){
         Column(modifier = Modifier
             .fillMaxSize()
             .background(Color.DarkGray)) {
