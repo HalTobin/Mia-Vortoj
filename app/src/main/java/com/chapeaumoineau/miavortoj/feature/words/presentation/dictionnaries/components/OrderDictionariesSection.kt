@@ -9,7 +9,7 @@ import com.chapeaumoineau.miavortoj.feature.words.domain.util.DictionaryOrder
 import com.chapeaumoineau.miavortoj.feature.words.domain.util.OrderType
 
 @Composable
-fun OrderSection(modifier: Modifier = Modifier,
+fun OrderDictionariesSection(modifier: Modifier = Modifier,
                  dictionaryOrder: DictionaryOrder = DictionaryOrder.Language(OrderType.Descending),
                  onOrderChange: (DictionaryOrder) -> Unit) {
     Column(modifier = modifier) {

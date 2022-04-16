@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
                             )
                         ) {
                             val language = it.arguments?.getInt("dictionaryLanguage") ?: -1
-                            AddEditDictionaryScreen(navController = navController, dictionaryLanguage = language)
+                            AddEditDictionaryScreen(navController = navController)
                         }
                         composable(route = Screen.WordsScreen.route + "?dictionaryId={dictionaryId}&dictionaryLanguage={dictionaryLanguage}",
                             arguments = listOf(navArgument(name = "dictionaryId") {

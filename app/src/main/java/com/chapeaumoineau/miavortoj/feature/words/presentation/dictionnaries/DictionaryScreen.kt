@@ -2,7 +2,6 @@ package com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,7 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.R
 import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.components.DictionaryItem
-import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.components.OrderSection
+import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.components.OrderDictionariesSection
 import com.chapeaumoineau.miavortoj.feature.words.presentation.util.Screen
 import kotlinx.coroutines.launch
 
@@ -55,7 +54,7 @@ fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewM
                 }
             }
             AnimatedVisibility(visible = state.isOrderSectionVisible, enter = fadeIn() + slideInVertically(), exit = fadeOut() + slideOutVertically()) {
-                OrderSection(modifier = Modifier
+                OrderDictionariesSection(modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 16.dp), dictionaryOrder = state.dictionaryOrder, onOrderChange = {
                     viewModel.onEvent(DictionariesEvent.Order(it))

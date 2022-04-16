@@ -56,10 +56,20 @@ data class Language(
             Language("Lietuvių kalba", "LTU", R.drawable.flag_simple_lt, 0xFF548171, false, 35),
         )
 
+        val defaultList = listOf(getDefault(), getDefault(), getDefault(), getDefault())
+
         val DUMB_FAV = listOf("EPO", "KOR", "UKR", "EST")
 
         fun getDefault(): Language {
             return languagesList[0]
+        }
+
+        fun getLanguagesFromIsos(isos: List<String>): ArrayList<Language> {
+            val myLanguages = arrayListOf<Language>()
+            for (iso in isos) {
+                myLanguages.add(getLanguageByIso(iso))
+            }
+            return myLanguages
         }
 
         fun getLanguageByIso(iso: String): Language {
@@ -80,13 +90,10 @@ data class Language(
         }
 
         fun getFlagsFromIsos(isos: List<String>): ArrayList<Int> {
-            println("MY_ISO : " + isos.toString())
-            var myFlags = arrayListOf<Int>()
+            val myFlags = arrayListOf<Int>()
             for (iso in isos) {
-                println("MY_ISO : " + iso)
                 myFlags.add(this.getLanguageByIso(iso).flag)
             }
-            println("MY_ISO : " + myFlags.toString())
             return myFlags
         }
 

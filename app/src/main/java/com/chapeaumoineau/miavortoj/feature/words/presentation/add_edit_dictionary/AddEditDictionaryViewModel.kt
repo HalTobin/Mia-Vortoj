@@ -6,20 +6,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chapeaumoineau.miavortoj.R
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
+import com.chapeaumoineau.miavortoj.feature.words.domain.model.FavoriteLanguage
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.InvalidDictionaryException
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.DictionaryUseCases
+import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.FavoriteLanguageUseCases
 import com.chapeaumoineau.miavortoj.feature.words.presentation.components.TextFieldState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCases: DictionaryUseCases,
+                                                     private val favoriteLanguageUseCases: FavoriteLanguageUseCases,
                                                      savedStateHandle: SavedStateHandle): ViewModel() {
 
     private val _dictionaryTitle = mutableStateOf(TextFieldState(hint = ""))
@@ -28,19 +30,23 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
     private val _dictionaryDescription = mutableStateOf(TextFieldState(hint = ""))
     val description: State<TextFieldState> = _dictionaryDescription
 
-    private val _dictionaryLanguageIso = mutableStateOf(Language.getDefault().iso)
-    val dictionaryLanguageIso: State<String> = _dictionaryLanguageIso
+    private val _dictionaryLanguage = mutableStateOf(Language.getDefault())
+    val dictionaryLanguage: State<Language> = _dictionaryLanguage
 
-    private val _dictionaryLanguageColor = mutableStateOf(Language.getDefault().getColor())
-    val dictionaryLanguageColor: State<Color> = _dictionaryLanguageColor
+    private val _displayedLanguages = mutableStateOf(Language.defaultList)
+    val languages: State<List<Language>> = _displayedLanguages
 
-    private val _lastFlags = mutableStateOf(Language.getFlagsFromIsos(Language.DUMB_FAV))
-    val flags: State<List<Int>> = _lastFlags
+    private val _isLanguageDialogVisible = mutableStateOf(false)
+    val dialog: State<Boolean> = _isLanguageDialogVisible
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
+    private var nextLanguageRemoveFromFavorite: FavoriteLanguage? = null
+
     private var currentDictionaryId: Int? = null
+
+    private var getFavoriteLanguagesJob: Job? = null
 
     init {
         savedStateHandle.get<Int>("dictionaryId")?.let {dictionaryId ->
@@ -50,13 +56,17 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
                         currentDictionaryId = dictionary.id
                         _dictionaryTitle.value = title.value.copy(text = dictionary.title, isHintVisible = false)
                         _dictionaryDescription.value = description.value.copy(text = dictionary.description, isHintVisible = false)
-                        _dictionaryLanguageIso.value = dictionary.languageIso
-                        _dictionaryLanguageColor.value = Language.getLanguageByIso(dictionary.languageIso).getColor()
-                        _lastFlags.value = Language.getFlagsFromIsos(Language.DUMB_FAV)
+                        _dictionaryLanguage.value = Language.getLanguageByIso(dictionary.languageIso)
                     }
                 }
             }
         }
+        getFavoriteLanguagesJob?.cancel()
+        getFavoriteLanguagesJob = favoriteLanguageUseCases.getFavoriteLanguages().onEach { languages ->
+            _displayedLanguages.value = Language.getLanguagesFromIsos(FavoriteLanguage.getIsos(languages))
+            _dictionaryLanguage.value = Language.getLanguageByIso(languages[0].iso)
+            nextLanguageRemoveFromFavorite = languages[0]
+        }.launchIn(viewModelScope)
     }
 
     fun onEvent(event: AddEditDictionaryEvent) {
@@ -78,18 +88,29 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
             }
 
             is AddEditDictionaryEvent.ChangeLanguage -> {
-                _dictionaryLanguageIso.value = event.language
-                _dictionaryLanguageColor.value = Language.getLanguageByIso(event.language).getColor()
+                _dictionaryLanguage.value = Language.getLanguageByIso(event.language)
             }
 
             is AddEditDictionaryEvent.MoreLanguage -> {
-                /* TODO */
+                _isLanguageDialogVisible.value = true
+            }
+
+            is AddEditDictionaryEvent.OnNewLanguageSelected -> {
+                if(!_displayedLanguages.value.contains(Language.getLanguageByIso(event.language)))
+                viewModelScope.launch {
+                    favoriteLanguageUseCases.addFavoriteLanguage(FavoriteLanguage(event.language, System.currentTimeMillis()))
+                    nextLanguageRemoveFromFavorite?.let {
+                        favoriteLanguageUseCases.deleteFavoriteLanguage(it)
+                    }
+                }
+                _isLanguageDialogVisible.value = false
+                _dictionaryLanguage.value = Language.getLanguageByIso(event.language)
             }
 
             is AddEditDictionaryEvent.SaveDictionary -> {
                 viewModelScope.launch {
                     try {
-                        dictionaryUseCases.addDictionary(Dictionary(title = title.value.text, description = description.value.text, languageIso = dictionaryLanguageIso.value, id = currentDictionaryId))
+                        dictionaryUseCases.addDictionary(Dictionary(title = title.value.text, description = description.value.text, languageIso = dictionaryLanguage.value.iso, id = currentDictionaryId))
                         _eventFlow.emit(UiEvent.SaveDictionary)
                     } catch(e: InvalidDictionaryException) {
                         _eventFlow.emit(UiEvent.ShowSnackBar(message = e.message ?: "Couldn't saved dictionary"))

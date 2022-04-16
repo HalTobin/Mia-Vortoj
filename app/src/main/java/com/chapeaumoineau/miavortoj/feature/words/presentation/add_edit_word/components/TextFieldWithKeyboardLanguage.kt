@@ -1,4 +1,4 @@
-package com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.components
+package com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,7 +16,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 
 @Composable
-fun TransparentHintTextField(text: String,
+fun TextFieldWithKeyboardLanguage(text: String,
                              hint: String,
                              modifier: Modifier = Modifier,
                              isHintVisible: Boolean = true,

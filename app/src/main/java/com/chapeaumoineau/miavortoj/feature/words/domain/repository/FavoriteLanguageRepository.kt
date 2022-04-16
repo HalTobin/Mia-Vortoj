@@ -9,8 +9,8 @@ interface FavoriteLanguageRepository {
 
     suspend fun getFavoriteLanguageById(id: Int): FavoriteLanguage?
 
-    suspend fun insertFavoriteLanguage(word: FavoriteLanguage)
+    suspend fun insertFavoriteLanguage(favoriteLanguage: FavoriteLanguage)
 
-    suspend fun deleteFavoriteLanguage(word: FavoriteLanguage)
+    suspend fun deleteFavoriteLanguage(favoriteLanguage: FavoriteLanguage)
 
 }

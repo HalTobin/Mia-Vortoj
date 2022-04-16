@@ -24,33 +24,25 @@ fun DialogLanguageItem(language: Language,
     Box(modifier = modifier) {
         Column(modifier = Modifier
             .fillMaxSize()
-            .padding(start = 16.dp,
-                top = 4.dp,
-                bottom = 4.dp)) {
+            .align(Alignment.Center)
+            .padding(start = 16.dp)) {
             Text(text = language.name,
                 style = MaterialTheme.typography.subtitle1,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colors.onSurface,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
-
         }
 
         Column(modifier = Modifier
-            .padding(end = 16.dp)
+            .padding(end = 16.dp, bottom = 4.dp, top = 4.dp, start = 8.dp)
             .align(Alignment.CenterEnd)) {
             Image(painter = painterResource(language.flag),
                 contentDescription = "",
                 modifier = Modifier
-                    .size(50.dp)
+                    .size(40.dp)
                     .shadow(15.dp, CircleShape)
                     .clip(CircleShape)
-                    .border(
-                        width = 3.dp,
-                        color = Color.Black,
-                        shape = CircleShape
-                    )
             )
         }
     }

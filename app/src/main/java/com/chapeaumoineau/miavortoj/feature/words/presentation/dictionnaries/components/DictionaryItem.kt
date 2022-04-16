@@ -49,7 +49,11 @@ fun DictionaryItem(dictionary: Dictionary,
             .fillMaxSize()
             .padding(16.dp)
             .padding(end = 32.dp)) {
-            Text(text = dictionary.title, style = MaterialTheme.typography.h6, color = MaterialTheme.colors.onSurface, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(text = dictionary.title,
+                style = MaterialTheme.typography.h6,
+                color = MaterialTheme.colors.onSurface,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis)
         }
 
         Column(modifier = Modifier

@@ -1,4 +1,4 @@
-package com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.components
+package com.chapeaumoineau.miavortoj.feature.words.presentation.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,8 +10,6 @@ import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun TransparentHintTextField(text: String,

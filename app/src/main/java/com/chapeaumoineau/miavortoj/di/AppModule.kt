@@ -17,6 +17,7 @@ import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.dictionary.Get
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.favorite_language.AddFavoriteLanguageUseCase
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.favorite_language.DeleteFavoriteLanguageUseCase
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.favorite_language.GetFavoriteLanguageUseCase
+import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.favorite_language.GetFavoriteLanguagesUseCase
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.word.*
 import dagger.Module
 import dagger.Provides
@@ -31,7 +32,9 @@ class AppModule {
     @Provides
     @Singleton
     fun provideVocabularyDatabase(app: Application): VocabularyDatabase {
-        return Room.databaseBuilder(app, VocabularyDatabase::class.java, VocabularyDatabase.DATABASE_NAME).build()
+        return Room.databaseBuilder(app,
+            VocabularyDatabase::class.java,
+            VocabularyDatabase.DATABASE_NAME).addCallback(VocabularyDatabase.prepopulate).build()
     }
 
     @Provides
@@ -67,6 +70,6 @@ class AppModule {
     @Provides
     @Singleton
     fun provideFavoriteLanguageUseCases(repository: FavoriteLanguageRepository): FavoriteLanguageUseCases {
-        return FavoriteLanguageUseCases(getFavoriteLanguages = GetFavoriteLanguageUseCase(repository), getFavoriteLanguage = GetFavoriteLanguageUseCase(repository), deleteFavoriteLanguage = DeleteFavoriteLanguageUseCase(repository), addFavoriteLanguage = AddFavoriteLanguageUseCase(repository))
+        return FavoriteLanguageUseCases(getFavoriteLanguages = GetFavoriteLanguagesUseCase(repository), getFavoriteLanguage = GetFavoriteLanguageUseCase(repository), deleteFavoriteLanguage = DeleteFavoriteLanguageUseCase(repository), addFavoriteLanguage = AddFavoriteLanguageUseCase(repository))
     }
 }

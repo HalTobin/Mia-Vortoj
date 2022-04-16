@@ -10,7 +10,7 @@ interface FavoriteLanguageDao {
     @Query("SELECT * FROM favoriteLanguage")
     fun getFavoriteLanguages(): Flow<List<FavoriteLanguage>>
 
-    @Query("SELECT * FROM word WHERE id = :id")
+    @Query("SELECT * FROM favoriteLanguage WHERE id = :id")
     suspend fun getFavoriteLanguageById(id: Int): FavoriteLanguage?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

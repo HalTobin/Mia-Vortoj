@@ -28,25 +28,27 @@ import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.R
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
-import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.components.TransparentHintTextField
+import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.components.LanguageDialog
+import com.chapeaumoineau.miavortoj.feature.words.presentation.components.TransparentHintTextField
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @Composable
 fun AddEditDictionaryScreen(navController: NavController,
-                            dictionaryLanguage: Int,
                             viewModel: AddEditDictionaryViewModel = hiltViewModel()) {
     val titleState = viewModel.title.value
     val descriptionState = viewModel.description.value
 
-    val languageIsoState = viewModel.dictionaryLanguageIso.value
-    val colorState = viewModel.dictionaryLanguageColor.value
-    val flagsState = viewModel.flags.value
+    val languageSelection = viewModel.dictionaryLanguage.value
+
+    val languagesState = viewModel.languages.value
+
+    val dialogState = viewModel.dialog.value
 
     val scaffoldState = rememberScaffoldState()
 
     val dictionaryBackgroundAnimated = remember {
-        Animatable(colorState)
+        Animatable(languageSelection.getColor())
     }
     val scope = rememberCoroutineScope()
 
@@ -64,6 +66,7 @@ fun AddEditDictionaryScreen(navController: NavController,
     }
 
     Scaffold(floatingActionButton = {
+        LanguageDialog(isVisible = dialogState)
         FloatingActionButton(onClick = { viewModel.onEvent(AddEditDictionaryEvent.SaveDictionary) }, backgroundColor = MaterialTheme.colors.primary) {
             Icon(imageVector = Icons.Default.Save, contentDescription = "Save dictionary")
         }
@@ -79,8 +82,8 @@ fun AddEditDictionaryScreen(navController: NavController,
 
                 for (c in 0..4) {
                     if(c!=4) {
-                        val myLanguage = Language.getLanguageByIso(Language.DUMB_FAV[c])
-                        Image(painter = painterResource(flagsState[c]),
+                        val myLanguage = languagesState[c]
+                        Image(painter = painterResource(myLanguage.flag),
                             contentDescription = "",
                             modifier = Modifier
                                 .size(50.dp)
@@ -88,7 +91,7 @@ fun AddEditDictionaryScreen(navController: NavController,
                                 .clip(CircleShape)
                                 .border(
                                     width = 3.dp,
-                                    color = if (viewModel.dictionaryLanguageIso.value == myLanguage.iso) {
+                                    color = if (viewModel.dictionaryLanguage.value.iso == myLanguage.iso) {
                                         Color.Black
                                     } else Color.Transparent,
                                     shape = CircleShape
@@ -100,14 +103,13 @@ fun AddEditDictionaryScreen(navController: NavController,
                                             animationSpec = tween(durationMillis = 500)
                                         )
                                     }
-                                    if(c!=4) {
+                                    if (c != 4) {
                                         viewModel.onEvent(
-                                            AddEditDictionaryEvent.ChangeLanguage(
-                                                myLanguage.iso
-                                            )
+                                            AddEditDictionaryEvent.ChangeLanguage(myLanguage.iso)
                                         )
                                     } else {
                                         viewModel.onEvent(AddEditDictionaryEvent.MoreLanguage)
+                                        //viewModel.onEvent(AddEditDictionaryEvent.MoreLanguage)
                                     }
                                 }
                         )
@@ -185,5 +187,6 @@ fun AddEditDictionaryScreen(navController: NavController,
                 singleLine = true,
                 textStyle = MaterialTheme.typography.h6,
                 modifier = Modifier.fillMaxHeight())
-        }    }
+        }
+    }
 }

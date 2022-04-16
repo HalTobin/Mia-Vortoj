@@ -15,7 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.R
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
-import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.components.TransparentHintTextField
+import com.chapeaumoineau.miavortoj.feature.words.presentation.components.TransparentHintTextField
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable

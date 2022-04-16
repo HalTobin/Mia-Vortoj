@@ -9,5 +9,6 @@ sealed class AddEditDictionaryEvent{
     data class ChangeDescriptionFocus(val focusState: FocusState): AddEditDictionaryEvent()
     data class ChangeLanguage(val language: String): AddEditDictionaryEvent()
     object MoreLanguage: AddEditDictionaryEvent()
+    data class OnNewLanguageSelected(val language: String): AddEditDictionaryEvent()
     object SaveDictionary: AddEditDictionaryEvent()
 }
