@@ -84,12 +84,15 @@ fun AddEditWordScreen(navController: NavController,
             Spacer(modifier = Modifier.height(16.dp))
 
             Row() {
-                Card(modifier = Modifier.weight(1f), onClick = { AddEditWordEvent.MoreCategory }) {
+                Card(modifier = Modifier.weight(1f), onClick = { viewModel.onEvent(AddEditWordEvent.MoreCategory) }) {
+                    Spacer(modifier = Modifier.height(16.dp))
                     Row() {
-                        Text(text = categoryState.title)
-                        Icon(imageVector = ImageVector.vectorResource(categoryState.icon),
+                        Text(modifier = Modifier.padding(8.dp), text = categoryState.title)
+                        Icon(modifier = Modifier.padding(),
+                            imageVector = ImageVector.vectorResource(categoryState.icon),
                             contentDescription = "")
                     }
+                    Spacer(modifier = Modifier.height(16.dp))
                 }
             }
 

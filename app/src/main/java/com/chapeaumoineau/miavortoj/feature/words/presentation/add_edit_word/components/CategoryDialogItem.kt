@@ -42,7 +42,6 @@ fun CategoryDialogItem(category: Category,
                 contentDescription = "",
                 modifier = Modifier
                     .size(40.dp)
-                    .shadow(15.dp, CircleShape)
                     .clip(CircleShape)
             )
         }

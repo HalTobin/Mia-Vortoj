@@ -22,13 +22,13 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
                                                private val dictionaryUseCases: DictionaryUseCases,
                                                savedStateHandle: SavedStateHandle): ViewModel() {
 
-    private val _wordSource = mutableStateOf(TextFieldState(hint = "Enter title..."))
+    private val _wordSource = mutableStateOf(TextFieldState(hint = ""))
     val source: State<TextFieldState> = _wordSource
 
-    private val _wordTarget = mutableStateOf(TextFieldState(hint = "Enter title..."))
+    private val _wordTarget = mutableStateOf(TextFieldState(hint = ""))
     val target: State<TextFieldState> = _wordTarget
 
-    private val _wordNotes = mutableStateOf(TextFieldState(hint = "Enter a description..."))
+    private val _wordNotes = mutableStateOf(TextFieldState(hint = ""))
     val notes: State<TextFieldState> = _wordNotes
 
     private val _wordCategory = mutableStateOf(Category.getDefaultCategory())
@@ -107,6 +107,7 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
             }
 
             is AddEditWordEvent.MoreCategory -> {
+                println("MORE_CATEGORY")
                 _isCategoryDialogVisible.value = true
             }
 
