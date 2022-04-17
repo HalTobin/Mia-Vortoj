@@ -26,7 +26,8 @@ fun CategoryDialog(isVisible: Boolean, viewModel: AddEditWordViewModel = hiltVie
             .fillMaxSize()
             .background(Color.DarkGray)) {
             Row(modifier = Modifier.fillMaxWidth()) {
-                TextField(value = viewModel.search.value,
+                TextField(modifier = Modifier.fillMaxWidth(),
+                    value = viewModel.search.value,
                     onValueChange = {
                         viewModel.onEvent(AddEditWordEvent.EnteredSearch(it))
                     },

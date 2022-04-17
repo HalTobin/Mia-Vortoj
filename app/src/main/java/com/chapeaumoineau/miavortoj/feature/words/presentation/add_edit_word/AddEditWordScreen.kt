@@ -84,17 +84,21 @@ fun AddEditWordScreen(navController: NavController,
             Spacer(modifier = Modifier.height(16.dp))
 
             Row() {
-                Card(modifier = Modifier.weight(1f), onClick = { viewModel.onEvent(AddEditWordEvent.MoreCategory) }) {
+                Card(modifier = Modifier.weight(1f),
+                    onClick = { viewModel.onEvent(AddEditWordEvent.MoreCategory) }) {
                     Spacer(modifier = Modifier.height(16.dp))
                     Row() {
-                        Text(modifier = Modifier.padding(8.dp), text = categoryState.title)
-                        Icon(modifier = Modifier.padding(),
+                        Text(modifier = Modifier.padding(8.dp).align(Alignment.CenterVertically),
+                            text = categoryState.title)
+                        Icon(modifier = Modifier.padding().align(Alignment.CenterVertically),
                             imageVector = ImageVector.vectorResource(categoryState.icon),
                             contentDescription = "")
                     }
                     Spacer(modifier = Modifier.height(16.dp))
                 }
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
 
             Box(modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally)) {
                 TransparentHintTextField(text = targetState.text,

@@ -40,7 +40,8 @@ fun LanguageDialog(isVisible: Boolean, viewModel: AddEditDictionaryViewModel = h
             .fillMaxSize()
             .background(Color.DarkGray)) {
             Row(modifier = Modifier.fillMaxWidth()) {
-                TextField(value = viewModel.search.value,
+                TextField(modifier = Modifier.fillMaxWidth(),
+                    value = viewModel.search.value,
                     onValueChange = {
                         viewModel.onEvent(AddEditDictionaryEvent.EnteredSearch(it))
                     },
@@ -50,7 +51,7 @@ fun LanguageDialog(isVisible: Boolean, viewModel: AddEditDictionaryViewModel = h
                     maxLines = 1
                 )
             }
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
+            LazyColumn(modifier = Modifier.fillMaxWidth()) {
                 itemsIndexed(viewModel.languageList.value) { index, language ->
                     LanguageDialogItem(
                         language = language,

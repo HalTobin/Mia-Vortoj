@@ -148,7 +148,7 @@ fun AddEditDictionaryScreen(navController: NavController,
                     viewModel.onEvent(AddEditDictionaryEvent.ChangeDescriptionFocus(it))
                 },
                 isHintVisible = descriptionState.isHintVisible,
-                singleLine = true,
+                singleLine = false,
                 textStyle = MaterialTheme.typography.h6,
                 modifier = Modifier.fillMaxHeight())
         }
