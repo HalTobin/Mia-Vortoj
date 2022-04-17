@@ -35,5 +35,26 @@ data class Category(
             Category("Sport", R.drawable.theme_sport, 24),
             Category("Country & Language", R.drawable.theme_country_language, 25),
         )
+
+        fun getDefaultCategory(): Category {
+            return defaultCategories[0]
+        }
+
+        fun getCategoryById(id: Int): Category {
+            var selectCategory: Category = defaultCategories[0]
+            var keepLooking = true
+            var index = 0
+
+            while(keepLooking) {
+                if(defaultCategories[index].id == id) {
+                    keepLooking = false
+                    selectCategory = defaultCategories[index]
+                }
+                if(index >= Language.languagesList.size -1) keepLooking = false
+                else index++
+            }
+
+            return selectCategory
+        }
     }
 }

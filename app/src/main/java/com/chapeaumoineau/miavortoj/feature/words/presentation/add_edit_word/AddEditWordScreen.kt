@@ -2,6 +2,7 @@ package com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Save
@@ -10,7 +11,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -21,6 +26,7 @@ import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.com
 import com.chapeaumoineau.miavortoj.feature.words.presentation.components.TransparentHintTextField
 import kotlinx.coroutines.flow.collectLatest
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun AddEditWordScreen(navController: NavController,
                             viewModel: AddEditWordViewModel = hiltViewModel()) {
@@ -30,6 +36,8 @@ fun AddEditWordScreen(navController: NavController,
     val colorState = viewModel.color.value
 
     val dialogState = viewModel.dialog.value
+
+    val categoryState = viewModel.category.value
 
     val scaffoldState = rememberScaffoldState()
 
@@ -75,7 +83,15 @@ fun AddEditWordScreen(navController: NavController,
 
             Spacer(modifier = Modifier.height(16.dp))
 
-
+            Row() {
+                Card(modifier = Modifier.weight(1f), onClick = { AddEditWordEvent.MoreCategory }) {
+                    Row() {
+                        Text(text = categoryState.title)
+                        Icon(imageVector = ImageVector.vectorResource(categoryState.icon),
+                            contentDescription = "")
+                    }
+                }
+            }
 
             Box(modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally)) {
                 TransparentHintTextField(text = targetState.text,
@@ -104,5 +120,6 @@ fun AddEditWordScreen(navController: NavController,
                 singleLine = false,
                 textStyle = MaterialTheme.typography.subtitle1,
                 modifier = Modifier.fillMaxHeight())
-        }    }
+        }
+    }
 }

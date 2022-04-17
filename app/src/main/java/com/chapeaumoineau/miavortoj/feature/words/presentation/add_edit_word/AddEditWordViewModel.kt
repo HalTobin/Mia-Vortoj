@@ -31,8 +31,8 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
     private val _wordNotes = mutableStateOf(TextFieldState(hint = "Enter a description..."))
     val notes: State<TextFieldState> = _wordNotes
 
-    private val _wordCategoryId = mutableStateOf(0)
-    val category: State<Int> = _wordCategoryId
+    private val _wordCategory = mutableStateOf(Category.getDefaultCategory())
+    val category: State<Category> = _wordCategory
 
     private val _color = mutableStateOf(Language.getDefault().getColor())
     val color: State<Color> = _color
@@ -72,7 +72,7 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
                             target.value.copy(text = word.targetWord, isHintVisible = false)
                         _wordNotes.value =
                             notes.value.copy(text = word.notes, isHintVisible = false)
-                        _wordCategoryId.value =
+                        _wordCategory.value =
                             category.value
                     }
                 }
@@ -112,7 +112,7 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
 
             is AddEditWordEvent.OnNewCategorySelected -> {
                 _isCategoryDialogVisible.value = false
-                _wordCategoryId.value = event.category
+                _wordCategory.value = Category.getCategoryById(event.category)
             }
 
             is AddEditWordEvent.DismissCategoryDialog -> {

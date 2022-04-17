@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.chapeaumoineau.miavortoj.R
+import com.chapeaumoineau.miavortoj.feature.words.domain.model.Category
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryEvent
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.AddEditWordEvent
@@ -49,7 +50,7 @@ fun CategoryDialog(isVisible: Boolean, viewModel: AddEditWordViewModel = hiltVie
                                 )
                             }
                     )
-                    if (index < Language.languagesList.lastIndex)
+                    if (index < Category.defaultCategories.lastIndex)
                         Divider(color = Color.Black, thickness = 1.dp)
                 }
             }
