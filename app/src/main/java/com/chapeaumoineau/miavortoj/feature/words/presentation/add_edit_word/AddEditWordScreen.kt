@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Save
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -15,6 +16,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.R
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
+import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.components.LanguageDialog
+import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.components.CategoryDialog
 import com.chapeaumoineau.miavortoj.feature.words.presentation.components.TransparentHintTextField
 import kotlinx.coroutines.flow.collectLatest
 
@@ -25,6 +28,8 @@ fun AddEditWordScreen(navController: NavController,
     val targetState = viewModel.target.value
     val notesState = viewModel.notes.value
     val colorState = viewModel.color.value
+
+    val dialogState = viewModel.dialog.value
 
     val scaffoldState = rememberScaffoldState()
 
@@ -44,7 +49,8 @@ fun AddEditWordScreen(navController: NavController,
     }
 
     Scaffold(floatingActionButton = {
-        FloatingActionButton(onClick = { viewModel.onEvent(AddEditWordEvent.SaveDictionary) }, backgroundColor = MaterialTheme.colors.primary) {
+        CategoryDialog(isVisible = dialogState)
+        FloatingActionButton(onClick = { viewModel.onEvent(AddEditWordEvent.SaveWord) }, backgroundColor = MaterialTheme.colors.primary) {
             Icon(imageVector = Icons.Default.Save, contentDescription = "Save dictionary")
         }
     },
@@ -67,17 +73,23 @@ fun AddEditWordScreen(navController: NavController,
                 singleLine = true,
                 textStyle = MaterialTheme.typography.h5)
 
-            TransparentHintTextField(text = targetState.text,
-                hint = stringResource(R.string.add_edit_word_target_hint),
-                onValueChange = {
-                    viewModel.onEvent(AddEditWordEvent.EnteredTarget(it))
-                },
-                onFocusChange = {
-                    viewModel.onEvent(AddEditWordEvent.ChangeTargetFocus(it))
-                },
-                isHintVisible = targetState.isHintVisible,
-                singleLine = true,
-                textStyle = MaterialTheme.typography.h6)
+            Spacer(modifier = Modifier.height(16.dp))
+
+
+
+            Box(modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally)) {
+                TransparentHintTextField(text = targetState.text,
+                    hint = stringResource(R.string.add_edit_word_target_hint),
+                    onValueChange = {
+                        viewModel.onEvent(AddEditWordEvent.EnteredTarget(it))
+                    },
+                    onFocusChange = {
+                        viewModel.onEvent(AddEditWordEvent.ChangeTargetFocus(it))
+                    },
+                    isHintVisible = targetState.isHintVisible,
+                    singleLine = true,
+                    textStyle = MaterialTheme.typography.h6)
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
             TransparentHintTextField(text = notesState.text,
@@ -89,7 +101,7 @@ fun AddEditWordScreen(navController: NavController,
                     viewModel.onEvent(AddEditWordEvent.ChangeDescriptionFocus(it))
                 },
                 isHintVisible = notesState.isHintVisible,
-                singleLine = true,
+                singleLine = false,
                 textStyle = MaterialTheme.typography.subtitle1,
                 modifier = Modifier.fillMaxHeight())
         }    }

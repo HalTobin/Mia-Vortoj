@@ -6,11 +6,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chapeaumoineau.miavortoj.feature.words.domain.model.InvalidDictionaryException
-import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
-import com.chapeaumoineau.miavortoj.feature.words.domain.model.Word
+import com.chapeaumoineau.miavortoj.feature.words.domain.model.*
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.DictionaryUseCases
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.WordUseCases
+import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryEvent
 import com.chapeaumoineau.miavortoj.feature.words.presentation.components.TextFieldState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -32,8 +31,20 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
     private val _wordNotes = mutableStateOf(TextFieldState(hint = "Enter a description..."))
     val notes: State<TextFieldState> = _wordNotes
 
+    private val _wordCategoryId = mutableStateOf(0)
+    val category: State<Int> = _wordCategoryId
+
     private val _color = mutableStateOf(Language.getDefault().getColor())
     val color: State<Color> = _color
+
+    private val _isCategoryDialogVisible = mutableStateOf(false)
+    val dialog: State<Boolean> = _isCategoryDialogVisible
+
+    private val _categorySearch = mutableStateOf("")
+    val search: State<String> = _categorySearch
+
+    private val _categoryList = mutableStateOf(Category.defaultCategories)
+    val categories: State<List<Category>> = _categoryList
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
@@ -61,6 +72,8 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
                             target.value.copy(text = word.targetWord, isHintVisible = false)
                         _wordNotes.value =
                             notes.value.copy(text = word.notes, isHintVisible = false)
+                        _wordCategoryId.value =
+                            category.value
                     }
                 }
             }
@@ -93,7 +106,20 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
                 _wordNotes.value = notes.value.copy(isHintVisible = !event.focusState.isFocused && notes.value.text.isBlank())
             }
 
-            is AddEditWordEvent.SaveDictionary -> {
+            is AddEditWordEvent.MoreCategory -> {
+                _isCategoryDialogVisible.value = true
+            }
+
+            is AddEditWordEvent.OnNewCategorySelected -> {
+                _isCategoryDialogVisible.value = false
+                _wordCategoryId.value = event.category
+            }
+
+            is AddEditWordEvent.DismissCategoryDialog -> {
+                _isCategoryDialogVisible.value = false
+            }
+
+            is AddEditWordEvent.SaveWord -> {
                 viewModelScope.launch {
                     try {
                         wordUseCases.addWord(Word(sourceWord = source.value.text,
