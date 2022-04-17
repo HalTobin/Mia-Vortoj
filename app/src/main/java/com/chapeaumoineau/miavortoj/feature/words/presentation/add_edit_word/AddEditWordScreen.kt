@@ -3,6 +3,7 @@ package com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Save
@@ -85,7 +86,9 @@ fun AddEditWordScreen(navController: NavController,
 
             Row() {
                 Card(modifier = Modifier.weight(1f),
-                    onClick = { viewModel.onEvent(AddEditWordEvent.MoreCategory) }) {
+                    onClick = { viewModel.onEvent(AddEditWordEvent.MoreCategory) },
+                    shape = RoundedCornerShape(10.dp)
+                ) {
                     Spacer(modifier = Modifier.height(16.dp))
                     Row() {
                         Text(modifier = Modifier.padding(8.dp).align(Alignment.CenterVertically),
