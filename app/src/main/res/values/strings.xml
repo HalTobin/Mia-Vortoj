@@ -6,7 +6,7 @@
     <string name="add_edit_dictionary_screen_description_hint">Entrez une description...</string>
     <string name="add_edit_dictionary_language_dialog_search_hint">Recherche</string>
 
-
-    <string name="add_edit_word_source_hint">Mot</string>
+    <string name="add_edit_word_source_hint">Mot Source</string>
     <string name="add_edit_word_target_hint">Palabra</string>
+    <string name="add_edit_word_emote_hint">COURT</string>
 </resources>

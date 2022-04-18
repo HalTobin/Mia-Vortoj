@@ -11,6 +11,7 @@ data class Word (
     val notes: String,
     val mastery: Int,
     val timestamp: Long,
+    val lastTestTimestamp: Long,
     val dictionaryId: Int,
     val themeId: Int,
     @PrimaryKey val id: Int? = null

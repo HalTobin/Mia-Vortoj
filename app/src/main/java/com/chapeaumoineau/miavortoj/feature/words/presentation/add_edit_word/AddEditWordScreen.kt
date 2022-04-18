@@ -34,10 +34,12 @@ fun AddEditWordScreen(navController: NavController,
     val sourceState = viewModel.source.value
     val targetState = viewModel.target.value
     val notesState = viewModel.notes.value
+    val emoteState = viewModel.emote.value
     val colorState = viewModel.color.value
 
-    val dialogState = viewModel.dialog.value
+    val targetHintState = viewModel.targetHint.value
 
+    val dialogState = viewModel.dialog.value
     val categoryState = viewModel.category.value
 
     val scaffoldState = rememberScaffoldState()
@@ -85,15 +87,32 @@ fun AddEditWordScreen(navController: NavController,
             Spacer(modifier = Modifier.height(16.dp))
 
             Row() {
+                Column(modifier = Modifier.weight(1f)) {
+                    TransparentHintTextField(text = emoteState.text,
+                        hint = stringResource(R.string.add_edit_word_emote_hint),
+                        onValueChange = {
+                            viewModel.onEvent(AddEditWordEvent.EnteredEmote(it))
+                        },
+                        onFocusChange = {
+                            viewModel.onEvent(AddEditWordEvent.ChangeEmoteFocus(it))
+                        },
+                        isHintVisible = emoteState.isHintVisible,
+                        singleLine = true,
+                        textStyle = MaterialTheme.typography.h5)
+                }
                 Card(modifier = Modifier.weight(1f),
                     onClick = { viewModel.onEvent(AddEditWordEvent.MoreCategory) },
                     shape = RoundedCornerShape(10.dp)
                 ) {
                     Spacer(modifier = Modifier.height(16.dp))
                     Row() {
-                        Text(modifier = Modifier.padding(8.dp).align(Alignment.CenterVertically),
+                        Text(modifier = Modifier
+                            .padding(8.dp)
+                            .align(Alignment.CenterVertically),
                             text = categoryState.title)
-                        Icon(modifier = Modifier.padding().align(Alignment.CenterVertically),
+                        Icon(modifier = Modifier
+                            .padding()
+                            .align(Alignment.CenterVertically),
                             imageVector = ImageVector.vectorResource(categoryState.icon),
                             contentDescription = "")
                     }
@@ -103,9 +122,11 @@ fun AddEditWordScreen(navController: NavController,
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Box(modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally)) {
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.CenterHorizontally)) {
                 TransparentHintTextField(text = targetState.text,
-                    hint = stringResource(R.string.add_edit_word_target_hint),
+                    hint = targetHintState,
                     onValueChange = {
                         viewModel.onEvent(AddEditWordEvent.EnteredTarget(it))
                     },

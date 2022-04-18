@@ -28,11 +28,17 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
     private val _wordTarget = mutableStateOf(TextFieldState(hint = ""))
     val target: State<TextFieldState> = _wordTarget
 
+    private val _wordEmote = mutableStateOf(TextFieldState(hint = ""))
+    val emote: State<TextFieldState> = _wordEmote
+
     private val _wordNotes = mutableStateOf(TextFieldState(hint = ""))
     val notes: State<TextFieldState> = _wordNotes
 
     private val _wordCategory = mutableStateOf(Category.getDefaultCategory())
     val category: State<Category> = _wordCategory
+
+    private val _wordTargetHint = mutableStateOf("")
+    val targetHint: State<String> = _wordTargetHint
 
     private val _color = mutableStateOf(Language.getDefault().getColor())
     val color: State<Color> = _color
@@ -58,6 +64,7 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
                 viewModelScope.launch {
                     dictionaryUseCases.getDictionary(dictionaryId)?.also { dictionary ->
                         _color.value = Language.getLanguageByIso(dictionary.languageIso).getColor()
+                        _wordTargetHint.value = Language.getLanguageByIso(dictionary.languageIso).name
                     }
                 }
             }
@@ -70,6 +77,8 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
                             source.value.copy(text = word.sourceWord, isHintVisible = false)
                         _wordTarget.value =
                             target.value.copy(text = word.targetWord, isHintVisible = false)
+                        _wordEmote.value =
+                            emote.value.copy(text = word.emote, isHintVisible = false)
                         _wordNotes.value =
                             notes.value.copy(text = word.notes, isHintVisible = false)
                         _wordCategory.value =
@@ -106,8 +115,16 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
                 _wordNotes.value = notes.value.copy(isHintVisible = !event.focusState.isFocused && notes.value.text.isBlank())
             }
 
+            //EVENT FOR EMOTE TEXT INPUT
+            is AddEditWordEvent.EnteredEmote -> {
+                _wordEmote.value = emote.value.copy(text = event.value)
+            }
+            is AddEditWordEvent.ChangeEmoteFocus -> {
+                _wordEmote.value = emote.value.copy(isHintVisible = !event.focusState.isFocused && emote.value.text.isBlank())
+            }
+
+            //EVENT FOR CATEGORY SELECTION
             is AddEditWordEvent.MoreCategory -> {
-                println("MORE_CATEGORY")
                 _isCategoryDialogVisible.value = true
             }
 
@@ -125,12 +142,13 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
                     try {
                         wordUseCases.addWord(Word(sourceWord = source.value.text,
                             targetWord = target.value.text,
-                            emote = "",
+                            emote = emote.value.text,
                             notes = notes.value.text,
-                            themeId = 0,
+                            themeId = category.value.id,
                             mastery = 0,
                             dictionaryId = currentDictionaryId!!,
-                            timestamp = System.currentTimeMillis()))
+                            timestamp = System.currentTimeMillis(),
+                            lastTestTimestamp = System.currentTimeMillis()))
                         _eventFlow.emit(UiEvent.SaveWord)
                     } catch(e: InvalidDictionaryException) {
                         _eventFlow.emit(UiEvent.ShowSnackBar(message = e.message ?: "Couldn't saved word"))
