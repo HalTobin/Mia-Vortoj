@@ -59,7 +59,7 @@ fun WordsScreen(navController: NavController,
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically) {
                 Image(painter = painterResource(flag),
-                    contentDescription = "",
+                    contentDescription = "Flag",
                     modifier = Modifier
                         .size(65.dp)
                         .shadow(15.dp, CircleShape)
@@ -96,7 +96,7 @@ fun WordsScreen(navController: NavController,
                             .fillMaxWidth()
                             .combinedClickable(
                                 onClick = {
-                                    //navController.navigate(Screen.WordsScreen.route + "?id=${word.id}&dictionaryId=${word.dictionaryId}&dictionaryLanguage=${dictionaryLanguage}")
+                                    navController.navigate(Screen.WordCardScreen.route + "?wordId=${word.id}")
                                 },
                                 onLongClick = {
                                     viewModel.onEvent(WordsEvent.DeleteWord(word))

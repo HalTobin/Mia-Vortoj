@@ -34,6 +34,7 @@ data class Category(
             Category("Work", R.drawable.theme_work, 23),
             Category("Sport", R.drawable.theme_sport, 24),
             Category("Country & Language", R.drawable.theme_country_language, 25),
+            Category("Transport", R.drawable.theme_transport, 26)
         )
 
         fun getDefaultCategory(): Category {

@@ -21,7 +21,6 @@ fun WordItem(word: Word,
              modifier: Modifier = Modifier) {
     Row(modifier = modifier) {
         Column(modifier = Modifier
-            //.fillMaxSize()
             .padding(start = 16.dp, top = 4.dp, bottom = 4.dp)) {
             Text(text = if(isFromSource) word.sourceWord else word.targetWord,
                 style = MaterialTheme.typography.subtitle1,
@@ -35,20 +34,11 @@ fun WordItem(word: Word,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis)
         }
-        Column(modifier = Modifier.align(Alignment.CenterVertically).padding(end = 16.dp)) {
-            Text(modifier = Modifier
-                .padding(end = 16.dp)
-                .weight(1f),
-                text = word.emote,
-                style = MaterialTheme.typography.h4,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colors.onSurface,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis)
+        Row(modifier = Modifier. padding(end = 16.dp).fillMaxSize().align(Alignment.CenterVertically),
+            horizontalArrangement = Arrangement.End) {
             Icon(modifier = Modifier
-                .weight(1f)
                 .fillMaxHeight()
-                .size(42.dp),
+                .size(38.dp),
                 imageVector = ImageVector.vectorResource(Category.getCategoryById(word.themeId).icon),
                 contentDescription = "")
         }

@@ -15,6 +15,7 @@ import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.Add
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryScreen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.DictionariesScreen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.util.Screen
+import com.chapeaumoineau.miavortoj.feature.words.presentation.word_card.WordCardScreen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.words.WordsScreen
 import com.chapeaumoineau.miavortoj.ui.theme.VortojAppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -70,6 +71,14 @@ class MainActivity : ComponentActivity() {
                             },)) {
                             val language = it.arguments?.getInt("dictionaryLanguageIdState") ?: -1
                             AddEditWordScreen(navController = navController)
+                        }
+                        composable(route = Screen.WordCardScreen.route + "?wordId={wordId}", arguments = listOf(
+                            navArgument(name = "wordId") {
+                                type = NavType.IntType
+                                defaultValue = -1
+                            }
+                        )) {
+                            WordCardScreen(navController = navController)
                         }
                     }
                 }
