@@ -59,6 +59,7 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
 
     init {
         savedStateHandle.get<Int>("dictionaryId")?.let { dictionaryId ->
+            println("INIT_ADDEDIT - DICTIONARY : " + dictionaryId)
             if (dictionaryId != -1) {
                 currentDictionaryId = dictionaryId
                 viewModelScope.launch {
@@ -70,7 +71,8 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
             }
         }
         savedStateHandle.get<Int>("wordId")?.let { wordId ->
-            if (wordId != 1) {
+            println("INIT_ADDEDIT - WORD : " + wordId)
+            if (wordId != -1) {
                 viewModelScope.launch {
                     wordUseCases.getWord(wordId)?.also { word ->
                         _wordSource.value =
@@ -81,8 +83,7 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
                             emote.value.copy(text = word.emote, isHintVisible = false)
                         _wordNotes.value =
                             notes.value.copy(text = word.notes, isHintVisible = false)
-                        _wordCategory.value =
-                            category.value
+                        _wordCategory.value = Category.getCategoryById(word.themeId)
                     }
                 }
             }

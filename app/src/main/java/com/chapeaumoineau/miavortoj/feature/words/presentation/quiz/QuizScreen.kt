@@ -1,4 +1,4 @@
-package com.chapeaumoineau.miavortoj.feature.words.presentation.word_card
+package com.chapeaumoineau.miavortoj.feature.words.presentation.quiz
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -21,17 +21,19 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Category
+import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.QuizViewModel
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.WordCardViewModel
+import com.chapeaumoineau.miavortoj.feature.words.presentation.components.TransparentHintTextField
 import com.chapeaumoineau.miavortoj.feature.words.presentation.util.Screen
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun WordCardScreen(navController: NavController,
-                    viewModel: WordCardViewModel = hiltViewModel()) {
+fun QuizScreen(navController: NavController,
+                viewModel: QuizViewModel = hiltViewModel()) {
 
     val word = viewModel.word.value
     val category = viewModel.category.value
-    val dictionary = viewModel.dictionary.value
+    val userEntry = viewModel.userEntry.value
     val language = viewModel.language.value
 
     val scaffoldState = rememberScaffoldState()
@@ -44,20 +46,25 @@ fun WordCardScreen(navController: NavController,
             Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit word")
         }
     }, scaffoldState = scaffoldState) {
-        Column(modifier = Modifier.fillMaxSize().background(language.getColor()).padding(16.dp)) {
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .background(language.getColor())
+            .padding(16.dp)) {
             Row() {
-                Icon(modifier = Modifier.size(60.dp).padding(end = 16.dp).align(Alignment.CenterVertically),
+                Icon(modifier = Modifier
+                    .size(60.dp)
+                    .padding(end = 16.dp)
+                    .align(Alignment.CenterVertically),
                     imageVector = ImageVector.vectorResource(category.icon),
                     contentDescription = "")
-                Column() {
-                    Text(text = word.targetWord, style = MaterialTheme.typography.h5, fontWeight = FontWeight.Bold, color = Color.Black)
-                    Text(text = word.sourceWord, style = MaterialTheme.typography.h5, color = Color.Black)
-                }
+                Text(text = word.targetWord, style = MaterialTheme.typography.h5, fontWeight = FontWeight.Bold, color = Color.Black)
             }
             Spacer(modifier = Modifier.height(16.dp))
-            Text(text = word.notes, style = MaterialTheme.typography.subtitle1, color = Color.Black)
+            TransparentHintTextField(text = , hint = , onValueChange = , onFocusChange = )
             Spacer(modifier = Modifier.height(16.dp))
-            Row(modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally), horizontalArrangement = Arrangement.Center) {
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.CenterHorizontally), horizontalArrangement = Arrangement.Center) {
                 Text(text = word.emote, style = MaterialTheme.typography.h1, color = Color.Black)
             }
         }
