@@ -15,4 +15,16 @@ data class Word (
     val dictionaryId: Int,
     val themeId: Int,
     @PrimaryKey val id: Int? = null
-) {}
+) {
+
+    fun isValid(input: String): Boolean {
+        return (removeSpace(input.lowercase()) == removeSpace(targetWord.lowercase()))
+    }
+
+    companion object {
+        fun removeSpace(input: String): String {
+            return input.replace("\\s".toRegex(),"")
+        }
+    }
+
+}

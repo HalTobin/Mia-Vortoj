@@ -113,7 +113,7 @@ fun QuizScreen(navController: NavController,
                 .clip(RoundedCornerShape(32.dp)),
                 colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.dark_green)),
                 onClick = {
-                    textFieldColor = if(word.targetWord == userEntry) DarkGreen else DarkRed
+                    textFieldColor = if(word.isValid(userEntry)) DarkGreen else DarkRed
                     scope.launch {
                         viewModel.onEvent(QuizEvent.CheckAnswer)
                         textFieldBackgroundAnimated.animateTo(

@@ -75,7 +75,7 @@ class QuizViewModel @Inject constructor(private val wordUseCases: WordUseCases,
             }
 
             is QuizEvent.CheckAnswer -> {
-                if(_userEntry.value.lowercase() == _word.value.targetWord.lowercase()) {
+                if(_word.value.isValid(_userEntry.value)) {
                     viewModelScope.launch {
                         _word.value.id?.let { wordUseCases.changeWordLastTimestampUseCase(it, System.currentTimeMillis()) }
                         findAndSelectOldestWord()
