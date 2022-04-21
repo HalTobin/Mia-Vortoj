@@ -9,4 +9,9 @@
     <string name="add_edit_word_source_hint">Mot Source</string>
     <string name="add_edit_word_target_hint">Palabra</string>
     <string name="add_edit_word_emote_hint">COURT</string>
+
+    <string name="words_start_quiz">QUIZ</string>
+
+    <string name="quiz_enter_response">Réponse</string>
+    <string name="quiz_validate_answer">Valider</string>
 </resources>

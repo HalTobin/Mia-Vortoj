@@ -58,7 +58,13 @@ class AppModule {
     @Provides
     @Singleton
     fun provideWordUseCases(repository: WordRepository): WordUseCases {
-        return WordUseCases(getWords = GetWordsUseCase(repository), getWordsFromDictionary = GetWordsFromDictionaryUseCase(repository),deleteWord = DeleteWordUseCase(repository), addWord = AddWordUseCase(repository), getWord = GetWordUseCase(repository))
+        return WordUseCases(getWords = GetWordsUseCase(repository),
+                            getWordsFromDictionary = GetWordsByDictionaryUseCase(repository),
+                            getOldWordByDictionaryId = GetOldWordByDictionaryId(repository),
+                            deleteWord = DeleteWordUseCase(repository),
+                            changeWordLastTimestampUseCase = ChangeWordLastTimestampUseCase(repository),
+                            addWord = AddWordUseCase(repository),
+                            getWord = GetWordUseCase(repository))
     }
 
     @Provides

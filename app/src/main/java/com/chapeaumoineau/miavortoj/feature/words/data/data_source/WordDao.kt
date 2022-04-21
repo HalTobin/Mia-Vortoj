@@ -16,6 +16,12 @@ interface WordDao {
     @Query("SELECT * FROM word WHERE id = :id")
     suspend fun getWordById(id: Int): Word?
 
+    @Query("SELECT * FROM word WHERE lastTestTimestamp = (SELECT MIN(lastTestTimestamp) FROM word WHERE dictionaryId = :dictionaryId)")
+    suspend fun getOldWordByDictionaryId(dictionaryId: Int): Word?
+
+    @Query("UPDATE word SET lastTestTimestamp = :timestamp WHERE id = :id")
+    suspend fun changeWordLastTimestamp(id: Int, timestamp: Long)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWord(word: Word)
 

@@ -18,6 +18,14 @@ class WordRepositoryImpl(private val dao: WordDao) : WordRepository {
         return dao.getWordById(id)
     }
 
+    override suspend fun getOldWordByDictionaryId(dictionaryId: Int): Word? {
+        return dao.getOldWordByDictionaryId(dictionaryId)
+    }
+
+    override suspend fun changeWordLastTimestamp(id: Int, timestamp: Long) {
+        dao.changeWordLastTimestamp(id, timestamp)
+    }
+
     override suspend fun insertWord(word: Word) {
         dao.insertWord(word)
     }

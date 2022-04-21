@@ -59,7 +59,6 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
 
     init {
         savedStateHandle.get<Int>("dictionaryId")?.let { dictionaryId ->
-            println("INIT_ADDEDIT - DICTIONARY : " + dictionaryId)
             if (dictionaryId != -1) {
                 currentDictionaryId = dictionaryId
                 viewModelScope.launch {
@@ -71,7 +70,6 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
             }
         }
         savedStateHandle.get<Int>("wordId")?.let { wordId ->
-            println("INIT_ADDEDIT - WORD : " + wordId)
             if (wordId != -1) {
                 viewModelScope.launch {
                     wordUseCases.getWord(wordId)?.also { word ->

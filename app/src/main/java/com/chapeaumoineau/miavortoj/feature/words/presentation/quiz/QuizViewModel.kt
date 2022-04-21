@@ -2,6 +2,8 @@ package com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,8 +11,10 @@ import com.chapeaumoineau.miavortoj.R
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.*
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.DictionaryUseCases
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.WordUseCases
-import com.chapeaumoineau.miavortoj.feature.words.presentation.components.TextFieldState
-import com.chapeaumoineau.miavortoj.feature.words.presentation.word_card.WordCardEvent
+import com.chapeaumoineau.miavortoj.feature.words.presentation.quiz.QuizEvent
+import com.chapeaumoineau.miavortoj.ui.theme.DarkGreen
+import com.chapeaumoineau.miavortoj.ui.theme.DarkRed
+import com.chapeaumoineau.miavortoj.ui.theme.Transparent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -34,32 +38,51 @@ class QuizViewModel @Inject constructor(private val wordUseCases: WordUseCases,
     private val _category = mutableStateOf(Category("", R.drawable.theme_other, 0))
     val category: State<Category> = _category
 
-    private val _userEntry = mutableStateOf(TextFieldState(hint = ""))
-    val userEntry: State<TextFieldState> = _userEntry
+    private val _userEntry = mutableStateOf("")
+    val userEntry: State<String> = _userEntry
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
     init {
-        savedStateHandle.get<Int>("wordId")?.let { wordId ->
-            if (wordId != 1) {
+        savedStateHandle.get<Int>("dictionaryId")?.let { dictionaryId ->
+            if (dictionaryId != -1) {
                 viewModelScope.launch {
-                    wordUseCases.getWord(wordId)?.also { wordDb ->
-                        _word.value = wordDb
-                        _category.value = Category.getCategoryById(wordDb.themeId)
-                        dictionaryUseCases.getDictionary(wordDb.dictionaryId)?.also { dictionaryDb ->
-                            _dictionary.value = dictionaryDb
-                            _language.value = Language.getLanguageByIso(dictionaryDb.languageIso)
-                        }
+                    dictionaryUseCases.getDictionary(dictionaryId)?.also { dictionaryFromDb ->
+                        _dictionary.value = dictionaryFromDb
+                        _language.value = Language.getLanguageByIso(dictionaryFromDb.languageIso)
+                        findAndSelectOldestWord()
                     }
                 }
             }
         }
     }
 
-    fun onEvent(event: WordCardEvent) {
+    private suspend fun findAndSelectOldestWord() {
+        _dictionary.value.id?.let {
+            wordUseCases.getOldWordByDictionaryId(it)?.also { wordFromDb ->
+                _word.value = wordFromDb
+                _category.value = Category.getCategoryById(wordFromDb.themeId)
+            }
+        }
+    }
+
+    fun onEvent(event: QuizEvent) {
         when(event) {
-            is WordCardEvent.EditWord -> {
+            // EVENT FOR USER TEXT INPUT
+            is QuizEvent.EnteredEntry -> {
+                _userEntry.value = event.value
+            }
+
+            is QuizEvent.CheckAnswer -> {
+                if(_userEntry.value.lowercase() == _word.value.targetWord.lowercase()) {
+                    viewModelScope.launch {
+                        _word.value.id?.let { wordUseCases.changeWordLastTimestampUseCase(it, System.currentTimeMillis()) }
+                        findAndSelectOldestWord()
+                        _userEntry.value = ""
+                    }
+                }
+                //_textFieldColor.value = Transparent
             }
         }
     }

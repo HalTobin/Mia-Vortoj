@@ -14,6 +14,7 @@ import androidx.navigation.navArgument
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.AddEditWordScreen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryScreen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.DictionariesScreen
+import com.chapeaumoineau.miavortoj.feature.words.presentation.quiz.QuizScreen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.util.Screen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.word_card.WordCardScreen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.words.WordsScreen
@@ -44,7 +45,6 @@ class MainActivity : ComponentActivity() {
                             },
                             )
                         ) {
-                            val language = it.arguments?.getInt("dictionaryLanguage") ?: -1
                             AddEditDictionaryScreen(navController = navController)
                         }
                         composable(route = Screen.WordsScreen.route + "?dictionaryId={dictionaryId}&dictionaryLanguage={dictionaryLanguage}",
@@ -69,7 +69,6 @@ class MainActivity : ComponentActivity() {
                                 type = NavType.IntType
                                 defaultValue = -1
                             },)) {
-                            val language = it.arguments?.getInt("dictionaryLanguageIdState") ?: -1
                             AddEditWordScreen(navController = navController)
                         }
                         composable(route = Screen.WordCardScreen.route + "?wordId={wordId}", arguments = listOf(
@@ -79,6 +78,14 @@ class MainActivity : ComponentActivity() {
                             }
                         )) {
                             WordCardScreen(navController = navController)
+                        }
+                        composable(route = Screen.QuizScreen.route + "?dictionaryId={dictionaryId}", arguments = listOf(
+                            navArgument(name = "dictionaryId") {
+                                type = NavType.IntType
+                                defaultValue = -1
+                            }
+                        )) {
+                            QuizScreen(navController = navController)
                         }
                     }
                 }

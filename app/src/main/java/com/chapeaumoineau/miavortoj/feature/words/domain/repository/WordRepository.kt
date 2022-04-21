@@ -11,7 +11,11 @@ interface WordRepository {
 
     suspend fun getWordById(id: Int): Word?
 
+    suspend fun getOldWordByDictionaryId(dictionaryId: Int): Word?
+
     suspend fun insertWord(word: Word)
+
+    suspend fun changeWordLastTimestamp(id: Int, timestamp: Long)
 
     suspend fun deleteWord(word: Word)
 
