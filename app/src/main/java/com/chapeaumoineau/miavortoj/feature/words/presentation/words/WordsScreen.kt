@@ -127,6 +127,8 @@ fun WordsScreen(navController: NavController,
                 Text(text = stringResource(R.string.words_start_quiz), style = MaterialTheme.typography.subtitle1)
             }
 
+            Spacer(modifier = Modifier.height(12.dp))
+
             Divider(modifier = Modifier.padding(top = 8.dp), color = Color.Black, thickness = 1.dp)
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 itemsIndexed(state.words) { index, word ->
