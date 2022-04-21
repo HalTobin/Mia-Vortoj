@@ -9,6 +9,7 @@ data class Word (
     val targetWord: String,
     val emote: String,
     val notes: String,
+    val difficulty: Int,
     val mastery: Int,
     val timestamp: Long,
     val lastTestTimestamp: Long,

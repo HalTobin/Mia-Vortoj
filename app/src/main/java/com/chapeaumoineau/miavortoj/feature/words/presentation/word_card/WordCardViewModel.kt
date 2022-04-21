@@ -21,7 +21,7 @@ class WordCardViewModel @Inject constructor(private val wordUseCases: WordUseCas
                                            private val dictionaryUseCases: DictionaryUseCases,
                                            savedStateHandle: SavedStateHandle): ViewModel() {
 
-    private val _word = mutableStateOf(Word("", "", "", "", 0, 0, 0, 0, 0))
+    private val _word = mutableStateOf(Word("", "", "", "", 0, 0, 0, 0, 0, 0))
     val word: State<Word> = _word
 
     private val _dictionary = mutableStateOf(Dictionary("", "","", 0))
@@ -38,7 +38,7 @@ class WordCardViewModel @Inject constructor(private val wordUseCases: WordUseCas
 
     init {
         savedStateHandle.get<Int>("wordId")?.let { wordId ->
-            if (wordId != 1) {
+            if (wordId != -1) {
                 viewModelScope.launch {
                     wordUseCases.getWord(wordId)?.also { wordDb ->
                         _word.value = wordDb

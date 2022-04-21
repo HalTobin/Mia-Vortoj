@@ -26,7 +26,7 @@ class QuizViewModel @Inject constructor(private val wordUseCases: WordUseCases,
                                         private val dictionaryUseCases: DictionaryUseCases,
                                         savedStateHandle: SavedStateHandle): ViewModel() {
 
-    private val _word = mutableStateOf(Word("", "", "", "", 0, 0, 0, 0, 0))
+    private val _word = mutableStateOf(Word("", "", "", "", 0, 0, 0, 0, 0, 0))
     val word: State<Word> = _word
 
     private val _dictionary = mutableStateOf(Dictionary("", "","", 0))

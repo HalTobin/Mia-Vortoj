@@ -6,6 +6,14 @@
 
     <color name="transparent">#00000000</color>
 
+    <color name="difficulty_easy_off">#83B883</color>
+    <color name="difficulty_medium_off">#A6A681</color>
+    <color name="difficulty_hard_off">#AF8383</color>
+
+    <color name="difficulty_easy_on">#00AE00</color>
+    <color name="difficulty_medium_on">#E3E300</color>
+    <color name="difficulty_hard_on">#C30000</color>
+
     <color name="dark_green">#00B600</color>
     <color name="dark_red">#B60000</color>
 </resources>

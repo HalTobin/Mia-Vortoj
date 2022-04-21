@@ -34,7 +34,9 @@ class AppModule {
     fun provideVocabularyDatabase(app: Application): VocabularyDatabase {
         return Room.databaseBuilder(app,
             VocabularyDatabase::class.java,
-            VocabularyDatabase.DATABASE_NAME).addCallback(VocabularyDatabase.prepopulate).build()
+            VocabularyDatabase.DATABASE_NAME)
+            .addCallback(VocabularyDatabase.prepopulate)
+            .build()
     }
 
     @Provides

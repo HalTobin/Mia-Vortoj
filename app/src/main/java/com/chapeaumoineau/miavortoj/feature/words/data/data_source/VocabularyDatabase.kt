@@ -4,14 +4,16 @@ import android.content.ContentValues
 import androidx.room.Database
 import androidx.room.OnConflictStrategy
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.FavoriteLanguage
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Word
 
+
 @Database(
     entities = [Dictionary::class, Word::class, FavoriteLanguage::class],
-    version = 1
+    version = 2
 )
 abstract class VocabularyDatabase: RoomDatabase() {
 
