@@ -53,6 +53,9 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
     private val _dictionaryFlag = mutableStateOf(Language.getDefault().flag)
     val flag: State<Int> = _dictionaryFlag
 
+    private val _isFromSource = mutableStateOf(true)
+    val isFromSource: State<Boolean> = _isFromSource
+
     private val _eventFlow = MutableSharedFlow<AddEditDictionaryViewModel.UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
@@ -75,7 +78,7 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
                 }
             }
         }
-        getWords(currentDictionaryId, WordOrder.SourceWord(OrderType.Descending))
+        getWords(currentDictionaryId, WordOrder.Source(OrderType.Ascending))
     }
 
     fun onEvent(event: WordsEvent) {
@@ -84,7 +87,10 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
                 if(state.value.wordOrder::class == event.wordOrder::class && state.value.wordOrder.orderType == event.wordOrder.orderType) {
                     return
                 }
-                getWords(currentDictionaryId, WordOrder.SourceWord(OrderType.Descending))
+                getWords(currentDictionaryId, event.wordOrder)
+                if (event.wordOrder is WordOrder.Source) _isFromSource.value = true
+                if (event.wordOrder is WordOrder.Target) _isFromSource.value = false
+                if (event.wordOrder is WordOrder.Theme) _isFromSource.value = true
             }
             is WordsEvent.DeleteWord -> {
                 viewModelScope.launch {

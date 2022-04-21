@@ -7,6 +7,10 @@
     <string name="order_dictionary_language">Language</string>
     <string name="order_dictionary_title">Titre</string>
 
+    <string name="order_word_source">Source</string>
+    <string name="order_word_target">Cible</string>
+    <string name="order_word_theme">Thème</string>
+
     <string name="dictionary_screen_title">Vos dictionnaires</string>
 
     <string name="add_edit_dictionary_screen_title_hint">Entrez un titre...</string>

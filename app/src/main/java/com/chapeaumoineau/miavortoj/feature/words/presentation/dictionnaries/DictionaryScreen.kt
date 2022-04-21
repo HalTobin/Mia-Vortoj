@@ -53,6 +53,7 @@ fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewM
                         contentDescription = "Sort")
                 }
             }
+
             AnimatedVisibility(visible = state.isOrderSectionVisible, enter = fadeIn() + slideInVertically(), exit = fadeOut() + slideOutVertically()) {
                 OrderDictionariesSection(modifier = Modifier
                     .fillMaxWidth()

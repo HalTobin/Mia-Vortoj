@@ -9,20 +9,20 @@ import kotlinx.coroutines.flow.map
 
 class GetWordsUseCase(private val repository: WordRepository) {
 
-    operator fun invoke(wordOrder: WordOrder = WordOrder.SourceWord(OrderType.Descending)): Flow<List<Word>> {
+    operator fun invoke(wordOrder: WordOrder = WordOrder.Source(OrderType.Descending)): Flow<List<Word>> {
         return repository.getWords().map {
             words -> when(wordOrder.orderType) {
                 is OrderType.Ascending -> {
                     when(wordOrder) {
-                        is WordOrder.TargetWord -> words.sortedBy { it.targetWord.lowercase() }
-                        is WordOrder.SourceWord -> words.sortedBy { it.sourceWord.lowercase() }
+                        is WordOrder.Target -> words.sortedBy { it.targetWord.lowercase() }
+                        is WordOrder.Source -> words.sortedBy { it.sourceWord.lowercase() }
                         is WordOrder.Theme -> words.sortedBy { it.themeId }
                     }
                 }
                 is OrderType.Descending -> {
                     when(wordOrder) {
-                        is WordOrder.TargetWord -> words.sortedByDescending { it.targetWord.lowercase() }
-                        is WordOrder.SourceWord -> words.sortedByDescending { it.sourceWord.lowercase() }
+                        is WordOrder.Target -> words.sortedByDescending { it.targetWord.lowercase() }
+                        is WordOrder.Source -> words.sortedByDescending { it.sourceWord.lowercase() }
                         is WordOrder.Theme -> words.sortedByDescending { it.themeId }
                     }
                 }

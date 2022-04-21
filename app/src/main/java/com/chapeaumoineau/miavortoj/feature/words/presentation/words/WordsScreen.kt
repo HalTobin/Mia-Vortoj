@@ -1,5 +1,6 @@
 package com.chapeaumoineau.miavortoj.feature.words.presentation.words
 
+import androidx.compose.animation.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -24,11 +25,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.R
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
+import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.DictionariesEvent
+import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.components.OrderDictionariesSection
 import com.chapeaumoineau.miavortoj.feature.words.presentation.util.Screen
+import com.chapeaumoineau.miavortoj.feature.words.presentation.words.components.OrderWordsSection
 import com.chapeaumoineau.miavortoj.feature.words.presentation.words.components.WordItem
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
 @Composable
 fun WordsScreen(navController: NavController,
                 viewModel:WordsViewModel = hiltViewModel()) {
@@ -42,6 +46,8 @@ fun WordsScreen(navController: NavController,
 
     val color = viewModel.color.value
     val flag = viewModel.flag.value
+
+    val isFromSource = viewModel.isFromSource.value
 
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
@@ -83,11 +89,20 @@ fun WordsScreen(navController: NavController,
                         maxLines = 3)
                 }
                 IconButton(onClick = {
-                    //viewModel.onEvent(WordsEvent.ToggleOrderSection)
+                    viewModel.onEvent(WordsEvent.ToggleOrderSection)
                 }) {
                     Icon(imageVector = Icons.Default.Sort,
                         contentDescription = "Sort",
                         tint = Color.Black)
+                }
+            }
+            AnimatedVisibility(visible = state.isOrderSectionVisible, enter = fadeIn() + slideInVertically(), exit = fadeOut() + slideOutVertically()) {
+                Box(modifier = Modifier.padding(start = 16.dp)) {
+                    OrderWordsSection(modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp), wordOrder = state.wordOrder, onOrderChange = {
+                        viewModel.onEvent(WordsEvent.Order(it))
+                    })
                 }
             }
 
@@ -117,7 +132,7 @@ fun WordsScreen(navController: NavController,
                 itemsIndexed(state.words) { index, word ->
                     WordItem(
                         word = word,
-                        isFromSource = true,
+                        isFromSource = isFromSource,
                         modifier = Modifier
                             .fillMaxWidth()
                             .combinedClickable(
