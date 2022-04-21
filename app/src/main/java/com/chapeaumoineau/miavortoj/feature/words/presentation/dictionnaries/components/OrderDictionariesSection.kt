@@ -3,32 +3,34 @@ package com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.co
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.chapeaumoineau.miavortoj.R
 
 import com.chapeaumoineau.miavortoj.feature.words.domain.util.DictionaryOrder
 import com.chapeaumoineau.miavortoj.feature.words.domain.util.OrderType
 
 @Composable
 fun OrderDictionariesSection(modifier: Modifier = Modifier,
-                 dictionaryOrder: DictionaryOrder = DictionaryOrder.Language(OrderType.Descending),
+                 dictionaryOrder: DictionaryOrder = DictionaryOrder.Language(OrderType.Ascending),
                  onOrderChange: (DictionaryOrder) -> Unit) {
     Column(modifier = modifier) {
         Row(modifier = modifier.fillMaxWidth()) {
-            DefaultRadioButton(text = "Language",
+            DefaultRadioButton(text = stringResource(id = R.string.order_dictionary_language),
                 selected = dictionaryOrder is DictionaryOrder.Language,
                 onSelect = { onOrderChange(DictionaryOrder.Language(dictionaryOrder.orderType)) })
             Spacer(modifier = Modifier.width(8.dp))
-            DefaultRadioButton(text = "Title",
+            DefaultRadioButton(text = stringResource(id = R.string.order_dictionary_title),
                 selected = dictionaryOrder is DictionaryOrder.Title,
-                onSelect = { onOrderChange(DictionaryOrder.Language(dictionaryOrder.orderType)) })
+                onSelect = { onOrderChange(DictionaryOrder.Title(dictionaryOrder.orderType)) })
             Spacer(modifier = Modifier.width(16.dp))
         }
         Row(modifier = modifier.fillMaxWidth()) {
-            DefaultRadioButton(text = "Ascending",
+            DefaultRadioButton(text = stringResource(id = R.string.order_ascending),
                 selected = dictionaryOrder.orderType is OrderType.Ascending,
                 onSelect = { onOrderChange(dictionaryOrder.copy(OrderType.Ascending)) })
             Spacer(modifier = Modifier.width(8.dp))
-            DefaultRadioButton(text = "Descending",
+            DefaultRadioButton(text = stringResource(id = R.string.order_descending),
                 selected = dictionaryOrder.orderType is OrderType.Descending,
                 onSelect = { onOrderChange(dictionaryOrder.copy(OrderType.Descending)) })
             Spacer(modifier = Modifier.width(16.dp))
