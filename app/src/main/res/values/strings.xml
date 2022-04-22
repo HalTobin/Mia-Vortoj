@@ -39,4 +39,34 @@
 
     <string name="quiz_enter_response">Réponse</string>
     <string name="quiz_validate_answer">Valider</string>
+
+    <string name="theme_other">Autres</string>
+    <string name="theme_number">Chiffres &amp; Nombres</string>
+    <string name="theme_house">Maison</string>
+    <string name="theme_food_drink">Nourritures &amp; Boissons</string>
+    <string name="theme_greetings">Salutations</string>
+    <string name="theme_family">Famille</string>
+    <string name="theme_religion">Religion</string>
+    <string name="theme_body">Corps</string>
+    <string name="theme_clothes">Vêtements</string>
+    <string name="theme_weather">Météo</string>
+    <string name="theme_date_time">Heures &amp; Dates</string>
+    <string name="theme_animal">Animaux</string>
+    <string name="theme_space">Espace</string>
+    <string name="theme_nature">Nature</string>
+    <string name="theme_music">Musique</string>
+    <string name="theme_art">Art</string>
+    <string name="theme_color">Couleurs</string>
+    <string name="theme_adjective">Adjectif</string>
+    <string name="theme_verb">Verbe</string>
+    <string name="theme_communication">Communication</string>
+    <string name="theme_health">Santé</string>
+    <string name="theme_movie">Film</string>
+    <string name="theme_work">Travail</string>
+    <string name="theme_sport">Sport</string>
+    <string name="theme_country_language">Langues &amp; Pays</string>
+    <string name="theme_transport">Transport</string>
+    <string name="theme_object">Objets</string>
+    <string name="theme_place">Lieux</string>
+    <string name="theme_science">Science</string>
 </resources>

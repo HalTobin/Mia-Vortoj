@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -36,11 +37,13 @@ fun AddEditWordScreen(navController: NavController,
     val targetHintState = viewModel.targetHint.value
 
     val dialogState = viewModel.dialog.value
+    val categoryListState = viewModel.categories.value
     val categoryState = viewModel.category.value
 
     val scaffoldState = rememberScaffoldState()
 
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
@@ -50,6 +53,12 @@ fun AddEditWordScreen(navController: NavController,
                 }
                 is AddEditWordViewModel.UiEvent.SaveWord -> {
                     navController.navigateUp()
+                }
+                is AddEditWordViewModel.UiEvent.InitWordTranslations -> {
+                    println("INIT WORDS TRANSLATION")
+                    categoryListState.forEachIndexed { index, category ->
+                        viewModel.onEvent(AddEditWordEvent.GetCategoryTranslation(index, context.resources.getString(category.text)))
+                    }
                 }
             }
         }
@@ -117,7 +126,10 @@ fun AddEditWordScreen(navController: NavController,
                         textStyle = MaterialTheme.typography.h6,
                     )
                 }
-                Card(modifier = Modifier.weight(1f).padding(end = 16.dp).height(48.dp),
+                Card(modifier = Modifier
+                    .weight(1f)
+                    .padding(end = 16.dp)
+                    .height(48.dp),
                     onClick = { viewModel.onEvent(AddEditWordEvent.MoreCategory) },
                     shape = RoundedCornerShape(10.dp),
                     backgroundColor = Color.DarkGray

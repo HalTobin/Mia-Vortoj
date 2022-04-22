@@ -33,7 +33,7 @@ class WordCardViewModel @Inject constructor(private val wordUseCases: WordUseCas
     private val _language = mutableStateOf(Language("", "", R.drawable.globe, 0xFFFFFFFF, 0xFF00000000,false))
     val language: State<Language> = _language
 
-    private val _category = mutableStateOf(Category("", R.drawable.theme_other, 0))
+    private val _category = mutableStateOf(Category.getDefaultCategory())
     val category: State<Category> = _category
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()

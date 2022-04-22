@@ -3,9 +3,11 @@ package com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Category
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.InvalidDictionaryException
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
@@ -53,7 +55,8 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
     private val _categorySearch = mutableStateOf("")
     val search: State<String> = _categorySearch
 
-    private val _categoryList = mutableStateOf(Category.defaultCategories)
+    private val _listFromClass = Category.defaultCategories
+    private val _categoryList = mutableStateOf(_listFromClass)
     val categories: State<List<Category>> = _categoryList
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
@@ -93,6 +96,10 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
                 }
             }
         }
+        viewModelScope.launch {
+            println(_categoryList.toString())
+            _eventFlow.emit(UiEvent.InitWordTranslations)
+        }
     }
 
     fun onEvent(event: AddEditWordEvent) {
@@ -120,6 +127,18 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
             //EVENT FOR CATEGORY SELECTION
             is AddEditWordEvent.MoreCategory -> {
                 _isCategoryDialogVisible.value = true
+            }
+
+            is AddEditWordEvent.GetCategoryTranslation -> {
+                _listFromClass[event.index].translation = event.translation
+            }
+
+            is AddEditWordEvent.EnteredSearch -> {
+                _categorySearch.value = event.value
+                println(_categoryList.value[0].toString())
+                viewModelScope.launch {
+                    _categoryList.value = _listFromClass.sortedBy { it.translation }.filter { l -> l.title.contains(event.value) || l.translation.contains(event.value)}
+                }
             }
 
             is AddEditWordEvent.OnNewCategorySelected -> {
@@ -163,6 +182,7 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
     sealed class UiEvent {
         data class ShowSnackBar(val message: String): UiEvent()
         object SaveWord: UiEvent()
+        object InitWordTranslations: UiEvent()
     }
 
 }

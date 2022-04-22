@@ -13,6 +13,7 @@ import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.DictionaryUseC
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.WordUseCases
 import com.chapeaumoineau.miavortoj.feature.words.domain.util.OrderType
 import com.chapeaumoineau.miavortoj.feature.words.domain.util.WordOrder
+import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryEvent
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -56,6 +57,12 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
     private val _isFromSource = mutableStateOf(true)
     val isFromSource: State<Boolean> = _isFromSource
 
+    private val _wordList = mutableStateOf(listOf<Word>())
+    val words: State<List<Word>> = _wordList
+
+    private val _wordSearch = mutableStateOf("")
+    val search: State<String> = _wordSearch
+
     private val _eventFlow = MutableSharedFlow<AddEditDictionaryViewModel.UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
@@ -92,6 +99,13 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
                 if (event.wordOrder is WordOrder.Target) _isFromSource.value = false
                 if (event.wordOrder is WordOrder.Theme) _isFromSource.value = true
             }
+
+            //EVENT FOR SEARCH FIELD
+            is WordsEvent.EnteredSearch -> {
+                _wordSearch.value = event.value
+                //_word.value = Language.getSortedLanguageList().filter { l -> l.name.contains(event.value) || l.iso.contains(event.value)}
+            }
+
             is WordsEvent.DeleteWord -> {
                 viewModelScope.launch {
                     wordUseCases.deleteWord(event.word)

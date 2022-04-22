@@ -27,7 +27,8 @@ fun CategoryDialog(isVisible: Boolean, viewModel: AddEditWordViewModel = hiltVie
     if(isVisible) Dialog(onDismissRequest = { viewModel.onEvent(AddEditWordEvent.DismissCategoryDialog) }) {
         Surface(
             modifier = Modifier.fillMaxHeight(0.9f),
-            shape = RoundedCornerShape(8.dp)
+            shape = RoundedCornerShape(8.dp),
+            contentColor = Color.White
         ) {
             Column(
                 modifier = Modifier
