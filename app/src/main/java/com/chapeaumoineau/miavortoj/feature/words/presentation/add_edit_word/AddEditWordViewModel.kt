@@ -43,7 +43,7 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
     private val _wordDifficulty = mutableStateOf(1)
     val difficulty: State<Int> = _wordDifficulty
 
-    private val _color = mutableStateOf(Language.getDefault().getColor())
+    private val _color = mutableStateOf(Language.getDefault().getDarkColor())
     val color: State<Color> = _color
 
     private val _isCategoryDialogVisible = mutableStateOf(false)
@@ -68,7 +68,7 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
                 currentDictionaryId = dictionaryId
                 viewModelScope.launch {
                     dictionaryUseCases.getDictionary(dictionaryId)?.also { dictionary ->
-                        _color.value = Language.getLanguageByIso(dictionary.languageIso).getColor()
+                        _color.value = Language.getLanguageByIso(dictionary.languageIso).getDarkColor()
                         _wordTargetHint.value = Language.getLanguageByIso(dictionary.languageIso).name
                     }
                 }

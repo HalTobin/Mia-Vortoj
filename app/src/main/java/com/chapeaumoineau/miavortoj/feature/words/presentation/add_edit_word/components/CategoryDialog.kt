@@ -4,6 +4,7 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -32,7 +33,7 @@ fun CategoryDialog(isVisible: Boolean, viewModel: AddEditWordViewModel = hiltVie
                         viewModel.onEvent(AddEditWordEvent.EnteredSearch(it))
                     },
                     label = {
-                        Text(text = stringResource(R.string.add_edit_dictionary_language_dialog_search_hint))
+                        Text(text = stringResource(R.string.add_edit_dictionary_language_dialog_search_hint), color = Color.LightGray)
                     },
                     maxLines = 1
                 )

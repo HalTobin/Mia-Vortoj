@@ -47,7 +47,7 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
     private val _dictionaryLanguageIso = mutableStateOf(Language.getDefault().iso)
     val dictionaryLanguageIso: State<String> = _dictionaryLanguageIso
 
-    private val _dictionaryColor = mutableStateOf(Language.getDefault().getColor())
+    private val _dictionaryColor = mutableStateOf(Language.getDefault().getDarkColor())
     val color: State<Color> = _dictionaryColor
 
     private val _dictionaryFlag = mutableStateOf(Language.getDefault().flag)
@@ -72,7 +72,7 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
                         _dictionaryTitle.value = dictionary.title
                         _dictionaryDescription.value = dictionary.description
                         _dictionaryLanguageIso.value = dictionary.languageIso
-                        _dictionaryColor.value = language.getColor()
+                        _dictionaryColor.value = language.getDarkColor()
                         _dictionaryFlag.value = language.flag
                     }
                 }

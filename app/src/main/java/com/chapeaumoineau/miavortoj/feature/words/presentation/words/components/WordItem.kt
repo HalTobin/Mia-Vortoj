@@ -25,12 +25,10 @@ fun WordItem(word: Word,
             Text(text = if(isFromSource) word.sourceWord else word.targetWord,
                 style = MaterialTheme.typography.subtitle1,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colors.onSurface,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis)
             Text(text = if(isFromSource) word.targetWord else word.sourceWord,
                 style = MaterialTheme.typography.subtitle2,
-                color = MaterialTheme.colors.onSurface,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis)
         }

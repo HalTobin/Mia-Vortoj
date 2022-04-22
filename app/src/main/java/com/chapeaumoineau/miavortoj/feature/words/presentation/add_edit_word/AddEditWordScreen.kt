@@ -87,7 +87,7 @@ fun AddEditWordScreen(navController: NavController,
                     viewModel.onEvent(AddEditWordEvent.EnteredSource(it))
                 },
                 label = {
-                    Text(text = stringResource(R.string.add_edit_word_source_hint), style = MaterialTheme.typography.h6)
+                    Text(text = stringResource(R.string.add_edit_word_source_hint), style = MaterialTheme.typography.h6, color = Color.LightGray)
                 },
                 singleLine = true,
                 textStyle = MaterialTheme.typography.h5,
@@ -103,7 +103,7 @@ fun AddEditWordScreen(navController: NavController,
                     viewModel.onEvent(AddEditWordEvent.EnteredTarget(it))
                 },
                 label = {
-                    Text(text = targetHintState, style = MaterialTheme.typography.h6)
+                    Text(text = targetHintState, style = MaterialTheme.typography.h6, color = Color.LightGray)
                 },
                 singleLine = true,
                 textStyle = MaterialTheme.typography.h5,
@@ -121,7 +121,7 @@ fun AddEditWordScreen(navController: NavController,
                             viewModel.onEvent(AddEditWordEvent.EnteredEmote(it))
                         },
                         label = {
-                            Text(text = stringResource(R.string.add_edit_word_emote_hint), style = MaterialTheme.typography.subtitle1)
+                            Text(text = stringResource(R.string.add_edit_word_emote_hint), style = MaterialTheme.typography.subtitle1, color = Color.LightGray)
                         },
                         singleLine = true,
                         textStyle = MaterialTheme.typography.h6,
@@ -129,19 +129,22 @@ fun AddEditWordScreen(navController: NavController,
                 }
                 Card(modifier = Modifier.weight(1f).padding(end = 16.dp).height(48.dp),
                     onClick = { viewModel.onEvent(AddEditWordEvent.MoreCategory) },
-                    shape = RoundedCornerShape(10.dp)
+                    shape = RoundedCornerShape(10.dp),
+                    backgroundColor = Color.DarkGray
                 ) {
                     Spacer(modifier = Modifier.height(16.dp))
                     Row(Modifier, Arrangement.Center) {
                         Text(modifier = Modifier
                             .padding(end = 8.dp)
                             .align(Alignment.CenterVertically),
-                            text = categoryState.title)
+                            text = categoryState.title,
+                            color = Color.White)
                         Icon(modifier = Modifier
                             .padding()
                             .align(Alignment.CenterVertically),
                             imageVector = ImageVector.vectorResource(categoryState.icon),
-                            contentDescription = "")
+                            contentDescription = "",
+                            tint = Color.White)
                     }
                     Spacer(modifier = Modifier.height(16.dp))
                 }
@@ -158,7 +161,7 @@ fun AddEditWordScreen(navController: NavController,
                     viewModel.onEvent(AddEditWordEvent.EnteredDescription(it))
                 },
                 label = {
-                    Text(text = stringResource(R.string.add_edit_word_notes_hint), style = MaterialTheme.typography.subtitle1)
+                    Text(text = stringResource(R.string.add_edit_word_notes_hint), style = MaterialTheme.typography.subtitle1, color = Color.LightGray)
                 },
                 singleLine = false,
                 textStyle = MaterialTheme.typography.subtitle1,
@@ -167,20 +170,19 @@ fun AddEditWordScreen(navController: NavController,
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(text = stringResource(R.string.difficulty),
-                style = MaterialTheme.typography.h6,
-                color = Color.Black)
+                style = MaterialTheme.typography.h6)
             Spacer(modifier = Modifier.height(8.dp))
             Row(modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center) {
                 Button(modifier = Modifier
                     .clip(RoundedCornerShape(32.dp))
-                    .border(
+                    /*.border(
                         width = 4.dp,
                         color = if (viewModel.difficulty.value == 0) {
                             Color.Black
                         } else Color.Transparent,
                         shape = CircleShape
-                    ),
+                    )*/,
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = if(viewModel.difficulty.value == 0) colorResource(R.color.difficulty_easy_on)
                             else colorResource(R.color.difficulty_easy_off)),
@@ -202,13 +204,13 @@ fun AddEditWordScreen(navController: NavController,
 
                 Button(modifier = Modifier
                     .clip(RoundedCornerShape(32.dp))
-                    .border(
+                    /*.border(
                         width = 4.dp,
                         color = if (viewModel.difficulty.value == 1) {
                             Color.Black
                         } else Color.Transparent,
                         shape = CircleShape
-                    ),
+                    )*/,
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = if(viewModel.difficulty.value == 1) colorResource(R.color.difficulty_medium_on)
                             else colorResource(R.color.difficulty_medium_off)),
@@ -230,13 +232,13 @@ fun AddEditWordScreen(navController: NavController,
 
                 Button(modifier = Modifier
                     .clip(RoundedCornerShape(32.dp))
-                    .border(
+                    /*.border(
                         width = 4.dp,
                         color = if (viewModel.difficulty.value == 2) {
                             Color.Black
                         } else Color.Transparent,
                         shape = CircleShape
-                    ),
+                    )*/,
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = if(viewModel.difficulty.value == 2) colorResource(R.color.difficulty_hard_on)
                             else colorResource(R.color.difficulty_hard_off)),

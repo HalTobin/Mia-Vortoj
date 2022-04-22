@@ -65,7 +65,7 @@ fun QuizScreen(navController: NavController,
     Scaffold(scaffoldState = scaffoldState) {
         Column(modifier = Modifier
             .fillMaxSize()
-            .background(language.getColor())
+            .background(language.getDarkColor())
             .padding(16.dp)) {
             Row() {
                 Icon(modifier = Modifier
@@ -77,8 +77,7 @@ fun QuizScreen(navController: NavController,
                 Text(modifier = Modifier.align(Alignment.CenterVertically),
                     text = word.sourceWord,
                     style = MaterialTheme.typography.h5,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black)
+                    fontWeight = FontWeight.Bold)
             }
 
             Spacer(modifier = Modifier.height(64.dp))
@@ -86,7 +85,7 @@ fun QuizScreen(navController: NavController,
             Row(modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.CenterHorizontally), horizontalArrangement = Arrangement.Center) {
-                Text(text = word.emote, style = MaterialTheme.typography.h1, color = Color.Black)
+                Text(text = word.emote, style = MaterialTheme.typography.h1)
             }
 
             Spacer(modifier = Modifier.height(80.dp))
@@ -99,7 +98,7 @@ fun QuizScreen(navController: NavController,
                     viewModel.onEvent(QuizEvent.EnteredEntry(it))
                 },
                 label = {
-                    Text(text = stringResource(R.string.quiz_enter_response), style = MaterialTheme.typography.h6)
+                    Text(text = stringResource(R.string.quiz_enter_response), style = MaterialTheme.typography.h6, color = Color.LightGray)
                 },
                 colors = TextFieldDefaults.textFieldColors(backgroundColor = textFieldBackgroundAnimated.value),
                 textStyle = MaterialTheme.typography.h6,

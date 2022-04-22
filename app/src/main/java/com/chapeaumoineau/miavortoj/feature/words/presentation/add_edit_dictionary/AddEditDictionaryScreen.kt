@@ -44,7 +44,7 @@ fun AddEditDictionaryScreen(navController: NavController,
     val scaffoldState = rememberScaffoldState()
 
     val dictionaryBackgroundAnimated = remember {
-        Animatable(languageSelection.getColor())
+        Animatable(languageSelection.getDarkColor())
     }
     val scope = rememberCoroutineScope()
 
@@ -95,7 +95,7 @@ fun AddEditDictionaryScreen(navController: NavController,
                                 .clickable {
                                     scope.launch {
                                         dictionaryBackgroundAnimated.animateTo(
-                                            targetValue = myLanguage.getColor(),
+                                            targetValue = myLanguage.getDarkColor(),
                                             animationSpec = tween(durationMillis = 500)
                                         )
                                     }
@@ -134,7 +134,7 @@ fun AddEditDictionaryScreen(navController: NavController,
                     viewModel.onEvent(AddEditDictionaryEvent.EnteredTitle(it))
                 },
                 label = {
-                    Text(text = stringResource(R.string.add_edit_dictionary_screen_title_hint), style = MaterialTheme.typography.h5)
+                    Text(text = stringResource(R.string.add_edit_dictionary_screen_title_hint), style = MaterialTheme.typography.h5, color = Color.LightGray)
                 },
                 singleLine = true,
                 textStyle = MaterialTheme.typography.h4,
@@ -151,7 +151,7 @@ fun AddEditDictionaryScreen(navController: NavController,
                     viewModel.onEvent(AddEditDictionaryEvent.EnteredDescription(it))
                 },
                 label = {
-                    Text(text = stringResource(R.string.add_edit_dictionary_screen_description_hint), style = MaterialTheme.typography.subtitle1)
+                    Text(text = stringResource(R.string.add_edit_dictionary_screen_description_hint), style = MaterialTheme.typography.subtitle1, color = Color.LightGray)
                 },
                 maxLines = 2,
                 textStyle = MaterialTheme.typography.h6,

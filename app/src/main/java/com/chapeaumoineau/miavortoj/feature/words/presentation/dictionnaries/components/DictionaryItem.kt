@@ -39,7 +39,7 @@ fun DictionaryItem(dictionary: Dictionary,
 
             clipPath(clipPath) {
                 drawRoundRect(
-                    color = Language.getLanguageByIso(dictionary.languageIso).getColor(),
+                    color = Language.getLanguageByIso(dictionary.languageIso).getLightColor(),
                     size = size,
                     cornerRadius = CornerRadius(cornerRadius.toPx())
                 )

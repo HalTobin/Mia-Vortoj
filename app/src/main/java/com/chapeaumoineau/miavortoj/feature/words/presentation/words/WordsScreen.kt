@@ -81,19 +81,16 @@ fun WordsScreen(navController: NavController,
                 )
                 Column(modifier = Modifier.padding(start = 16.dp)) {
                     Text(text = dictionaryTitle,
-                        style = MaterialTheme.typography.h5,
-                        color = Color.Black)
+                        style = MaterialTheme.typography.h5)
                     Text(text = dictionaryDescription,
                         style = MaterialTheme.typography.subtitle1,
-                        color = Color.Black,
                         maxLines = 3)
                 }
                 IconButton(onClick = {
                     viewModel.onEvent(WordsEvent.ToggleOrderSection)
                 }) {
                     Icon(imageVector = Icons.Default.Sort,
-                        contentDescription = "Sort",
-                        tint = Color.Black)
+                        contentDescription = "Sort")
                 }
             }
             AnimatedVisibility(visible = state.isOrderSectionVisible, enter = fadeIn() + slideInVertically(), exit = fadeOut() + slideOutVertically()) {

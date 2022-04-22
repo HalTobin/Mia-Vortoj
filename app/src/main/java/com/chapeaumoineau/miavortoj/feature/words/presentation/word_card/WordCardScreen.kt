@@ -44,7 +44,7 @@ fun WordCardScreen(navController: NavController,
             Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit word")
         }
     }, scaffoldState = scaffoldState) {
-        Column(modifier = Modifier.fillMaxSize().background(language.getColor()).padding(16.dp)) {
+        Column(modifier = Modifier.fillMaxSize().background(language.getDarkColor()).padding(16.dp)) {
             Row() {
                 Icon(modifier = Modifier.size(60.dp).padding(end = 16.dp).align(Alignment.CenterVertically),
                     imageVector = ImageVector.vectorResource(category.icon),

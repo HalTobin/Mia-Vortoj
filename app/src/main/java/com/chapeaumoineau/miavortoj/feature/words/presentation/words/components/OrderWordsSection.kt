@@ -19,29 +19,24 @@ fun OrderWordsSection(modifier: Modifier = Modifier,
     Column(modifier = modifier) {
         Row(modifier = modifier.fillMaxWidth()) {
             DefaultRadioButton(text = stringResource(id = R.string.order_word_source),
-                color = Color.Black,
                 selected = wordOrder is WordOrder.Source,
                 onSelect = { onOrderChange(WordOrder.Source(wordOrder.orderType)) })
             Spacer(modifier = Modifier.width(8.dp))
             DefaultRadioButton(text = stringResource(id = R.string.order_word_target),
-                color = Color.Black,
                 selected = wordOrder is WordOrder.Target,
                 onSelect = { onOrderChange(WordOrder.Target(wordOrder.orderType)) })
             Spacer(modifier = Modifier.width(8.dp))
             DefaultRadioButton(text = stringResource(id = R.string.order_word_theme),
-                color = Color.Black,
                 selected = wordOrder is WordOrder.Theme,
                 onSelect = { onOrderChange(WordOrder.Theme(wordOrder.orderType)) })
             Spacer(modifier = Modifier.width(16.dp))
         }
         Row(modifier = modifier.fillMaxWidth()) {
             DefaultRadioButton(text = stringResource(id = R.string.order_ascending),
-                color = Color.Black,
                 selected = wordOrder.orderType is OrderType.Ascending,
                 onSelect = { onOrderChange(wordOrder.copy(OrderType.Ascending)) })
             Spacer(modifier = Modifier.width(8.dp))
             DefaultRadioButton(text = stringResource(id = R.string.order_descending),
-                color = Color.Black,
                 selected = wordOrder.orderType is OrderType.Descending,
                 onSelect = { onOrderChange(wordOrder.copy(OrderType.Descending)) })
             Spacer(modifier = Modifier.width(16.dp))
