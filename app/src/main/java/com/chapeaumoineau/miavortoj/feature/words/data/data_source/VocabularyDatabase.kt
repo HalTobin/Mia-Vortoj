@@ -13,7 +13,7 @@ import com.chapeaumoineau.miavortoj.feature.words.domain.model.Word
 
 @Database(
     entities = [Dictionary::class, Word::class, FavoriteLanguage::class],
-    version = 2
+    version = 3
 )
 abstract class VocabularyDatabase: RoomDatabase() {
 
@@ -48,6 +48,13 @@ abstract class VocabularyDatabase: RoomDatabase() {
                 contentValues.put("iso", "ENG")
                 contentValues.put("timestamp", 4)
                 db.insert("favoriteLanguage", OnConflictStrategy.IGNORE, contentValues)
+            }
+        }
+
+        val MIGRATION_2_3: Migration = object : Migration(2, 3) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE 'Word' ADD COLUMN 'nbPlayed' INTEGER DEFAULT 0");
+                db.execSQL("ALTER TABLE 'Word' ADD COLUMN 'nbSucceed' INTEGER DEFAULT 0");
             }
         }
     }

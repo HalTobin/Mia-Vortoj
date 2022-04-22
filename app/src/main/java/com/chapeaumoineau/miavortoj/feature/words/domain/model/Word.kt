@@ -13,6 +13,8 @@ data class Word (
     val mastery: Int,
     val timestamp: Long,
     val lastTestTimestamp: Long,
+    val nbPlayed: Int? = 0,
+    val nbSucceed: Int? = 0,
     val dictionaryId: Int,
     val themeId: Int,
     @PrimaryKey val id: Int? = null

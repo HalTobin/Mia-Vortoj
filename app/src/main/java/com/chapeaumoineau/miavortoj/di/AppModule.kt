@@ -36,6 +36,7 @@ class AppModule {
             VocabularyDatabase::class.java,
             VocabularyDatabase.DATABASE_NAME)
             .addCallback(VocabularyDatabase.prepopulate)
+            .addMigrations(VocabularyDatabase.MIGRATION_2_3)
             .build()
     }
 
