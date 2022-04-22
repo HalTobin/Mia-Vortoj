@@ -24,7 +24,7 @@ import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.com
 import com.chapeaumoineau.miavortoj.feature.words.presentation.util.Screen
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalAnimationApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewModel = hiltViewModel()) {
     val state = viewModel.state.value

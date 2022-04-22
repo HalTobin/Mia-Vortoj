@@ -84,6 +84,7 @@ class QuizViewModel @Inject constructor(private val wordUseCases: WordUseCases,
                 }
                 //_textFieldColor.value = Transparent
             }
+            else -> {}
         }
     }
 

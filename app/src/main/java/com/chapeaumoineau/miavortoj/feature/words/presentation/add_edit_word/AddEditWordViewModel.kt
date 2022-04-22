@@ -155,6 +155,7 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
                     }
                 }
             }
+            else -> {}
         }
     }
 

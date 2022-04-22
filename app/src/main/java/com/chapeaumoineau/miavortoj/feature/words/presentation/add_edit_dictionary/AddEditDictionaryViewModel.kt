@@ -130,6 +130,7 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
                     }
                 }
             }
+            else -> {}
         }
     }
 
