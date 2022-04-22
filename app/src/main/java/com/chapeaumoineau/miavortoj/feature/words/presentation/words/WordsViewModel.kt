@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chapeaumoineau.miavortoj.feature.words.domain.model.Category
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Word
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.DictionaryUseCases
@@ -85,7 +86,7 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
                 }
             }
         }
-        getWords(currentDictionaryId, WordOrder.Source(OrderType.Ascending))
+        getWords(currentDictionaryId, WordOrder.Source(OrderType.Ascending), "")
     }
 
     fun onEvent(event: WordsEvent) {
@@ -94,7 +95,7 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
                 if(state.value.wordOrder::class == event.wordOrder::class && state.value.wordOrder.orderType == event.wordOrder.orderType) {
                     return
                 }
-                getWords(currentDictionaryId, event.wordOrder)
+                getWords(currentDictionaryId, event.wordOrder, "")
                 if (event.wordOrder is WordOrder.Source) _isFromSource.value = true
                 if (event.wordOrder is WordOrder.Target) _isFromSource.value = false
                 if (event.wordOrder is WordOrder.Theme) _isFromSource.value = true
@@ -103,6 +104,7 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
             //EVENT FOR SEARCH FIELD
             is WordsEvent.EnteredSearch -> {
                 _wordSearch.value = event.value
+                getWords(currentDictionaryId, state.value.wordOrder, _wordSearch.value)
                 //_word.value = Language.getSortedLanguageList().filter { l -> l.name.contains(event.value) || l.iso.contains(event.value)}
             }
 
@@ -127,11 +129,12 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
         }
     }
 
-    private fun getWords(id: Int?, wordOrder: WordOrder) {
+    private fun getWords(id: Int?, wordOrder: WordOrder, search: String) {
         getWordsJob?.cancel()
         getWordsJob = id?.let {
             wordUseCases.getWordsFromDictionary(it, wordOrder).onEach {
-                words -> _state.value = state.value.copy(words = words, wordOrder = wordOrder)
+                words -> _state.value = state.value.copy(words = words.filter { l -> l.sourceWord.contains(search) || l.targetWord.contains(search) }, wordOrder = wordOrder)
+                //_wordList.value = words
             }.launchIn(viewModelScope)
         }
     }

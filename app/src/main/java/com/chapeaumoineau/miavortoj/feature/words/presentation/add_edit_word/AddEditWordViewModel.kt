@@ -123,6 +123,7 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
             //EVENT FOR CATEGORY SELECTION
             is AddEditWordEvent.MoreCategory -> {
                 _categorySearch.value = ""
+                _categoryList.value = _listFromClass.sortedBy { it.translation }
                 if(_listFromClass[0].translation.isBlank()) viewModelScope.launch {
                     _eventFlow.emit(UiEvent.InitWordTranslations)
                 }
@@ -175,7 +176,6 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
                     }
                 }
             }
-            else -> {}
         }
     }
 

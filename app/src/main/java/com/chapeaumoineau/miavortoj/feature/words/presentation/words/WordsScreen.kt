@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.R
+import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryEvent
 import com.chapeaumoineau.miavortoj.feature.words.presentation.util.Screen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.words.components.OrderWordsSection
 import com.chapeaumoineau.miavortoj.feature.words.presentation.words.components.WordItem
@@ -127,7 +128,17 @@ fun WordsScreen(navController: NavController,
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            Divider(modifier = Modifier.padding(top = 8.dp), color = Color.Black, thickness = 1.dp)
+            TextField(modifier = Modifier.fillMaxWidth(),
+                value = viewModel.search.value,
+                onValueChange = {
+                    viewModel.onEvent(WordsEvent.EnteredSearch(it))
+                },
+                label = {
+                    Text(text = stringResource(R.string.search_hint), color = Color.LightGray)
+                },
+                maxLines = 1
+            )
+
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 itemsIndexed(state.words) { index, word ->
                     WordItem(

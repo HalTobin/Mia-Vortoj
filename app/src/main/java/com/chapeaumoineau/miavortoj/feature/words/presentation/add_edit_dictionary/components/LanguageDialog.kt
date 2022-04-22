@@ -40,7 +40,7 @@ fun LanguageDialog(isVisible: Boolean, viewModel: AddEditDictionaryViewModel = h
                             viewModel.onEvent(AddEditDictionaryEvent.EnteredSearch(it))
                         },
                         label = {
-                            Text(text = stringResource(R.string.add_edit_dictionary_language_dialog_search_hint), color = Color.LightGray)
+                            Text(text = stringResource(R.string.search_hint), color = Color.LightGray)
                         },
                         maxLines = 1
                     )

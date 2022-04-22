@@ -44,7 +44,7 @@ fun CategoryDialog(isVisible: Boolean, viewModel: AddEditWordViewModel = hiltVie
                         },
                         label = {
                             Text(
-                                text = stringResource(R.string.add_edit_dictionary_language_dialog_search_hint),
+                                text = stringResource(R.string.search_hint),
                                 color = Color.LightGray
                             )
                         },
