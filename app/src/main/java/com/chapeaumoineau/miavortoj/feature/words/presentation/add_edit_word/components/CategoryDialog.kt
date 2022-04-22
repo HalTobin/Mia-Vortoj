@@ -22,38 +22,49 @@ import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.Add
 
 @Composable
 fun CategoryDialog(isVisible: Boolean, viewModel: AddEditWordViewModel = hiltViewModel()) {
-    if(isVisible) Dialog(onDismissRequest = { viewModel.onEvent(AddEditWordEvent.DismissCategoryDialog) }){
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .background(Color.DarkGray)) {
-            Row(modifier = Modifier.fillMaxWidth()) {
-                TextField(modifier = Modifier.fillMaxWidth(),
-                    value = viewModel.search.value,
-                    onValueChange = {
-                        viewModel.onEvent(AddEditWordEvent.EnteredSearch(it))
-                    },
-                    label = {
-                        Text(text = stringResource(R.string.add_edit_dictionary_language_dialog_search_hint), color = Color.LightGray)
-                    },
-                    maxLines = 1
-                )
-            }
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                itemsIndexed(viewModel.categories.value) { index, category ->
-                    CategoryDialogItem(
-                        category = category,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                viewModel.onEvent(
-                                    AddEditWordEvent.OnNewCategorySelected(
-                                        category.id
-                                    )
-                                )
-                            }
+    if(isVisible) Dialog(onDismissRequest = { viewModel.onEvent(AddEditWordEvent.DismissCategoryDialog) }) {
+        Surface(
+            modifier = Modifier.fillMaxHeight(0.9f),
+            shape = RoundedCornerShape(8.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.DarkGray)
+            ) {
+                Row(modifier = Modifier.fillMaxWidth()) {
+                    TextField(
+                        modifier = Modifier.fillMaxWidth(),
+                        value = viewModel.search.value,
+                        onValueChange = {
+                            viewModel.onEvent(AddEditWordEvent.EnteredSearch(it))
+                        },
+                        label = {
+                            Text(
+                                text = stringResource(R.string.add_edit_dictionary_language_dialog_search_hint),
+                                color = Color.LightGray
+                            )
+                        },
+                        maxLines = 1
                     )
-                    if (index < Category.defaultCategories.lastIndex)
-                        Divider(color = Color.Black, thickness = 1.dp)
+                }
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    itemsIndexed(viewModel.categories.value) { index, category ->
+                        CategoryDialogItem(
+                            category = category,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    viewModel.onEvent(
+                                        AddEditWordEvent.OnNewCategorySelected(
+                                            category.id
+                                        )
+                                    )
+                                }
+                        )
+                        if (index < Category.defaultCategories.lastIndex)
+                            Divider(color = Color.Black, thickness = 1.dp)
+                    }
                 }
             }
         }

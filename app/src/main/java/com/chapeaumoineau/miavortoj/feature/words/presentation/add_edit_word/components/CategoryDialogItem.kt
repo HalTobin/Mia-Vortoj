@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
@@ -31,7 +32,8 @@ fun CategoryDialogItem(category: Category,
                 style = MaterialTheme.typography.subtitle1,
                 fontWeight = FontWeight.Bold,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
+                color = Color.White
             )
         }
 
@@ -40,6 +42,7 @@ fun CategoryDialogItem(category: Category,
             .align(Alignment.CenterEnd)) {
             Icon(imageVector = ImageVector.vectorResource(category.icon),
                 contentDescription = "",
+                tint = Color.White,
                 modifier = Modifier
                     .size(40.dp)
                     .clip(CircleShape)

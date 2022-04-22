@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -36,37 +37,43 @@ import kotlinx.coroutines.launch
 @Composable
 fun LanguageDialog(isVisible: Boolean, viewModel: AddEditDictionaryViewModel = hiltViewModel()) {
     if(isVisible) Dialog(onDismissRequest = { viewModel.onEvent(AddEditDictionaryEvent.DismissLanguageDialog) }){
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .background(Color.DarkGray)) {
-            Row(modifier = Modifier.fillMaxWidth()) {
-                TextField(modifier = Modifier.fillMaxWidth(),
-                    value = viewModel.search.value,
-                    onValueChange = {
-                        viewModel.onEvent(AddEditDictionaryEvent.EnteredSearch(it))
-                    },
-                    label = {
-                        Text(text = stringResource(R.string.add_edit_dictionary_language_dialog_search_hint))
-                    },
-                    maxLines = 1
-                )
-            }
-            LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                itemsIndexed(viewModel.languageList.value) { index, language ->
-                    LanguageDialogItem(
-                        language = language,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                viewModel.onEvent(
-                                    AddEditDictionaryEvent.OnNewLanguageSelected(
-                                        language.iso
-                                    )
-                                )
-                            }
+        Surface(
+            modifier = Modifier.fillMaxHeight(0.9f),
+            shape = RoundedCornerShape(8.dp),
+            contentColor = Color.White
+        ) {
+            Column(modifier = Modifier
+                .fillMaxSize()
+                .background(Color.DarkGray)) {
+                Row(modifier = Modifier.fillMaxWidth()) {
+                    TextField(modifier = Modifier.fillMaxWidth(),
+                        value = viewModel.search.value,
+                        onValueChange = {
+                            viewModel.onEvent(AddEditDictionaryEvent.EnteredSearch(it))
+                        },
+                        label = {
+                            Text(text = stringResource(R.string.add_edit_dictionary_language_dialog_search_hint), color = Color.LightGray)
+                        },
+                        maxLines = 1
                     )
-                    if (index < Language.languagesList.lastIndex)
-                        Divider(color = Color.Black, thickness = 1.dp)
+                }
+                LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                    itemsIndexed(viewModel.languageList.value) { index, language ->
+                        LanguageDialogItem(
+                            language = language,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    viewModel.onEvent(
+                                        AddEditDictionaryEvent.OnNewLanguageSelected(
+                                            language.iso
+                                        )
+                                    )
+                                }
+                        )
+                        if (index < Language.languagesList.lastIndex)
+                            Divider(color = Color.Black, thickness = 1.dp)
+                    }
                 }
             }
         }
