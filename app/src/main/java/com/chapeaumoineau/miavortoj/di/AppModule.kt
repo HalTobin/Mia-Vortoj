@@ -9,7 +9,9 @@ import com.chapeaumoineau.miavortoj.feature.words.data.repository.WordRepository
 import com.chapeaumoineau.miavortoj.feature.words.domain.repository.DictionaryRepository
 import com.chapeaumoineau.miavortoj.feature.words.domain.repository.FavoriteLanguageRepository
 import com.chapeaumoineau.miavortoj.feature.words.domain.repository.WordRepository
-import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.*
+import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.DictionaryUseCases
+import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.FavoriteLanguageUseCases
+import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.WordUseCases
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.dictionary.AddDictionaryUseCase
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.dictionary.DeleteDictionaryUseCase
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.dictionary.GetDictionariesUseCase
@@ -63,9 +65,10 @@ class AppModule {
     fun provideWordUseCases(repository: WordRepository): WordUseCases {
         return WordUseCases(getWords = GetWordsUseCase(repository),
                             getWordsFromDictionary = GetWordsByDictionaryUseCase(repository),
-                            getOldWordByDictionaryId = GetOldWordByDictionaryId(repository),
+                            getOldWordByDictionaryId = GetOldWordByDictionaryIdUseCase(repository),
+                            deleteWordsFromDictionary = DeleteWordsFromDictionaryUseCase(repository),
                             deleteWord = DeleteWordUseCase(repository),
-                            changeWordLastTimestampUseCase = ChangeWordLastTimestampUseCase(repository),
+                            changeWordLastTimestamp = ChangeWordLastTimestampUseCase(repository),
                             addWord = AddWordUseCase(repository),
                             getWord = GetWordUseCase(repository))
     }

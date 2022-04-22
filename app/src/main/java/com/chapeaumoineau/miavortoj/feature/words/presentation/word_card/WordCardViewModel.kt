@@ -6,7 +6,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chapeaumoineau.miavortoj.R
-import com.chapeaumoineau.miavortoj.feature.words.domain.model.*
+import com.chapeaumoineau.miavortoj.feature.words.domain.model.Category
+import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
+import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
+import com.chapeaumoineau.miavortoj.feature.words.domain.model.Word
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.DictionaryUseCases
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.WordUseCases
 import com.chapeaumoineau.miavortoj.feature.words.presentation.word_card.WordCardEvent

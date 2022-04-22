@@ -1,7 +1,6 @@
 package com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries
 
 import androidx.compose.animation.*
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Sort
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.internal.isLiveLiteralsEnabled
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -65,6 +65,7 @@ fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewM
                 items(state.dictionaries) { dictionary ->
                     DictionaryItem(
                         dictionary = dictionary,
+                        dictionaryEdited = state.dictionaryEdit,
                         modifier = Modifier.
                         fillMaxWidth()
                             .combinedClickable(
@@ -72,13 +73,14 @@ fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewM
                                     navController.navigate(Screen.WordsScreen.route + "?dictionaryId=${dictionary.id}&dictionaryName=${dictionary.title}&dictionaryLanguage=${dictionary.languageIso}")
                                 },
                                 onLongClick = {
-                                    viewModel.onEvent(DictionariesEvent.DeleteDictionary(dictionary))
+                                    viewModel.onEvent(DictionariesEvent.ToggleEditMode(dictionary))
+                                    /*viewModel.onEvent(DictionariesEvent.DeleteDictionary(dictionary))
                                     scope.launch {
                                         val result = scaffoldState.snackbarHostState.showSnackbar(message = "Dictionary deleted", actionLabel = "Undo")
                                         if(result == SnackbarResult.ActionPerformed) {
                                             viewModel.onEvent(DictionariesEvent.RestoreDictionary)
                                         }
-                                    }
+                                    }*/
                                 },
                             )
                     )

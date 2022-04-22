@@ -4,9 +4,10 @@ import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.word.*
 
 data class WordUseCases(val getWords: GetWordsUseCase,
                         val getWordsFromDictionary: GetWordsByDictionaryUseCase,
-                        val getOldWordByDictionaryId: GetOldWordByDictionaryId,
+                        val getOldWordByDictionaryId: GetOldWordByDictionaryIdUseCase,
+                        val deleteWordsFromDictionary: DeleteWordsFromDictionaryUseCase,
                         val deleteWord: DeleteWordUseCase,
-                        val changeWordLastTimestampUseCase: ChangeWordLastTimestampUseCase,
+                        val changeWordLastTimestamp: ChangeWordLastTimestampUseCase,
                         val addWord: AddWordUseCase,
                         val getWord: GetWordUseCase
 )

@@ -1,20 +1,17 @@
-package com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word
+package com.chapeaumoineau.miavortoj.feature.words.presentation.quiz
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chapeaumoineau.miavortoj.R
-import com.chapeaumoineau.miavortoj.feature.words.domain.model.*
+import com.chapeaumoineau.miavortoj.feature.words.domain.model.Category
+import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
+import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
+import com.chapeaumoineau.miavortoj.feature.words.domain.model.Word
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.DictionaryUseCases
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.WordUseCases
-import com.chapeaumoineau.miavortoj.feature.words.presentation.quiz.QuizEvent
-import com.chapeaumoineau.miavortoj.ui.theme.DarkGreen
-import com.chapeaumoineau.miavortoj.ui.theme.DarkRed
-import com.chapeaumoineau.miavortoj.ui.theme.Transparent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -77,12 +74,11 @@ class QuizViewModel @Inject constructor(private val wordUseCases: WordUseCases,
             is QuizEvent.CheckAnswer -> {
                 if(_word.value.isValid(_userEntry.value)) {
                     viewModelScope.launch {
-                        _word.value.id?.let { wordUseCases.changeWordLastTimestampUseCase(it, System.currentTimeMillis()) }
+                        _word.value.id?.let { wordUseCases.changeWordLastTimestamp(it, System.currentTimeMillis()) }
                         findAndSelectOldestWord()
                         _userEntry.value = ""
                     }
                 }
-                //_textFieldColor.value = Transparent
             }
             else -> {}
         }

@@ -1,8 +1,5 @@
 package com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word
 
-import androidx.compose.ui.focus.FocusState
-import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryEvent
-
 sealed class AddEditWordEvent{
     data class EnteredSource(val value: String): AddEditWordEvent()
     data class EnteredTarget(val value: String): AddEditWordEvent()

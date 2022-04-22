@@ -2,7 +2,6 @@ package com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_diction
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,10 +11,12 @@ import com.chapeaumoineau.miavortoj.feature.words.domain.model.InvalidDictionary
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.DictionaryUseCases
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.FavoriteLanguageUseCases
-import com.chapeaumoineau.miavortoj.feature.words.presentation.components.TextFieldState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

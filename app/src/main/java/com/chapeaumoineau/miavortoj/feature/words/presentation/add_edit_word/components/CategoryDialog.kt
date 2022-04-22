@@ -1,11 +1,15 @@
 package com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.components
 
-import androidx.compose.foundation.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Divider
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,8 +19,6 @@ import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.chapeaumoineau.miavortoj.R
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Category
-import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
-import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryEvent
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.AddEditWordEvent
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.AddEditWordViewModel
 

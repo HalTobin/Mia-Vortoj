@@ -1,12 +1,20 @@
 package com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.components
 
+import androidx.compose.animation.*
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,7 +34,9 @@ import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
 @Composable
 fun DictionaryItem(dictionary: Dictionary,
                    modifier: Modifier = Modifier,
+                   dictionaryEdited: Int = -1,
                    cornerRadius: Dp = 10.dp) {
+
     Box(modifier = modifier) {
         Canvas(modifier = Modifier.matchParentSize()) {
             val clipPath = Path().apply {
@@ -56,20 +66,71 @@ fun DictionaryItem(dictionary: Dictionary,
                 overflow = TextOverflow.Ellipsis)
         }
 
-        Column(modifier = Modifier
+        Box(modifier = Modifier
             .padding(end = 16.dp)
-            .align(Alignment.CenterEnd)) {
-            Image(painter = painterResource(Language.getLanguageByIso(dictionary.languageIso).flag),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(50.dp)
-                    .shadow(15.dp, CircleShape)
-                    .clip(CircleShape)
-                    .border(
-                        width = 3.dp,
-                        color = Color.Black,
-                        shape = CircleShape)
-            )
+            .align(Alignment.CenterEnd),
+            contentAlignment = Alignment.CenterEnd) {
+
+            AnimatedVisibility(visible = (dictionaryEdited != dictionary.id),
+                enter = fadeIn() + slideInHorizontally(
+                    initialOffsetX = { 150 }, // small slide 300px
+                    animationSpec = tween(
+                        durationMillis = 125,
+                        easing = LinearEasing // interpolator
+                    )
+                ),
+                exit = fadeOut() + slideOutHorizontally()) {
+                Image(painter = painterResource(Language.getLanguageByIso(dictionary.languageIso).flag),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .size(50.dp)
+                        .shadow(15.dp, CircleShape)
+                        .clip(CircleShape)
+                        .border(
+                            width = 3.dp,
+                            color = Color.Black,
+                            shape = CircleShape)
+                )
+            }
+
+            AnimatedVisibility(visible = (dictionaryEdited == dictionary.id),
+                enter = fadeIn() + slideInHorizontally(
+                    initialOffsetX = { 150 }, // small slide 300px
+                    animationSpec = tween(
+                        durationMillis = 125,
+                        easing = LinearEasing // interpolator
+                    )
+                ),
+                exit = fadeOut() + slideOutHorizontally()) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(imageVector = Icons.Default.Edit,
+                        contentDescription = "",
+                        tint = Color.Black,
+                        modifier = Modifier
+                            .size(32.dp)
+                            .clip(CircleShape)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Icon(imageVector = Icons.Default.Delete,
+                        contentDescription = "",
+                        tint = Color.Black,
+                        modifier = Modifier
+                            .size(32.dp)
+                            .clip(CircleShape)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Icon(imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "",
+                        tint = Color.Black,
+                        modifier = Modifier
+                            .size(32.dp)
+                            .clip(CircleShape)
+                    )
+                }
+            }
+
         }
     }
+
+
 }

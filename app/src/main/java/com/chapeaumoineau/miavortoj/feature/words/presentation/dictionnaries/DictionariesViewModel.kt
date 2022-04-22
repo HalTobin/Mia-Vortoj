@@ -52,8 +52,8 @@ class DictionariesViewModel @Inject constructor(private val dictionaryUseCases: 
             is DictionariesEvent.ToggleOrderSection -> {
                 _state.value = state.value.copy(isOrderSectionVisible = !state.value.isOrderSectionVisible)
             }
-            is DictionariesEvent.ToggleDeleteButton -> {
-                _state.value = state.value.copy(isDeleteButtonVisible = !state.value.isDeleteButtonVisible)
+            is DictionariesEvent.ToggleEditMode -> {
+                _state.value = event.dictionary.id?.let { state.value.copy(dictionaryEdit = it) }!!
             }
         }
     }

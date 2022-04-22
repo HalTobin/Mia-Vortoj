@@ -17,6 +17,8 @@ interface WordRepository {
 
     suspend fun changeWordLastTimestamp(id: Int, timestamp: Long)
 
+    suspend fun deleteWordsFromDictionary(dictionaryId: Int)
+
     suspend fun deleteWord(word: Word)
 
 }

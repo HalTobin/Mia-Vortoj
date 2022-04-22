@@ -30,6 +30,10 @@ class WordRepositoryImpl(private val dao: WordDao) : WordRepository {
         dao.insertWord(word)
     }
 
+    override suspend fun deleteWordsFromDictionary(dictionaryId: Int) {
+        dao.deleteWordsFromDictionary(dictionaryId)
+    }
+
     override suspend fun deleteWord(word: Word) {
         dao.deleteWord(word)
     }

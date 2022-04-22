@@ -3,10 +3,8 @@ package com.chapeaumoineau.miavortoj.feature.words.presentation.words.components
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-
 import com.chapeaumoineau.miavortoj.R
 import com.chapeaumoineau.miavortoj.feature.words.domain.util.OrderType
 import com.chapeaumoineau.miavortoj.feature.words.domain.util.WordOrder
