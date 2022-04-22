@@ -8,5 +8,8 @@ sealed class DictionariesEvent {
     data class DeleteDictionary(val dictionary: Dictionary): DictionariesEvent()
     object RestoreDictionary: DictionariesEvent()
     object ToggleOrderSection: DictionariesEvent()
-    data class ToggleEditMode(val dictionary: Dictionary): DictionariesEvent()
+    data class ToggleEditMode(val dictionaryId: Int? = -1): DictionariesEvent()
+    data class ToggleDeleteDialog(val dictionary: Dictionary, val deleteConfirmationToEnter: String): DictionariesEvent()
+    data class EnteredDeleteValidation(val deleteValidation: String): DictionariesEvent()
+    object DismissDeleteDialog: DictionariesEvent()
 }

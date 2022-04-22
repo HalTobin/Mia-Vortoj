@@ -1,5 +1,6 @@
 package com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.*
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
@@ -19,6 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.R
+import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.components.LanguageDialog
+import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.components.DeleteDialog
 import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.components.DictionaryItem
 import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.components.OrderDictionariesSection
 import com.chapeaumoineau.miavortoj.feature.words.presentation.util.Screen
@@ -30,6 +33,12 @@ fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewM
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
+    val deleteTextToEnter = stringResource(R.string.dictionary_screen_delete_to_enter)
+
+    BackHandler(enabled = (state.dictionaryEdit != -1)) {
+        if(state.dictionaryEdit!=-1) viewModel.onEvent(DictionariesEvent.ToggleEditMode(-1))
+    }
+
     Scaffold(floatingActionButton = {
         FloatingActionButton(onClick = {
             navController.navigate(Screen.AddEditDictionaryScreen.route)
@@ -37,6 +46,11 @@ fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewM
             Icon(imageVector = Icons.Default.Add, contentDescription = "Add dictionary")
         }
     }, scaffoldState = scaffoldState) {
+        state.dictionaryDelete?.let { it1 ->
+            DeleteDialog(isVisible = state.isDeleteDialogVisible,
+                it1
+            )
+        }
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)) {
@@ -66,21 +80,23 @@ fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewM
                     DictionaryItem(
                         dictionary = dictionary,
                         dictionaryEdited = state.dictionaryEdit,
-                        modifier = Modifier.
-                        fillMaxWidth()
+                        onEditClick = {
+                            navController.navigate(Screen.AddEditDictionaryScreen.route + "?dictionaryId=${dictionary.id}")
+                        },
+                        onDeleteClick = {
+                            viewModel.onEvent(DictionariesEvent.ToggleDeleteDialog(dictionary, deleteTextToEnter))
+                        },
+                        onBackClick = {
+                            viewModel.onEvent(DictionariesEvent.ToggleEditMode(-1))
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
                             .combinedClickable(
                                 onClick = {
                                     navController.navigate(Screen.WordsScreen.route + "?dictionaryId=${dictionary.id}&dictionaryName=${dictionary.title}&dictionaryLanguage=${dictionary.languageIso}")
                                 },
                                 onLongClick = {
-                                    viewModel.onEvent(DictionariesEvent.ToggleEditMode(dictionary))
-                                    /*viewModel.onEvent(DictionariesEvent.DeleteDictionary(dictionary))
-                                    scope.launch {
-                                        val result = scaffoldState.snackbarHostState.showSnackbar(message = "Dictionary deleted", actionLabel = "Undo")
-                                        if(result == SnackbarResult.ActionPerformed) {
-                                            viewModel.onEvent(DictionariesEvent.RestoreDictionary)
-                                        }
-                                    }*/
+                                    viewModel.onEvent(DictionariesEvent.ToggleEditMode(dictionary.id))
                                 },
                             )
                     )

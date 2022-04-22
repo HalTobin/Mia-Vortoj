@@ -9,6 +9,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -30,11 +31,15 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
+import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.DictionariesEvent
 
 @Composable
 fun DictionaryItem(dictionary: Dictionary,
                    modifier: Modifier = Modifier,
                    dictionaryEdited: Int = -1,
+                   onDeleteClick: () -> Unit,
+                   onEditClick:() -> Unit,
+                   onBackClick:() -> Unit,
                    cornerRadius: Dp = 10.dp) {
 
     Box(modifier = modifier) {
@@ -73,13 +78,11 @@ fun DictionaryItem(dictionary: Dictionary,
 
             AnimatedVisibility(visible = (dictionaryEdited != dictionary.id),
                 enter = fadeIn() + slideInHorizontally(
-                    initialOffsetX = { 150 }, // small slide 300px
-                    animationSpec = tween(
-                        durationMillis = 125,
-                        easing = LinearEasing // interpolator
-                    )
+                    initialOffsetX = { 150 },
                 ),
-                exit = fadeOut() + slideOutHorizontally()) {
+                exit = fadeOut() + slideOutHorizontally(
+                    targetOffsetX = { 150 },
+                )) {
                 Image(painter = painterResource(Language.getLanguageByIso(dictionary.languageIso).flag),
                     contentDescription = "",
                     modifier = Modifier
@@ -95,37 +98,41 @@ fun DictionaryItem(dictionary: Dictionary,
 
             AnimatedVisibility(visible = (dictionaryEdited == dictionary.id),
                 enter = fadeIn() + slideInHorizontally(
-                    initialOffsetX = { 150 }, // small slide 300px
-                    animationSpec = tween(
-                        durationMillis = 125,
-                        easing = LinearEasing // interpolator
-                    )
+                    initialOffsetX = { 150 },
                 ),
-                exit = fadeOut() + slideOutHorizontally()) {
+                exit = fadeOut() + slideOutHorizontally(
+                    targetOffsetX = { 150 },
+                )
+            ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(imageVector = Icons.Default.Edit,
+                    IconButton(onClick = onEditClick){
+                        Icon(imageVector = Icons.Default.Edit,
                         contentDescription = "",
                         tint = Color.Black,
                         modifier = Modifier
                             .size(32.dp)
                             .clip(CircleShape)
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Icon(imageVector = Icons.Default.Delete,
+                    }
+                    IconButton(onClick = onDeleteClick){
+                        Icon(imageVector = Icons.Default.Delete,
                         contentDescription = "",
                         tint = Color.Black,
                         modifier = Modifier
                             .size(32.dp)
                             .clip(CircleShape)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Icon(imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "",
-                        tint = Color.Black,
-                        modifier = Modifier
-                            .size(32.dp)
-                            .clip(CircleShape)
-                    )
+                        )
+                    }
+                    IconButton(onClick = onBackClick) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "",
+                            tint = Color.Black,
+                            modifier = Modifier
+                                .size(32.dp)
+                                .clip(CircleShape)
+                        )
+                    }
                 }
             }
 

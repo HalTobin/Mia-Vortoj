@@ -8,4 +8,7 @@ data class DictionariesState(
     val dictionaries: List<Dictionary> = emptyList(),
     val dictionaryOrder: DictionaryOrder = DictionaryOrder.Language(OrderType.Ascending),
     val isOrderSectionVisible: Boolean = false,
-    val dictionaryEdit: Int = -1)
+    val isDeleteDialogVisible: Boolean = false,
+    val dictionaryEdit: Int = -1,
+    val deleteConfirmationTextToEnter: String = "Delete",
+    val dictionaryDelete: Dictionary? = null)

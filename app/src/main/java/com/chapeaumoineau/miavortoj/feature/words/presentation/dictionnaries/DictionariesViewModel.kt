@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chapeaumoineau.miavortoj.R
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.DictionaryUseCases
 import com.chapeaumoineau.miavortoj.feature.words.domain.util.DictionaryOrder
@@ -21,6 +22,9 @@ class DictionariesViewModel @Inject constructor(private val dictionaryUseCases: 
     private val _state = mutableStateOf(DictionariesState())
     val state: State<DictionariesState> = _state
 
+    private val _deleteValidation = mutableStateOf("")
+    val deleteValidation: State<String> = _deleteValidation
+
     private var recentlyDeletedDictionary: Dictionary? = null
 
     private var getDictionariesJob: Job? = null
@@ -28,6 +32,7 @@ class DictionariesViewModel @Inject constructor(private val dictionaryUseCases: 
     init {
         getDictionaries(DictionaryOrder.Language(OrderType.Ascending))
     }
+
 
     fun onEvent(event: DictionariesEvent) {
         when(event) {
@@ -38,10 +43,15 @@ class DictionariesViewModel @Inject constructor(private val dictionaryUseCases: 
                 getDictionaries(event.dictionaryOrder)
             }
             is DictionariesEvent.DeleteDictionary -> {
-                viewModelScope.launch {
-                    dictionaryUseCases.deleteDictionary(event.dictionary)
-                    recentlyDeletedDictionary = event.dictionary
+                _state.value = state.value.copy(dictionaryEdit = -1)
+                if(deleteValidation.value == state.value.deleteConfirmationTextToEnter) {
+                    viewModelScope.launch {
+                        dictionaryUseCases.deleteDictionary(event.dictionary)
+                        recentlyDeletedDictionary = event.dictionary
+                    }
+                    _state.value = state.value.copy(isDeleteDialogVisible = false)
                 }
+
             }
             is DictionariesEvent.RestoreDictionary -> {
                 viewModelScope.launch {
@@ -53,7 +63,18 @@ class DictionariesViewModel @Inject constructor(private val dictionaryUseCases: 
                 _state.value = state.value.copy(isOrderSectionVisible = !state.value.isOrderSectionVisible)
             }
             is DictionariesEvent.ToggleEditMode -> {
-                _state.value = event.dictionary.id?.let { state.value.copy(dictionaryEdit = it) }!!
+                _state.value = event.dictionaryId?.let { state.value.copy(dictionaryEdit = it) }!!
+            }
+            is DictionariesEvent.ToggleDeleteDialog -> {
+                _state.value = state.value.copy(isDeleteDialogVisible = true)
+                _state.value = state.value.copy(dictionaryDelete = event.dictionary)
+                _state.value = state.value.copy(deleteConfirmationTextToEnter = event.deleteConfirmationToEnter)
+            }
+            is DictionariesEvent.EnteredDeleteValidation -> {
+                _deleteValidation.value = event.deleteValidation
+            }
+            is DictionariesEvent.DismissDeleteDialog -> {
+                _state.value = state.value.copy(isDeleteDialogVisible = false)
             }
         }
     }
