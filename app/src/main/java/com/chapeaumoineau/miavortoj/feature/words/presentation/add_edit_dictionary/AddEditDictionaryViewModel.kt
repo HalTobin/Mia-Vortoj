@@ -54,10 +54,6 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
 
     private var getFavoriteLanguagesJob: Job? = null
 
-    /* TODO - Focus a language at launch */
-
-    /* TODO - Focus the language selected in the dialog */
-
     init {
         savedStateHandle.get<Int>("dictionaryId")?.let {dictionaryId ->
             if(dictionaryId != -1) {
