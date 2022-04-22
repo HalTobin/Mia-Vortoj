@@ -89,22 +89,9 @@ fun AddEditWordScreen(navController: NavController,
                 label = {
                     Text(text = stringResource(R.string.add_edit_word_source_hint), style = MaterialTheme.typography.h6)
                 },
-                //colors = TextFieldDefaults.textFieldColors(backgroundColor = textFieldBackgroundAnimated.value),
                 singleLine = true,
                 textStyle = MaterialTheme.typography.h5,
             )
-
-            /*TransparentHintTextField(text = sourceState.text,
-                hint = stringResource(R.string.add_edit_word_source_hint),
-                onValueChange = {
-                    viewModel.onEvent(AddEditWordEvent.EnteredSource(it))
-                },
-                onFocusChange = {
-                    viewModel.onEvent(AddEditWordEvent.ChangeSourceFocus(it))
-                },
-                isHintVisible = sourceState.isHintVisible,
-                singleLine = true,
-                textStyle = MaterialTheme.typography.h5)*/
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -118,7 +105,6 @@ fun AddEditWordScreen(navController: NavController,
                 label = {
                     Text(text = targetHintState, style = MaterialTheme.typography.h6)
                 },
-                //colors = TextFieldDefaults.textFieldColors(backgroundColor = textFieldBackgroundAnimated.value),
                 singleLine = true,
                 textStyle = MaterialTheme.typography.h5,
             )
@@ -127,7 +113,6 @@ fun AddEditWordScreen(navController: NavController,
 
             Row(Modifier, Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
                 Column(modifier = Modifier.weight(1f)) {
-
                     TextField(modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 16.dp, end = 32.dp),
@@ -138,22 +123,9 @@ fun AddEditWordScreen(navController: NavController,
                         label = {
                             Text(text = stringResource(R.string.add_edit_word_emote_hint), style = MaterialTheme.typography.subtitle1)
                         },
-                        //colors = TextFieldDefaults.textFieldColors(backgroundColor = textFieldBackgroundAnimated.value),
                         singleLine = true,
                         textStyle = MaterialTheme.typography.h6,
                     )
-
-                    /*TransparentHintTextField(text = emoteState.text,
-                        hint = stringResource(R.string.add_edit_word_emote_hint),
-                        onValueChange = {
-                            viewModel.onEvent(AddEditWordEvent.EnteredEmote(it))
-                        },
-                        onFocusChange = {
-                            viewModel.onEvent(AddEditWordEvent.ChangeEmoteFocus(it))
-                        },
-                        isHintVisible = emoteState.isHintVisible,
-                        singleLine = true,
-                        textStyle = MaterialTheme.typography.h5)*/
                 }
                 Card(modifier = Modifier.weight(1f).padding(end = 16.dp).height(48.dp),
                     onClick = { viewModel.onEvent(AddEditWordEvent.MoreCategory) },
@@ -175,22 +147,6 @@ fun AddEditWordScreen(navController: NavController,
                 }
             }
 
-            /*Box(modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.CenterHorizontally)) {
-                TransparentHintTextField(text = targetState.text,
-                    hint = targetHintState,
-                    onValueChange = {
-                        viewModel.onEvent(AddEditWordEvent.EnteredTarget(it))
-                    },
-                    onFocusChange = {
-                        viewModel.onEvent(AddEditWordEvent.ChangeTargetFocus(it))
-                    },
-                    isHintVisible = targetState.isHintVisible,
-                    singleLine = true,
-                    textStyle = MaterialTheme.typography.h6)
-            }*/
-
             Spacer(modifier = Modifier.height(16.dp))
 
             TextField(modifier = Modifier
@@ -204,24 +160,9 @@ fun AddEditWordScreen(navController: NavController,
                 label = {
                     Text(text = stringResource(R.string.add_edit_word_notes_hint), style = MaterialTheme.typography.subtitle1)
                 },
-                //colors = TextFieldDefaults.textFieldColors(backgroundColor = textFieldBackgroundAnimated.value),
                 singleLine = false,
                 textStyle = MaterialTheme.typography.subtitle1,
             )
-
-            /*TransparentHintTextField(text = notesState.text,
-                hint = stringResource(R.string.add_edit_dictionary_screen_description_hint),
-                onValueChange = {
-                    viewModel.onEvent(AddEditWordEvent.EnteredDescription(it))
-                },
-                onFocusChange = {
-                    viewModel.onEvent(AddEditWordEvent.ChangeDescriptionFocus(it))
-                },
-                isHintVisible = notesState.isHintVisible,
-                singleLine = false,
-                textStyle = MaterialTheme.typography.subtitle1,
-                //modifier = Modifier.fillMaxHeight()
-            )*/
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -232,7 +173,6 @@ fun AddEditWordScreen(navController: NavController,
             Row(modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center) {
                 Button(modifier = Modifier
-                    //.align(Alignment.CenterHorizontally)
                     .clip(RoundedCornerShape(32.dp))
                     .border(
                         width = 4.dp,
@@ -261,7 +201,6 @@ fun AddEditWordScreen(navController: NavController,
                 Spacer(modifier = Modifier.width(8.dp))
 
                 Button(modifier = Modifier
-                    //.align(Alignment.CenterHorizontally)
                     .clip(RoundedCornerShape(32.dp))
                     .border(
                         width = 4.dp,
@@ -290,7 +229,6 @@ fun AddEditWordScreen(navController: NavController,
                 Spacer(modifier = Modifier.width(8.dp))
 
                 Button(modifier = Modifier
-                    //.align(Alignment.CenterHorizontally)
                     .clip(RoundedCornerShape(32.dp))
                     .border(
                         width = 4.dp,

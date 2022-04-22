@@ -27,6 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.R
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.components.LanguageDialog
+import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.AddEditWordEvent
 import com.chapeaumoineau.miavortoj.feature.words.presentation.components.TransparentHintTextField
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -124,31 +125,37 @@ fun AddEditDictionaryScreen(navController: NavController,
 
             }
             Spacer(modifier = Modifier.height(16.dp))
-            TransparentHintTextField(text = titleState.text,
-                hint = stringResource(R.string.add_edit_dictionary_screen_title_hint),
+
+            TextField(modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 8.dp, end = 8.dp),
+                value = titleState,
                 onValueChange = {
                     viewModel.onEvent(AddEditDictionaryEvent.EnteredTitle(it))
                 },
-                onFocusChange = {
-                    viewModel.onEvent(AddEditDictionaryEvent.ChangeTitleFocus(it))
+                label = {
+                    Text(text = stringResource(R.string.add_edit_dictionary_screen_title_hint), style = MaterialTheme.typography.h5)
                 },
-                isHintVisible = titleState.isHintVisible,
                 singleLine = true,
-                textStyle = MaterialTheme.typography.h4)
+                textStyle = MaterialTheme.typography.h4,
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
-            TransparentHintTextField(text = descriptionState.text,
-                hint = stringResource(R.string.add_edit_dictionary_screen_description_hint),
+
+            TextField(modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 8.dp, end = 8.dp)
+                .weight(1f),
+                value = descriptionState,
                 onValueChange = {
                     viewModel.onEvent(AddEditDictionaryEvent.EnteredDescription(it))
                 },
-                onFocusChange = {
-                    viewModel.onEvent(AddEditDictionaryEvent.ChangeDescriptionFocus(it))
+                label = {
+                    Text(text = stringResource(R.string.add_edit_dictionary_screen_description_hint), style = MaterialTheme.typography.subtitle1)
                 },
-                isHintVisible = descriptionState.isHintVisible,
-                singleLine = false,
+                maxLines = 2,
                 textStyle = MaterialTheme.typography.h6,
-                modifier = Modifier.fillMaxHeight())
+            )
         }
     }
 }

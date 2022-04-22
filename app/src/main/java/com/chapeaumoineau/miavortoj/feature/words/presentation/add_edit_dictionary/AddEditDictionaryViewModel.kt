@@ -24,11 +24,11 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
                                                      private val favoriteLanguageUseCases: FavoriteLanguageUseCases,
                                                      savedStateHandle: SavedStateHandle): ViewModel() {
 
-    private val _dictionaryTitle = mutableStateOf(TextFieldState(hint = ""))
-    val title: State<TextFieldState> = _dictionaryTitle
+    private val _dictionaryTitle = mutableStateOf("")
+    val title: State<String> = _dictionaryTitle
 
-    private val _dictionaryDescription = mutableStateOf(TextFieldState(hint = ""))
-    val description: State<TextFieldState> = _dictionaryDescription
+    private val _dictionaryDescription = mutableStateOf("")
+    val description: State<String> = _dictionaryDescription
 
     private val _languageSearch = mutableStateOf("")
     val search: State<String> = _languageSearch
@@ -54,14 +54,18 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
 
     private var getFavoriteLanguagesJob: Job? = null
 
+    /* TODO - Focus a dictionary at launch */
+
+    /* TODO - Focus the dictionary selected in the dialog */
+
     init {
         savedStateHandle.get<Int>("dictionaryId")?.let {dictionaryId ->
             if(dictionaryId != -1) {
                 viewModelScope.launch {
                     dictionaryUseCases.getDictionary(dictionaryId)?.also { dictionary ->
                         currentDictionaryId = dictionary.id
-                        _dictionaryTitle.value = title.value.copy(text = dictionary.title, isHintVisible = false)
-                        _dictionaryDescription.value = description.value.copy(text = dictionary.description, isHintVisible = false)
+                        _dictionaryTitle.value = dictionary.title
+                        _dictionaryDescription.value = dictionary.description
                         _dictionaryLanguage.value = Language.getLanguageByIso(dictionary.languageIso)
                     }
                 }
@@ -78,18 +82,12 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
         when(event) {
             // EVENT FOR TITLE TEXT INPUT
             is AddEditDictionaryEvent.EnteredTitle -> {
-                _dictionaryTitle.value = title.value.copy(text = event.value)
-            }
-            is AddEditDictionaryEvent.ChangeTitleFocus -> {
-                _dictionaryTitle.value = title.value.copy(isHintVisible = !event.focusState.isFocused && title.value.text.isBlank())
+                _dictionaryTitle.value = event.value
             }
 
             //EVENT FOR DESCRIPTION TEXT INPUT
             is AddEditDictionaryEvent.EnteredDescription -> {
-                _dictionaryDescription.value = description.value.copy(text = event.value)
-            }
-            is AddEditDictionaryEvent.ChangeDescriptionFocus -> {
-                _dictionaryDescription.value = description.value.copy(isHintVisible = !event.focusState.isFocused && description.value.text.isBlank())
+                _dictionaryDescription.value = event.value
             }
 
             //EVENT FOR SEARCH FIELD
@@ -125,7 +123,7 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
             is AddEditDictionaryEvent.SaveDictionary -> {
                 viewModelScope.launch {
                     try {
-                        dictionaryUseCases.addDictionary(Dictionary(title = title.value.text, description = description.value.text, languageIso = dictionaryLanguage.value.iso, id = currentDictionaryId))
+                        dictionaryUseCases.addDictionary(Dictionary(title = title.value, description = description.value, languageIso = dictionaryLanguage.value.iso, id = currentDictionaryId))
                         _eventFlow.emit(UiEvent.SaveDictionary)
                     } catch(e: InvalidDictionaryException) {
                         _eventFlow.emit(UiEvent.ShowSnackBar(message = e.message ?: "Couldn't saved dictionary"))

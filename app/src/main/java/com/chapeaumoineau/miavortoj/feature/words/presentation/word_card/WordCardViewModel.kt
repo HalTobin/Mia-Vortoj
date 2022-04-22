@@ -53,6 +53,12 @@ class WordCardViewModel @Inject constructor(private val wordUseCases: WordUseCas
         }
     }
 
+    /* TODO - Refresh the card after word edit */
+
+    /* TODO - Scraping from reverso / deepl | Look for API */
+
+    /* TODO - Text To Speech */
+
     fun onEvent(event: WordCardEvent) {
         when(event) {
             is WordCardEvent.EditWord -> {

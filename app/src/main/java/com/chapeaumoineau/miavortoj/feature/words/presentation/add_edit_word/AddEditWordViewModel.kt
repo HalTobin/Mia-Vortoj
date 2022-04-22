@@ -100,33 +100,21 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
             is AddEditWordEvent.EnteredSource -> {
                 _wordSource.value = event.value
             }
-            /*is AddEditWordEvent.ChangeSourceFocus -> {
-                _wordSource.value = source.value.copy(isHintVisible = !event.focusState.isFocused && source.value.text.isBlank())
-            }*/
 
             // EVENT FOR TARGET TEXT INPUT
             is AddEditWordEvent.EnteredTarget -> {
                 _wordTarget.value = event.value
             }
-            /*is AddEditWordEvent.ChangeTargetFocus -> {
-                _wordTarget.value = target.value.copy(isHintVisible = !event.focusState.isFocused && target.value.text.isBlank())
-            }*/
 
             //EVENT FOR DESCRIPTION TEXT INPUT
             is AddEditWordEvent.EnteredDescription -> {
                 _wordNotes.value = event.value
             }
-            /*is AddEditWordEvent.ChangeDescriptionFocus -> {
-                _wordNotes.value = notes.value.copy(isHintVisible = !event.focusState.isFocused && notes.value.text.isBlank())
-            }*/
 
             //EVENT FOR EMOTE TEXT INPUT
             is AddEditWordEvent.EnteredEmote -> {
                 _wordEmote.value = event.value
             }
-            /*is AddEditWordEvent.ChangeEmoteFocus -> {
-                _wordEmote.value = emote.value.copy(isHintVisible = !event.focusState.isFocused && emote.value.text.isBlank())
-            }*/
 
             //EVENT FOR CATEGORY SELECTION
             is AddEditWordEvent.MoreCategory -> {
