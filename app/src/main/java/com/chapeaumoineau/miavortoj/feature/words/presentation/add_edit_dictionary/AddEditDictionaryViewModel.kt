@@ -42,11 +42,11 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
     private val _isLanguageDialogVisible = mutableStateOf(false)
     val dialog: State<Boolean> = _isLanguageDialogVisible
 
-    private val _eventFlow = MutableSharedFlow<UiEvent>()
-    val eventFlow = _eventFlow.asSharedFlow()
-
     private val _languagesList = mutableStateOf(Language.getSortedLanguageList())
     val languageList: State<List<Language>> = _languagesList
+
+    private val _eventFlow = MutableSharedFlow<UiEvent>()
+    val eventFlow = _eventFlow.asSharedFlow()
 
     private var nextLanguageRemoveFromFavorite: FavoriteLanguage? = null
 
@@ -54,9 +54,9 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
 
     private var getFavoriteLanguagesJob: Job? = null
 
-    /* TODO - Focus a dictionary at launch */
+    /* TODO - Focus a language at launch */
 
-    /* TODO - Focus the dictionary selected in the dialog */
+    /* TODO - Focus the language selected in the dialog */
 
     init {
         savedStateHandle.get<Int>("dictionaryId")?.let {dictionaryId ->
@@ -74,7 +74,9 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
         getFavoriteLanguagesJob?.cancel()
         getFavoriteLanguagesJob = favoriteLanguageUseCases.getFavoriteLanguages().onEach { languages ->
             _displayedLanguages.value = Language.getLanguagesFromIsos(FavoriteLanguage.getIsos(languages))
+            _dictionaryLanguage.value = Language.getLanguageByIso(languages[3].iso)
             nextLanguageRemoveFromFavorite = languages[0]
+            _eventFlow.emit(UiEvent.ChangeLanguage(_dictionaryLanguage.value))
         }.launchIn(viewModelScope)
     }
 
@@ -98,6 +100,9 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
 
             is AddEditDictionaryEvent.ChangeLanguage -> {
                 _dictionaryLanguage.value = Language.getLanguageByIso(event.language)
+                viewModelScope.launch {
+                    _eventFlow.emit(UiEvent.ChangeLanguage(Language.getLanguageByIso(event.language)))
+                }
             }
 
             is AddEditDictionaryEvent.MoreLanguage -> {
@@ -114,6 +119,9 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
                 }
                 _isLanguageDialogVisible.value = false
                 _dictionaryLanguage.value = Language.getLanguageByIso(event.language)
+                viewModelScope.launch {
+                    _eventFlow.emit(UiEvent.ChangeLanguage(Language.getLanguageByIso(event.language)))
+                }
             }
 
             is AddEditDictionaryEvent.DismissLanguageDialog -> {
@@ -136,6 +144,7 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
 
     sealed class UiEvent {
         data class ShowSnackBar(val message: String): UiEvent()
+        data class ChangeLanguage(val language: Language): UiEvent()
         object SaveDictionary: UiEvent()
     }
 

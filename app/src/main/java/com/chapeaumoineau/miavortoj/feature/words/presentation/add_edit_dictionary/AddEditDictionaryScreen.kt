@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.R
+import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.components.LanguageDialog
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.AddEditWordEvent
 import com.chapeaumoineau.miavortoj.feature.words.presentation.components.TransparentHintTextField
@@ -51,6 +52,12 @@ fun AddEditDictionaryScreen(navController: NavController,
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when(event) {
+                is AddEditDictionaryViewModel.UiEvent.ChangeLanguage -> {
+                    dictionaryBackgroundAnimated.animateTo(
+                        targetValue = event.language.getDarkColor(),
+                        animationSpec = tween(durationMillis = 500)
+                    )
+                }
                 is AddEditDictionaryViewModel.UiEvent.ShowSnackBar -> {
                     scaffoldState.snackbarHostState.showSnackbar(message = event.message)
                 }
@@ -94,10 +101,7 @@ fun AddEditDictionaryScreen(navController: NavController,
                                 )
                                 .clickable {
                                     scope.launch {
-                                        dictionaryBackgroundAnimated.animateTo(
-                                            targetValue = myLanguage.getDarkColor(),
-                                            animationSpec = tween(durationMillis = 500)
-                                        )
+
                                     }
                                     if (c != 4) {
                                         viewModel.onEvent(
