@@ -33,7 +33,6 @@ import com.chapeaumoineau.miavortoj.feature.words.presentation.quiz.QuizEvent
 import com.chapeaumoineau.miavortoj.feature.words.presentation.util.Screen
 import kotlinx.coroutines.flow.collectLatest
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun AddEditWordScreen(navController: NavController,
                             viewModel: AddEditWordViewModel = hiltViewModel()) {

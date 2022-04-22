@@ -32,7 +32,6 @@ import com.chapeaumoineau.miavortoj.feature.words.presentation.words.components.
 import com.chapeaumoineau.miavortoj.feature.words.presentation.words.components.WordItem
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
 @Composable
 fun WordsScreen(navController: NavController,
                 viewModel:WordsViewModel = hiltViewModel()) {

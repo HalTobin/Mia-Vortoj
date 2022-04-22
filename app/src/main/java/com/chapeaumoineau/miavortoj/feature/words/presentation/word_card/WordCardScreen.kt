@@ -24,7 +24,6 @@ import com.chapeaumoineau.miavortoj.feature.words.domain.model.Category
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.WordCardViewModel
 import com.chapeaumoineau.miavortoj.feature.words.presentation.util.Screen
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun WordCardScreen(navController: NavController,
                     viewModel: WordCardViewModel = hiltViewModel()) {

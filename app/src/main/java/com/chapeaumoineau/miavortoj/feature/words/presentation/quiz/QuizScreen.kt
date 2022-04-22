@@ -43,7 +43,6 @@ import com.chapeaumoineau.miavortoj.ui.theme.DarkRed
 import com.chapeaumoineau.miavortoj.ui.theme.Transparent
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun QuizScreen(navController: NavController,
                viewModel: QuizViewModel = hiltViewModel()) {
