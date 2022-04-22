@@ -11,6 +11,8 @@ import com.chapeaumoineau.miavortoj.feature.words.domain.model.InvalidDictionary
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.DictionaryUseCases
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.FavoriteLanguageUseCases
+import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.AddEditWordEvent
+import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.AddEditWordViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -43,7 +45,8 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
     private val _isLanguageDialogVisible = mutableStateOf(false)
     val dialog: State<Boolean> = _isLanguageDialogVisible
 
-    private val _languagesList = mutableStateOf(Language.getSortedLanguageList())
+    private val _listFromClass = Language.languagesList
+    private val _languagesList = mutableStateOf(_listFromClass)
     val languageList: State<List<Language>> = _languagesList
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
@@ -94,7 +97,7 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
             //EVENT FOR SEARCH FIELD
             is AddEditDictionaryEvent.EnteredSearch -> {
                 _languageSearch.value = event.value
-                _languagesList.value = Language.getSortedLanguageList().filter { l -> l.name.contains(event.value) || l.iso.contains(event.value)}
+                _languagesList.value = _listFromClass.sortedBy { it.translation }.filter { l -> l.name.contains(event.value) || l.iso.contains(event.value) || l.translation.contains(event.value)}
             }
 
             is AddEditDictionaryEvent.ChangeLanguage -> {
@@ -104,7 +107,19 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
                 }
             }
 
+            is AddEditDictionaryEvent.GetLanguageTranslation -> {
+                event.listOfIndex.forEach { index ->
+                    _listFromClass[index].translation = event.listOfTranslation[index]
+                }
+                _languagesList.value = _listFromClass.sortedBy { it.translation }
+            }
+
             is AddEditDictionaryEvent.MoreLanguage -> {
+                _languageSearch.value = ""
+                _languagesList.value = _listFromClass.sortedBy { it.translation }
+                if(_listFromClass[0].translation.isBlank()) viewModelScope.launch {
+                    _eventFlow.emit(UiEvent.InitLanguageTranslations)
+                }
                 _isLanguageDialogVisible.value = true
             }
 
@@ -152,6 +167,7 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
         data class ShowSnackBar(val message: String): UiEvent()
         data class ChangeLanguage(val language: Language): UiEvent()
         object SaveDictionary: UiEvent()
+        object InitLanguageTranslations: UiEvent()
     }
 
 }

@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -27,6 +28,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.R
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.components.LanguageDialog
+import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.AddEditWordEvent
+import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.AddEditWordViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -39,12 +42,16 @@ fun AddEditDictionaryScreen(navController: NavController,
     val languagesState = viewModel.languages.value
     val dialogState = viewModel.dialog.value
 
+    val languageListState = viewModel.languageList.value
+
     val scaffoldState = rememberScaffoldState()
 
     val dictionaryBackgroundAnimated = remember {
         Animatable(languageSelection.getDarkColor())
     }
+
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
@@ -60,6 +67,15 @@ fun AddEditDictionaryScreen(navController: NavController,
                 }
                 is AddEditDictionaryViewModel.UiEvent.SaveDictionary -> {
                     navController.navigateUp()
+                }
+                is AddEditDictionaryViewModel.UiEvent.InitLanguageTranslations -> {
+                    val listOfTranslations = ArrayList<String>()
+                    val listOfIndex = ArrayList<Int>()
+                    languageListState.forEachIndexed { index, category ->
+                        listOfIndex.add(index)
+                        listOfTranslations.add(context.resources.getString(category.text))
+                    }
+                    viewModel.onEvent(AddEditDictionaryEvent.GetLanguageTranslation(listOfIndex, listOfTranslations))
                 }
             }
         }

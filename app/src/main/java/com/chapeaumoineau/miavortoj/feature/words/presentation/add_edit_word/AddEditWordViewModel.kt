@@ -130,14 +130,15 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
             }
 
             is AddEditWordEvent.GetCategoryTranslation -> {
-                _listFromClass[event.index].translation = event.translation
+                event.listOfIndex.forEach { index ->
+                    _listFromClass[index].translation = event.listOfTranslation[index]
+                }
+                _categoryList.value = _listFromClass.sortedBy { it.translation }
             }
 
             is AddEditWordEvent.EnteredSearch -> {
                 _categorySearch.value = event.value
-                viewModelScope.launch {
-                    _categoryList.value = _listFromClass.sortedBy { it.translation }.filter { l -> l.title.contains(event.value) || l.translation.contains(event.value)}
-                }
+                _categoryList.value = _listFromClass.sortedBy { it.translation }.filter { l -> l.title.contains(event.value) || l.translation.contains(event.value)}
             }
 
             is AddEditWordEvent.OnNewCategorySelected -> {

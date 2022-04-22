@@ -55,9 +55,13 @@ fun AddEditWordScreen(navController: NavController,
                     navController.navigateUp()
                 }
                 is AddEditWordViewModel.UiEvent.InitWordTranslations -> {
+                    val listOfTranslations = ArrayList<String>()
+                    val listOfIndex = ArrayList<Int>()
                     categoryListState.forEachIndexed { index, category ->
-                        viewModel.onEvent(AddEditWordEvent.GetCategoryTranslation(index, context.resources.getString(category.text)))
+                        listOfIndex.add(index)
+                        listOfTranslations.add(context.resources.getString(category.text))
                     }
+                    viewModel.onEvent(AddEditWordEvent.GetCategoryTranslation(listOfIndex, listOfTranslations))
                 }
             }
         }
