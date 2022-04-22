@@ -67,14 +67,16 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
                     }
                 }
             }
+            getFavoriteLanguagesJob?.cancel()
+            getFavoriteLanguagesJob = favoriteLanguageUseCases.getFavoriteLanguages().onEach { languages ->
+                _displayedLanguages.value = Language.getLanguagesFromIsos(FavoriteLanguage.getIsos(languages))
+                if(dictionaryId == -1) _dictionaryLanguage.value = Language.getLanguageByIso(languages[3].iso)
+                nextLanguageRemoveFromFavorite = languages[0]
+                focusLanguage(_dictionaryLanguage.value.iso)
+                _eventFlow.emit(UiEvent.ChangeLanguage(_dictionaryLanguage.value))
+            }.launchIn(viewModelScope)
         }
-        getFavoriteLanguagesJob?.cancel()
-        getFavoriteLanguagesJob = favoriteLanguageUseCases.getFavoriteLanguages().onEach { languages ->
-            _displayedLanguages.value = Language.getLanguagesFromIsos(FavoriteLanguage.getIsos(languages))
-            _dictionaryLanguage.value = Language.getLanguageByIso(languages[3].iso)
-            nextLanguageRemoveFromFavorite = languages[0]
-            _eventFlow.emit(UiEvent.ChangeLanguage(_dictionaryLanguage.value))
-        }.launchIn(viewModelScope)
+
     }
 
     fun onEvent(event: AddEditDictionaryEvent) {
@@ -107,17 +109,8 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
             }
 
             is AddEditDictionaryEvent.OnNewLanguageSelected -> {
-                if(!_displayedLanguages.value.contains(Language.getLanguageByIso(event.language)))
                 viewModelScope.launch {
-                    favoriteLanguageUseCases.addFavoriteLanguage(FavoriteLanguage(event.language, System.currentTimeMillis()))
-                    nextLanguageRemoveFromFavorite?.let {
-                        favoriteLanguageUseCases.deleteFavoriteLanguage(it)
-                    }
-                }
-                _isLanguageDialogVisible.value = false
-                _dictionaryLanguage.value = Language.getLanguageByIso(event.language)
-                viewModelScope.launch {
-                    _eventFlow.emit(UiEvent.ChangeLanguage(Language.getLanguageByIso(event.language)))
+                    focusLanguage(event.language)
                 }
             }
 
@@ -137,6 +130,22 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
             }
             else -> {}
         }
+    }
+
+    suspend fun focusLanguage(languageToFocusIso: String) {
+
+        if(!_displayedLanguages.value.contains(Language.getLanguageByIso(languageToFocusIso))) {
+            favoriteLanguageUseCases.addFavoriteLanguage(FavoriteLanguage(languageToFocusIso, System.currentTimeMillis()))
+            nextLanguageRemoveFromFavorite?.let {
+                favoriteLanguageUseCases.deleteFavoriteLanguage(it)
+            }
+        }
+
+        _isLanguageDialogVisible.value = false
+        _dictionaryLanguage.value = Language.getLanguageByIso(languageToFocusIso)
+
+        _eventFlow.emit(UiEvent.ChangeLanguage(Language.getLanguageByIso(languageToFocusIso)))
+
     }
 
     sealed class UiEvent {
