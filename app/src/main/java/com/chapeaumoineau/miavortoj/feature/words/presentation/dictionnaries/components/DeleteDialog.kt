@@ -48,7 +48,7 @@ fun DeleteDialog(isVisible: Boolean,
 
                     Text(text =
                     stringResource(R.string.dictionary_screen_delete_text_p1) + " "
-                            + dictionary.title
+                            + dictionary.title + " "
                             + stringResource(R.string.dictionary_screen_delete_text_p2) + " "
                             + stringResource(R.string.dictionary_screen_delete_to_enter),
                         style = MaterialTheme.typography.subtitle1)

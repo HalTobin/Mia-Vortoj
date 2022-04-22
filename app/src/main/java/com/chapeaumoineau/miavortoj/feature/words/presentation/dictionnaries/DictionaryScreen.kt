@@ -81,6 +81,7 @@ fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewM
                         dictionary = dictionary,
                         dictionaryEdited = state.dictionaryEdit,
                         onEditClick = {
+                            viewModel.onEvent(DictionariesEvent.ToggleEditMode(-1))
                             navController.navigate(Screen.AddEditDictionaryScreen.route + "?dictionaryId=${dictionary.id}")
                         },
                         onDeleteClick = {
@@ -93,6 +94,7 @@ fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewM
                             .fillMaxWidth()
                             .combinedClickable(
                                 onClick = {
+                                    viewModel.onEvent(DictionariesEvent.ToggleEditMode(-1))
                                     navController.navigate(Screen.WordsScreen.route + "?dictionaryId=${dictionary.id}&dictionaryName=${dictionary.title}&dictionaryLanguage=${dictionary.languageIso}")
                                 },
                                 onLongClick = {
