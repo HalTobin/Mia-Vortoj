@@ -55,7 +55,6 @@ fun AddEditWordScreen(navController: NavController,
                     navController.navigateUp()
                 }
                 is AddEditWordViewModel.UiEvent.InitWordTranslations -> {
-                    println("INIT WORDS TRANSLATION")
                     categoryListState.forEachIndexed { index, category ->
                         viewModel.onEvent(AddEditWordEvent.GetCategoryTranslation(index, context.resources.getString(category.text)))
                     }

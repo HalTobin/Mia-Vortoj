@@ -96,10 +96,6 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
                 }
             }
         }
-        viewModelScope.launch {
-            println(_categoryList.toString())
-            _eventFlow.emit(UiEvent.InitWordTranslations)
-        }
     }
 
     fun onEvent(event: AddEditWordEvent) {
@@ -126,6 +122,10 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
 
             //EVENT FOR CATEGORY SELECTION
             is AddEditWordEvent.MoreCategory -> {
+                _categorySearch.value = ""
+                if(_listFromClass[0].translation.isBlank()) viewModelScope.launch {
+                    _eventFlow.emit(UiEvent.InitWordTranslations)
+                }
                 _isCategoryDialogVisible.value = true
             }
 
@@ -135,7 +135,6 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
 
             is AddEditWordEvent.EnteredSearch -> {
                 _categorySearch.value = event.value
-                println(_categoryList.value[0].toString())
                 viewModelScope.launch {
                     _categoryList.value = _listFromClass.sortedBy { it.translation }.filter { l -> l.title.contains(event.value) || l.translation.contains(event.value)}
                 }
