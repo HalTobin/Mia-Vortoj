@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chapeaumoineau.miavortoj.feature.words.domain.extensions.containsCustom
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.FavoriteLanguage
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.InvalidDictionaryException
@@ -97,7 +98,7 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
             //EVENT FOR SEARCH FIELD
             is AddEditDictionaryEvent.EnteredSearch -> {
                 _languageSearch.value = event.value
-                _languagesList.value = _listFromClass.sortedBy { it.translation }.filter { l -> l.name.contains(event.value) || l.iso.contains(event.value) || l.translation.contains(event.value)}
+                _languagesList.value = _listFromClass.sortedBy { it.translation }.filter { l -> l.name.containsCustom(event.value) || l.iso.containsCustom(event.value) || l.translation.containsCustom(event.value)}
             }
 
             is AddEditDictionaryEvent.ChangeLanguage -> {

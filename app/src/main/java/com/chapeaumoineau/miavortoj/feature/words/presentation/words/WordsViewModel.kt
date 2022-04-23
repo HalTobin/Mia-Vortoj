@@ -7,19 +7,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chapeaumoineau.miavortoj.feature.words.domain.model.Category
+import com.chapeaumoineau.miavortoj.feature.words.domain.extensions.*
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Word
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.DictionaryUseCases
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.WordUseCases
 import com.chapeaumoineau.miavortoj.feature.words.domain.util.OrderType
 import com.chapeaumoineau.miavortoj.feature.words.domain.util.WordOrder
-import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryEvent
-import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -64,9 +60,6 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
     private val _wordSearch = mutableStateOf("")
     val search: State<String> = _wordSearch
 
-    private val _eventFlow = MutableSharedFlow<AddEditDictionaryViewModel.UiEvent>()
-    val eventFlow = _eventFlow.asSharedFlow()
-
     private var currentDictionaryId: Int? = null
 
     init {
@@ -104,7 +97,7 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
             //EVENT FOR SEARCH FIELD
             is WordsEvent.EnteredSearch -> {
                 _wordSearch.value = event.value
-                getWords(currentDictionaryId, state.value.wordOrder, _wordSearch.value)
+                getWords(currentDictionaryId, state.value.wordOrder, event.value)
                 //_word.value = Language.getSortedLanguageList().filter { l -> l.name.contains(event.value) || l.iso.contains(event.value)}
             }
 
@@ -133,7 +126,7 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
         getWordsJob?.cancel()
         getWordsJob = id?.let {
             wordUseCases.getWordsFromDictionary(it, wordOrder).onEach {
-                words -> _state.value = state.value.copy(words = words.filter { l -> l.sourceWord.contains(search) || l.targetWord.contains(search) }, wordOrder = wordOrder)
+                words -> _state.value = state.value.copy(words = words.filter { l -> l.sourceWord.containsCustom(search) || l.targetWord.containsCustom(search) }, wordOrder = wordOrder)
                 //_wordList.value = words
             }.launchIn(viewModelScope)
         }

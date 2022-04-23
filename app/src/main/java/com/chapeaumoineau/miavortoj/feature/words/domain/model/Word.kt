@@ -2,6 +2,7 @@ package com.chapeaumoineau.miavortoj.feature.words.domain.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.chapeaumoineau.miavortoj.feature.words.domain.extensions.equalsCustom
 
 @Entity
 data class Word (
@@ -21,13 +22,7 @@ data class Word (
 ) {
 
     fun isValid(input: String): Boolean {
-        return (removeSpace(input.lowercase()) == removeSpace(targetWord.lowercase()))
-    }
-
-    companion object {
-        fun removeSpace(input: String): String {
-            return input.replace("\\s".toRegex(),"")
-        }
+        return targetWord.equalsCustom(input)
     }
 
 }

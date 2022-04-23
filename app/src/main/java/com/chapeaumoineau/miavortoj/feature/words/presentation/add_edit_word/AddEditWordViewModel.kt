@@ -8,6 +8,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.chapeaumoineau.miavortoj.feature.words.domain.extensions.containsCustom
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Category
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.InvalidDictionaryException
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
@@ -139,7 +140,7 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
 
             is AddEditWordEvent.EnteredSearch -> {
                 _categorySearch.value = event.value
-                _categoryList.value = _listFromClass.sortedBy { it.translation }.filter { l -> l.title.contains(event.value) || l.translation.contains(event.value)}
+                _categoryList.value = _listFromClass.sortedBy { it.translation }.filter { l -> l.title.containsCustom(event.value) || l.translation.containsCustom(event.value)}
             }
 
             is AddEditWordEvent.OnNewCategorySelected -> {
