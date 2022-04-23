@@ -74,13 +74,14 @@ class WordCardViewModel @Inject constructor(application: Application,
             is WordCardEvent.EditWord -> {
             }
             is WordCardEvent.PlayWord -> {
-                tts = TextToSpeech(getApplication<Application>().applicationContext, TextToSpeech.OnInitListener {
-                    if(it == TextToSpeech.SUCCESS && _language.value.locale != null) {
+                tts = TextToSpeech(getApplication<Application>().applicationContext) {
+                    if (it == TextToSpeech.SUCCESS && _language.value.locale != null) {
+                        if(tts.isLanguageAvailable(_language.value.locale) == TextToSpeech.LANG_AVAILABLE)
                         tts.language = _language.value.locale
                         tts.setSpeechRate(1.0f)
                         tts.speak(_word.value.targetWord, TextToSpeech.QUEUE_ADD, null)
                     }
-                })
+                }
             }
         }
     }
