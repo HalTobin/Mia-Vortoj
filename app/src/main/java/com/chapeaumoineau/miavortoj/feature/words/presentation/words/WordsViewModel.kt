@@ -98,26 +98,31 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
             is WordsEvent.EnteredSearch -> {
                 _wordSearch.value = event.value
                 getWords(currentDictionaryId, state.value.wordOrder, event.value)
-                //_word.value = Language.getSortedLanguageList().filter { l -> l.name.contains(event.value) || l.iso.contains(event.value)}
             }
 
             is WordsEvent.DeleteWord -> {
+                _state.value = state.value.copy(wordEdit = -1)
+                _state.value = state.value.copy(isDeleteDialogVisible = false)
                 viewModelScope.launch {
                     wordUseCases.deleteWord(event.word)
                     recentlyDeletedWord = event.word
                 }
             }
-            is WordsEvent.RestoreWord -> {
-                viewModelScope.launch {
-                    wordUseCases.addWord(recentlyDeletedWord ?: return@launch)
-                    recentlyDeletedWord = null
-                }
-            }
             is WordsEvent.ToggleOrderSection -> {
                 _state.value = state.value.copy(isOrderSectionVisible = !state.value.isOrderSectionVisible)
             }
-            is WordsEvent.ToggleDeleteButton -> {
-                _state.value = state.value.copy(isDeleteButtonVisible = !state.value.isDeleteButtonVisible)
+            is WordsEvent.ToggleEditMode -> {
+                _state.value = event.wordId?.let { state.value.copy(wordEdit = it) }!!
+            }
+
+            //EVENT RELATED TO DELETE DIALOG
+            is WordsEvent.ToggleDeleteDialog -> {
+                _state.value = state.value.copy(wordEdit = -1)
+                _state.value = state.value.copy(wordDelete = event.word)
+                _state.value = state.value.copy(isDeleteDialogVisible = true)
+            }
+            is WordsEvent.DismissDeleteDialog -> {
+                _state.value = state.value.copy(isDeleteDialogVisible = false)
             }
         }
     }
@@ -127,7 +132,6 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
         getWordsJob = id?.let {
             wordUseCases.getWordsFromDictionary(it, wordOrder).onEach {
                 words -> _state.value = state.value.copy(words = words.filter { l -> l.sourceWord.containsCustom(search) || l.targetWord.containsCustom(search) }, wordOrder = wordOrder)
-                //_wordList.value = words
             }.launchIn(viewModelScope)
         }
     }

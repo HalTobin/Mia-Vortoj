@@ -57,6 +57,7 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
     val search: State<String> = _categorySearch
 
     private val _listFromClass = Category.defaultCategories
+    val categoriesWithTranslation: State<List<Category>> = mutableStateOf(_listFromClass)
     private val _categoryList = mutableStateOf(_listFromClass)
     val categories: State<List<Category>> = _categoryList
 
@@ -68,6 +69,9 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
     private var currentDictionaryId: Int? = null
 
     init {
+        viewModelScope.launch {
+            _eventFlow.emit(UiEvent.InitWordTranslations)
+        }
         savedStateHandle.get<Int>("dictionaryId")?.let { dictionaryId ->
             if (dictionaryId != -1) {
                 currentDictionaryId = dictionaryId

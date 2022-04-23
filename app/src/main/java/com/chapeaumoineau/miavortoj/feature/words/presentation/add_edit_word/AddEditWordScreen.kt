@@ -18,6 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -27,7 +28,7 @@ import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun AddEditWordScreen(navController: NavController,
-                            viewModel: AddEditWordViewModel = hiltViewModel()) {
+                      viewModel: AddEditWordViewModel = hiltViewModel()) {
     val sourceState = viewModel.source.value
     val targetState = viewModel.target.value
     val notesState = viewModel.notes.value
@@ -37,7 +38,7 @@ fun AddEditWordScreen(navController: NavController,
     val targetHintState = viewModel.targetHint.value
 
     val dialogState = viewModel.dialog.value
-    val categoryListState = viewModel.categories.value
+    val categoryListState = viewModel.categoriesWithTranslation.value
     val categoryState = viewModel.category.value
 
     val scaffoldState = rememberScaffoldState()
@@ -139,13 +140,14 @@ fun AddEditWordScreen(navController: NavController,
                 ) {
                     Spacer(modifier = Modifier.height(16.dp))
                     Row(Modifier, Arrangement.Center) {
-                        Text(modifier = Modifier
-                            .padding(end = 8.dp)
+                        /*Text(modifier = Modifier
                             .align(Alignment.CenterVertically),
-                            text = categoryState.title,
-                            color = MaterialTheme.colors.primary)
+                            text = categoryState.translation,
+                            color = MaterialTheme.colors.primary,
+                            overflow = TextOverflow.Ellipsis,
+                            maxLines = 1)*/
                         Icon(modifier = Modifier
-                            .padding()
+                            .padding(start = 8.dp)
                             .align(Alignment.CenterVertically),
                             imageVector = ImageVector.vectorResource(categoryState.icon),
                             contentDescription = "",

@@ -2,13 +2,13 @@ package com.chapeaumoineau.miavortoj.feature.words.presentation.words
 
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Word
 import com.chapeaumoineau.miavortoj.feature.words.domain.util.WordOrder
-import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryEvent
 
 sealed class WordsEvent {
     data class Order(val wordOrder: WordOrder): WordsEvent()
     data class EnteredSearch(val value: String): WordsEvent()
     data class DeleteWord(val word: Word): WordsEvent()
-    object RestoreWord: WordsEvent()
     object ToggleOrderSection: WordsEvent()
-    object ToggleDeleteButton: WordsEvent()
+    data class ToggleEditMode(val wordId: Int? = -1): WordsEvent()
+    data class ToggleDeleteDialog(var word: Word): WordsEvent()
+    object DismissDeleteDialog: WordsEvent()
 }

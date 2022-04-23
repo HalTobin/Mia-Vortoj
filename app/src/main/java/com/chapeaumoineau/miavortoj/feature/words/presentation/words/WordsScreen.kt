@@ -1,10 +1,8 @@
 package com.chapeaumoineau.miavortoj.feature.words.presentation.words
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.*
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -30,7 +28,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.R
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryEvent
+import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.DictionariesEvent
 import com.chapeaumoineau.miavortoj.feature.words.presentation.util.Screen
+import com.chapeaumoineau.miavortoj.feature.words.presentation.words.components.DeleteDialog
 import com.chapeaumoineau.miavortoj.feature.words.presentation.words.components.OrderWordsSection
 import com.chapeaumoineau.miavortoj.feature.words.presentation.words.components.WordItem
 import kotlinx.coroutines.launch
@@ -54,6 +54,10 @@ fun WordsScreen(navController: NavController,
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
+    BackHandler(enabled = (state.wordEdit != -1)) {
+        if(state.wordEdit!=-1) viewModel.onEvent(WordsEvent.ToggleEditMode(-1))
+    }
+
     Scaffold(floatingActionButton = {
         FloatingActionButton(onClick = {
             navController.navigate(Screen.AddEditWordScreen.route + "?dictionaryId=${dictionaryId}&dictionaryLanguage=${dictionaryLanguageId}")
@@ -61,6 +65,10 @@ fun WordsScreen(navController: NavController,
             Icon(imageVector = Icons.Default.Add, contentDescription = "Add word")
         }
     }, scaffoldState = scaffoldState) {
+        state.wordDelete?.let { it1 ->
+            DeleteDialog(isVisible = state.isDeleteDialogVisible, word = it1)
+        }
+
         Column(modifier = Modifier
             .fillMaxSize()
             .background(color)) {
@@ -143,12 +151,29 @@ fun WordsScreen(navController: NavController,
                 itemsIndexed(state.words) { index, word ->
                     WordItem(
                         word = word,
+                        wordEdited = state.wordEdit,
                         isFromSource = isFromSource,
+                        onMoreClick = {
+                            viewModel.onEvent(WordsEvent.ToggleEditMode(word.id))
+                        },
+                        onEditClick = {
+                            viewModel.onEvent(WordsEvent.ToggleEditMode(-1))
+                            navController.navigate(Screen.AddEditWordScreen.route + "?dictionaryId=${word.dictionaryId}&wordId=${word.id}")
+                        },
+                        onDeleteClick = {
+                            viewModel.onEvent(WordsEvent.ToggleDeleteDialog(word))
+                        },
+                        onBackClick = {
+                            viewModel.onEvent(WordsEvent.ToggleEditMode(-1))
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .combinedClickable(
-                                onClick = { navController.navigate(Screen.WordCardScreen.route + "?wordId=${word.id}") },
-                                onLongClick = {
+                            .clickable(
+                                onClick = {
+                                    viewModel.onEvent(WordsEvent.ToggleEditMode(-1))
+                                    navController.navigate(Screen.WordCardScreen.route + "?wordId=${word.id}")
+                                          },
+                                /*onLongClick = {
                                     viewModel.onEvent(WordsEvent.DeleteWord(word))
                                     scope.launch {
                                         val result = scaffoldState.snackbarHostState.showSnackbar(
@@ -159,7 +184,7 @@ fun WordsScreen(navController: NavController,
                                             viewModel.onEvent(WordsEvent.RestoreWord)
                                         }
                                     }
-                                },
+                                }*/
                             )
                     )
                     if (index < state.words.lastIndex)

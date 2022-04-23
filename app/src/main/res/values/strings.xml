@@ -3,6 +3,7 @@
 
     <string name="search_hint">Recherche</string>
 
+    <string name="dialog_warning">Attention</string>
     <string name="dialog_cancel">Annuler</string>
     <string name="dialog_confirm">Confirmer</string>
 
@@ -18,13 +19,14 @@
 
     <string name="dictionary_screen_title">Vos dictionnaires</string>
 
-    <string name="dictionary_screen_delete_title">Êtes-vous sûr ?</string>
-    <string name="dictionary_screen_delete_text_p1">La suppression d\'un dictionnaire est définitive, </string>
+    <string name="dictionary_screen_delete_text_p1">La suppression d\'un dictionnaire est définitive,</string>
     <string name="dictionary_screen_delete_text_p2">ainsi que toutes les entrées associées seront perdues...\nEntrez le texte suivant pour confirmer la suppression :</string>
     <string name="dictionary_screen_delete_to_enter">Supprimer</string>
 
     <string name="add_edit_dictionary_screen_title_hint">Entrez un titre...</string>
     <string name="add_edit_dictionary_screen_description_hint">Entrez une description...</string>
+
+    <string name="word_screen_delete_text">Êtes-vous sûr de vouloir supprimer le mot suivant :</string>
 
     <string name="add_edit_word_source_hint">Source</string>
     <string name="add_edit_word_target_hint">Cible</string>

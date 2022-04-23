@@ -33,8 +33,8 @@ import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
 import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.DictionariesEvent
 
 @Composable
-fun DictionaryItem(dictionary: Dictionary,
-                   modifier: Modifier = Modifier,
+fun DictionaryItem(modifier: Modifier = Modifier,
+                   dictionary: Dictionary,
                    dictionaryEdited: Int = -1,
                    onMoreClick: () -> Unit,
                    onDeleteClick: () -> Unit,

@@ -48,10 +48,9 @@ fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewM
         }
     }, scaffoldState = scaffoldState) {
         state.dictionaryDelete?.let { it1 ->
-            DeleteDialog(isVisible = state.isDeleteDialogVisible,
-                it1
-            )
+            DeleteDialog(isVisible = state.isDeleteDialogVisible, it1)
         }
+
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)) {
