@@ -6,10 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,7 +25,7 @@ fun LanguageDialog(isVisible: Boolean, viewModel: AddEditDictionaryViewModel = h
         Surface(
             modifier = Modifier.fillMaxHeight(0.9f),
             shape = RoundedCornerShape(8.dp),
-            contentColor = Color.White
+            contentColor = MaterialTheme.colors.primary
         ) {
             Column(modifier = Modifier
                 .fillMaxSize()

@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -44,15 +43,15 @@ fun WordCardScreen(navController: NavController,
                     imageVector = ImageVector.vectorResource(category.icon),
                     contentDescription = "")
                 Column() {
-                    Text(text = word.targetWord, style = MaterialTheme.typography.h5, fontWeight = FontWeight.Bold, color = Color.Black)
-                    Text(text = word.sourceWord, style = MaterialTheme.typography.h5, color = Color.Black)
+                    Text(text = word.targetWord, style = MaterialTheme.typography.h5, fontWeight = FontWeight.Bold, color = MaterialTheme.colors.primary)
+                    Text(text = word.sourceWord, style = MaterialTheme.typography.h5, color = MaterialTheme.colors.primary)
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
-            Text(text = word.notes, style = MaterialTheme.typography.subtitle1, color = Color.Black)
+            Text(text = word.notes, style = MaterialTheme.typography.subtitle1, color = MaterialTheme.colors.primary)
             Spacer(modifier = Modifier.height(16.dp))
             Row(modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally), horizontalArrangement = Arrangement.Center) {
-                Text(text = word.emote, style = MaterialTheme.typography.h1, color = Color.Black)
+                Text(text = word.emote, style = MaterialTheme.typography.h1, color = MaterialTheme.colors.primary)
             }
         }
     }

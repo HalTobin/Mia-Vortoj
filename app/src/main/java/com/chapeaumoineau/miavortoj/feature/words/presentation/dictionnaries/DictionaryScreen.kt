@@ -2,6 +2,7 @@ package com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.*
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -80,6 +81,10 @@ fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewM
                     DictionaryItem(
                         dictionary = dictionary,
                         dictionaryEdited = state.dictionaryEdit,
+                        onMoreClick = {
+                            viewModel.onEvent(DictionariesEvent.ToggleEditMode(dictionary.id))
+
+                        },
                         onEditClick = {
                             viewModel.onEvent(DictionariesEvent.ToggleEditMode(-1))
                             navController.navigate(Screen.AddEditDictionaryScreen.route + "?dictionaryId=${dictionary.id}")
@@ -92,14 +97,11 @@ fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewM
                         },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .combinedClickable(
+                            .clickable(
                                 onClick = {
                                     viewModel.onEvent(DictionariesEvent.ToggleEditMode(-1))
                                     navController.navigate(Screen.WordsScreen.route + "?dictionaryId=${dictionary.id}&dictionaryName=${dictionary.title}&dictionaryLanguage=${dictionary.languageIso}")
-                                },
-                                onLongClick = {
-                                    viewModel.onEvent(DictionariesEvent.ToggleEditMode(dictionary.id))
-                                },
+                                }
                             )
                     )
                     Spacer(modifier = Modifier.height(16.dp))

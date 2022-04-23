@@ -31,7 +31,7 @@ fun CategoryDialogItem(category: Category,
                 fontWeight = FontWeight.Bold,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                color = Color.White
+                color = MaterialTheme.colors.primary
             )
         }
 
@@ -40,7 +40,7 @@ fun CategoryDialogItem(category: Category,
             .align(Alignment.CenterEnd)) {
             Icon(imageVector = ImageVector.vectorResource(category.icon),
                 contentDescription = "",
-                tint = Color.White,
+                tint = MaterialTheme.colors.primary,
                 modifier = Modifier
                     .size(40.dp)
                     .clip(CircleShape)

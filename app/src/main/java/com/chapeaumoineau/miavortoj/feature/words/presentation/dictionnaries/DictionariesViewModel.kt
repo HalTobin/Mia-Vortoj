@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.chapeaumoineau.miavortoj.R
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.DictionaryUseCases
+import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.WordUseCases
 import com.chapeaumoineau.miavortoj.feature.words.domain.util.DictionaryOrder
 import com.chapeaumoineau.miavortoj.feature.words.domain.util.OrderType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DictionariesViewModel @Inject constructor(private val dictionaryUseCases: DictionaryUseCases): ViewModel() {
+class DictionariesViewModel @Inject constructor(private val dictionaryUseCases: DictionaryUseCases,
+                                                private val wordUseCases: WordUseCases): ViewModel() {
 
     private val _state = mutableStateOf(DictionariesState())
     val state: State<DictionariesState> = _state
@@ -45,6 +47,7 @@ class DictionariesViewModel @Inject constructor(private val dictionaryUseCases: 
             is DictionariesEvent.DeleteDictionary -> {
                 if(deleteValidation.value == state.value.deleteConfirmationTextToEnter) {
                     viewModelScope.launch {
+                        event.dictionary.id?.let { wordUseCases.deleteWordsFromDictionary(it) }
                         dictionaryUseCases.deleteDictionary(event.dictionary)
                         recentlyDeletedDictionary = event.dictionary
                     }

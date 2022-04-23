@@ -143,13 +143,13 @@ fun AddEditWordScreen(navController: NavController,
                             .padding(end = 8.dp)
                             .align(Alignment.CenterVertically),
                             text = categoryState.title,
-                            color = Color.White)
+                            color = MaterialTheme.colors.primary)
                         Icon(modifier = Modifier
                             .padding()
                             .align(Alignment.CenterVertically),
                             imageVector = ImageVector.vectorResource(categoryState.icon),
                             contentDescription = "",
-                            tint = Color.White)
+                            tint = MaterialTheme.colors.primary)
                     }
                     Spacer(modifier = Modifier.height(16.dp))
                 }

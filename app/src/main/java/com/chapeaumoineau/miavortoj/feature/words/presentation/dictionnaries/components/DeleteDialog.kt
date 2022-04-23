@@ -34,7 +34,7 @@ fun DeleteDialog(isVisible: Boolean,
         Surface(
             modifier = Modifier,
             shape = RoundedCornerShape(8.dp),
-            contentColor = Color.White
+            contentColor = MaterialTheme.colors.primary
         ) {
             Column(modifier = Modifier
                 .background(Color.DarkGray)) {
@@ -70,7 +70,7 @@ fun DeleteDialog(isVisible: Boolean,
                     Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
                         Button(modifier = Modifier,
                             colors = ButtonDefaults.buttonColors(
-                                backgroundColor = Color.White),
+                                backgroundColor = MaterialTheme.colors.primary),
                             onClick = {
                                 viewModel.onEvent(DictionariesEvent.DismissDeleteDialog)
                             },

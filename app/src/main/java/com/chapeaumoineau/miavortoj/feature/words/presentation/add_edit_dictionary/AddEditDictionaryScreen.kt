@@ -133,7 +133,7 @@ fun AddEditDictionaryScreen(navController: NavController,
                             .size(50.dp)
                             .shadow(15.dp, CircleShape)
                             .clip(CircleShape)
-                            .background(Color.White)
+                            .background(MaterialTheme.colors.primary)
                             .clickable {
                                 viewModel.onEvent(AddEditDictionaryEvent.MoreLanguage)
                             }

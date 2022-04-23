@@ -58,7 +58,7 @@ class WordCardViewModel @Inject constructor(private val wordUseCases: WordUseCas
 
     /* TODO - Refresh the card after word edit */
 
-    /* TODO - Scraping from reverso / deepl | Look for API */
+    /* TODO - Look for API to get word in context */
 
     /* TODO - Text To Speech */
 
