@@ -33,6 +33,8 @@
     <string name="add_edit_word_emote_hint">Emote</string>
     <string name="add_edit_word_notes_hint">Notes</string>
 
+    <string name="word_card_play">Écouter</string>
+
     <string name="difficulty">Difficulté</string>
     <string name="difficulty_easy">Facile</string>
     <string name="difficulty_medium">Moyen</string>

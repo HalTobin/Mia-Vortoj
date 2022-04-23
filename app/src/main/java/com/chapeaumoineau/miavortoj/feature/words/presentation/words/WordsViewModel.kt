@@ -63,6 +63,7 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
     private var currentDictionaryId: Int? = null
 
     init {
+        _state.value = state.value.copy(wordEdit = -1)
         savedStateHandle.get<Int>("dictionaryId")?.let {dictionaryId ->
             if(dictionaryId != -1) {
                 currentDictionaryId = dictionaryId

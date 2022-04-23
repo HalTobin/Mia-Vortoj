@@ -1,7 +1,10 @@
 package com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word
 
+import android.app.Application
+import android.speech.tts.TextToSpeech
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,12 +20,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class WordCardViewModel @Inject constructor(private val wordUseCases: WordUseCases,
-                                           private val dictionaryUseCases: DictionaryUseCases,
-                                           savedStateHandle: SavedStateHandle): ViewModel() {
+class WordCardViewModel @Inject constructor(application: Application,
+                                            private val wordUseCases: WordUseCases,
+                                            private val dictionaryUseCases: DictionaryUseCases,
+                                            savedStateHandle: SavedStateHandle): AndroidViewModel(application) {
 
     private val _word = mutableStateOf(Word("", "", "", "", 0, 0, 0,0, 0, 0, 0, 0))
     val word: State<Word> = _word
@@ -38,6 +43,8 @@ class WordCardViewModel @Inject constructor(private val wordUseCases: WordUseCas
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
+
+    lateinit var tts: TextToSpeech
 
     init {
         savedStateHandle.get<Int>("wordId")?.let { wordId ->
@@ -65,6 +72,15 @@ class WordCardViewModel @Inject constructor(private val wordUseCases: WordUseCas
     fun onEvent(event: WordCardEvent) {
         when(event) {
             is WordCardEvent.EditWord -> {
+            }
+            is WordCardEvent.PlayWord -> {
+                tts = TextToSpeech(getApplication<Application>().applicationContext, TextToSpeech.OnInitListener {
+                    if(it == TextToSpeech.SUCCESS && _language.value.locale != null) {
+                        tts.language = _language.value.locale
+                        tts.setSpeechRate(1.0f)
+                        tts.speak(_word.value.targetWord, TextToSpeech.QUEUE_ADD, null)
+                    }
+                })
             }
         }
     }
