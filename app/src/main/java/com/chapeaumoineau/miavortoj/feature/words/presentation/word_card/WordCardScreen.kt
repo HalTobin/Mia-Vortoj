@@ -7,6 +7,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -33,6 +34,8 @@ fun WordCardScreen(navController: NavController,
     val category = viewModel.category.value
     val dictionary = viewModel.dictionary.value
     val language = viewModel.language.value
+
+    val speech = viewModel.speech.value
 
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
@@ -66,7 +69,7 @@ fun WordCardScreen(navController: NavController,
             Button(modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .clip(RoundedCornerShape(32.dp)),
-                colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.dark_green)),
+                colors = ButtonDefaults.buttonColors(backgroundColor = if(speech) colorResource(R.color.dark_green) else colorResource(R.color.dark_gray)),
                 onClick = {
                     viewModel.onEvent(WordCardEvent.PlayWord)
                 },
@@ -78,12 +81,12 @@ fun WordCardScreen(navController: NavController,
                 )
             ) {
                 Icon(
-                    Icons.Default.PlayArrow,
+                    Icons.Default.VolumeUp,
                     contentDescription = "Text to speech",
-                    modifier = Modifier.size(48.dp)
+                    modifier = Modifier.size(32.dp)
                 )
                 Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                Text(text = stringResource(R.string.words_start_quiz), style = MaterialTheme.typography.h5)
+                Text(text = stringResource(R.string.word_card_play), style = MaterialTheme.typography.h5)
             }
 
         }

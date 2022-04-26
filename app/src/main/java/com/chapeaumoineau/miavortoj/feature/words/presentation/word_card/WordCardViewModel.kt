@@ -41,6 +41,9 @@ class WordCardViewModel @Inject constructor(application: Application,
     private val _category = mutableStateOf(Category.getDefaultCategory())
     val category: State<Category> = _category
 
+    private val _speech = mutableStateOf(false)
+    val speech: State<Boolean> = _speech
+
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
@@ -56,6 +59,17 @@ class WordCardViewModel @Inject constructor(application: Application,
                         dictionaryUseCases.getDictionary(wordDb.dictionaryId)?.also { dictionaryDb ->
                             _dictionary.value = dictionaryDb
                             _language.value = Language.getLanguageByIso(dictionaryDb.languageIso)
+
+                            if(_language.value.locale != null) {
+                                tts = TextToSpeech(getApplication<Application>().applicationContext) {
+                                    if (it == TextToSpeech.SUCCESS) {
+                                        if(tts.isLanguageAvailable(_language.value.locale) == TextToSpeech.LANG_AVAILABLE)
+                                            _speech.value = true
+                                            tts.language = _language.value.locale
+                                    }
+                                }
+                            }
+
                         }
                     }
                 }
@@ -72,15 +86,12 @@ class WordCardViewModel @Inject constructor(application: Application,
     fun onEvent(event: WordCardEvent) {
         when(event) {
             is WordCardEvent.EditWord -> {
+
             }
             is WordCardEvent.PlayWord -> {
-                tts = TextToSpeech(getApplication<Application>().applicationContext) {
-                    if (it == TextToSpeech.SUCCESS && _language.value.locale != null) {
-                        if(tts.isLanguageAvailable(_language.value.locale) == TextToSpeech.LANG_AVAILABLE)
-                        tts.language = _language.value.locale
-                        tts.setSpeechRate(1.0f)
-                        tts.speak(_word.value.targetWord, TextToSpeech.QUEUE_ADD, null)
-                    }
+                if(_speech.value) {
+                    tts.setPitch(1f)
+                    tts.speak(_word.value.targetWord, TextToSpeech.QUEUE_ADD, null, null)
                 }
             }
         }
@@ -88,7 +99,6 @@ class WordCardViewModel @Inject constructor(application: Application,
 
     sealed class UiEvent {
         data class ShowSnackBar(val message: String): UiEvent()
-        object SaveWord: UiEvent()
     }
 
 }
