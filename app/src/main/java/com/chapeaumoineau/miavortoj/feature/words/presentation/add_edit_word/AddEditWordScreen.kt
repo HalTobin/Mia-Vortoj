@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.R
+import com.chapeaumoineau.miavortoj.feature.words.domain.model.Rules
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.components.CategoryDialog
 import kotlinx.coroutines.flow.collectLatest
 
@@ -191,7 +192,7 @@ fun AddEditWordScreen(navController: NavController,
                         shape = CircleShape
                     )*/,
                     colors = ButtonDefaults.buttonColors(
-                        backgroundColor = if(viewModel.difficulty.value == 0) colorResource(R.color.difficulty_easy_on)
+                        backgroundColor = if(viewModel.difficulty.value == Rules.DIFFICULTY_EASY) colorResource(R.color.difficulty_easy_on)
                             else colorResource(R.color.difficulty_easy_off)),
                     onClick = {
                         viewModel.onEvent(AddEditWordEvent.ChangeDifficulty(0))
@@ -219,7 +220,7 @@ fun AddEditWordScreen(navController: NavController,
                         shape = CircleShape
                     )*/,
                     colors = ButtonDefaults.buttonColors(
-                        backgroundColor = if(viewModel.difficulty.value == 1) colorResource(R.color.difficulty_medium_on)
+                        backgroundColor = if(viewModel.difficulty.value == Rules.DIFFICULTY_MEDIUM) colorResource(R.color.difficulty_medium_on)
                             else colorResource(R.color.difficulty_medium_off)),
                     onClick = {
                         viewModel.onEvent(AddEditWordEvent.ChangeDifficulty(1))
@@ -247,7 +248,7 @@ fun AddEditWordScreen(navController: NavController,
                         shape = CircleShape
                     )*/,
                     colors = ButtonDefaults.buttonColors(
-                        backgroundColor = if(viewModel.difficulty.value == 2) colorResource(R.color.difficulty_hard_on)
+                        backgroundColor = if(viewModel.difficulty.value == Rules.DIFFICULTY_HARD) colorResource(R.color.difficulty_hard_on)
                             else colorResource(R.color.difficulty_hard_off)),
                     onClick = {
                         viewModel.onEvent(AddEditWordEvent.ChangeDifficulty(2))
