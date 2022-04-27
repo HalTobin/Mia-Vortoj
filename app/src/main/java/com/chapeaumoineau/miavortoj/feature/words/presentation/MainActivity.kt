@@ -46,15 +46,11 @@ class MainActivity : ComponentActivity() {
                         ) {
                             AddEditDictionaryScreen(navController = navController)
                         }
-                        composable(route = Screen.WordsScreen.route + "?dictionaryId={dictionaryId}&dictionaryLanguage={dictionaryLanguage}",
+                        composable(route = Screen.WordsScreen.route + "?dictionaryId={dictionaryId}",
                             arguments = listOf(navArgument(name = "dictionaryId") {
                                 type = NavType.IntType
                                 defaultValue = -1
-                            },
-                            navArgument(name = "dictionaryLanguage") {
-                                type = NavType.IntType
-                                defaultValue = -1
-                            },
+                            }
                             )
                         ) {
                             WordsScreen(navController = navController)
@@ -67,7 +63,7 @@ class MainActivity : ComponentActivity() {
                             navArgument(name = "wordId") {
                                 type = NavType.IntType
                                 defaultValue = -1
-                            },)) {
+                            })) {
                             AddEditWordScreen(navController = navController)
                         }
                         composable(route = Screen.WordCardScreen.route + "?wordId={wordId}", arguments = listOf(
@@ -78,7 +74,8 @@ class MainActivity : ComponentActivity() {
                         )) {
                             WordCardScreen(navController = navController)
                         }
-                        composable(route = Screen.QuizScreen.route + "?dictionaryId={dictionaryId}&rules={rules}", arguments = listOf(
+                        composable(route = Screen.QuizScreen.route + "?dictionaryId={dictionaryId}", arguments = listOf(
+                        //composable(route = Screen.QuizScreen.route + "?dictionaryId={dictionaryId}&rules={rules}", arguments = listOf(
                             navArgument(name = "dictionaryId") {
                                 type = NavType.IntType
                                 defaultValue = -1

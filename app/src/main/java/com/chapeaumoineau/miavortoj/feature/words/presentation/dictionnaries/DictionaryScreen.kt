@@ -99,7 +99,7 @@ fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewM
                             .clickable(
                                 onClick = {
                                     viewModel.onEvent(DictionariesEvent.ToggleEditMode(-1))
-                                    navController.navigate(Screen.WordsScreen.route + "?dictionaryId=${dictionary.id}&dictionaryName=${dictionary.title}&dictionaryLanguage=${dictionary.languageIso}")
+                                    navController.navigate(Screen.WordsScreen.route + "?dictionaryId=${dictionary.id}")
                                 }
                             )
                     )
