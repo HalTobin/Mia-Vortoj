@@ -8,7 +8,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chapeaumoineau.miavortoj.feature.words.domain.extensions.*
+import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
+import com.chapeaumoineau.miavortoj.feature.words.domain.model.Rules
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Word
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.DictionaryUseCases
 import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.WordUseCases
@@ -33,23 +35,11 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
 
     private var getWordsJob: Job? = null
 
-    private val _dictionaryId = mutableStateOf(0)
-    val dictionaryId: State<Int> = _dictionaryId
+    private val _dictionary = mutableStateOf(Dictionary.getDefault())
+    val dictionary: State<Dictionary> = _dictionary
 
-    private val _dictionaryTitle = mutableStateOf("")
-    val title: MutableState<String> = _dictionaryTitle
-
-    private val _dictionaryDescription = mutableStateOf("")
-    val description: MutableState<String> = _dictionaryDescription
-
-    private val _dictionaryLanguageIso = mutableStateOf(Language.getDefault().iso)
-    val dictionaryLanguageIso: State<String> = _dictionaryLanguageIso
-
-    private val _dictionaryColor = mutableStateOf(Language.getDefault().getDarkColor())
-    val color: State<Color> = _dictionaryColor
-
-    private val _dictionaryFlag = mutableStateOf(Language.getDefault().flag)
-    val flag: State<Int> = _dictionaryFlag
+    private val _language = mutableStateOf(Language.getDefault())
+    val language: State<Language> = _language
 
     private val _isFromSource = mutableStateOf(true)
     val isFromSource: State<Boolean> = _isFromSource
@@ -60,6 +50,9 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
     private val _wordSearch = mutableStateOf("")
     val search: State<String> = _wordSearch
 
+    private val _rules = mutableStateOf(Rules.getDefault())
+    val rules: State<Rules> = _rules
+
     private var currentDictionaryId: Int? = null
 
     init {
@@ -69,13 +62,8 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
                 currentDictionaryId = dictionaryId
                 viewModelScope.launch {
                     dictionaryUseCases.getDictionary(dictionaryId)?.also { dictionary ->
-                        val language = Language.getLanguageByIso(dictionary.languageIso)
-                        _dictionaryId.value = dictionaryId
-                        _dictionaryTitle.value = dictionary.title
-                        _dictionaryDescription.value = dictionary.description
-                        _dictionaryLanguageIso.value = dictionary.languageIso
-                        _dictionaryColor.value = language.getDarkColor()
-                        _dictionaryFlag.value = language.flag
+                        _dictionary.value = dictionary
+                        _language.value = Language.getLanguageByIso(dictionary.languageIso)
                     }
                 }
             }

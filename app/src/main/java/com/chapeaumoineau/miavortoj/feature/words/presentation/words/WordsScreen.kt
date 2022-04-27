@@ -41,13 +41,13 @@ fun WordsScreen(navController: NavController,
 
     val state = viewModel.state.value
 
-    val dictionaryId = viewModel.dictionaryId.value
-    val dictionaryTitle = viewModel.title.value
-    val dictionaryDescription = viewModel.description.value
-    val dictionaryLanguageId = viewModel.dictionaryLanguageIso.value
+    val dictionaryId = viewModel.dictionary.value.id
+    val dictionaryTitle = viewModel.dictionary.value.title
+    val dictionaryDescription = viewModel.dictionary.value.description
+    val dictionaryLanguageId = viewModel.dictionary.value.languageIso
 
-    val color = viewModel.color.value
-    val flag = viewModel.flag.value
+    val color = viewModel.language.value.getDarkColor()
+    val flag = viewModel.language.value.flag
 
     val isFromSource = viewModel.isFromSource.value
 
