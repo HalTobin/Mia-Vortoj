@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.chapeaumoineau.miavortoj.feature.words.domain.model.Rules
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryScreen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.AddEditWordScreen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.DictionariesScreen
@@ -77,11 +78,15 @@ class MainActivity : ComponentActivity() {
                         )) {
                             WordCardScreen(navController = navController)
                         }
-                        composable(route = Screen.QuizScreen.route + "?dictionaryId={dictionaryId}", arguments = listOf(
+                        composable(route = Screen.QuizScreen.route + "?dictionaryId={dictionaryId}&rules={rules}", arguments = listOf(
                             navArgument(name = "dictionaryId") {
                                 type = NavType.IntType
                                 defaultValue = -1
-                            }
+                            },
+                            /*navArgument(name = "rules") {
+                                type = NavType.ParcelableType(Rules::class.java)
+                                defaultValue = null
+                            }*/
                         )) {
                             QuizScreen(navController = navController)
                         }

@@ -12,7 +12,7 @@ fun String.isLastCharASpace(): Boolean {
 }
 
 fun String.removeLastSpace(): String {
-    return if (this.length > 0) if(this.isLastCharASpace()) this.dropLast(1) else this
+    return if (this.isNotEmpty()) if(this.isLastCharASpace()) this.dropLast(1) else this
     else this
 }
 
@@ -29,8 +29,4 @@ fun String.equalsCustom(inStr: String): Boolean {
 
 fun String.containsCustom(inStr: String): Boolean {
     return this.formatCustom().contains(inStr.formatCustom())
-}
-
-class String {
-
 }
