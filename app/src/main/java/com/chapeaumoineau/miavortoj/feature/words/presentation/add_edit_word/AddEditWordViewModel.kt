@@ -89,14 +89,11 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
                     wordUseCases.getWord(wordId)?.also { word ->
                         currentWordId = word.id
                         _wordSource.value = word.sourceWord
-                            //source.value.copy(text = word.sourceWord, isHintVisible = false)
                         _wordTarget.value = word.targetWord
-                            //target.value.copy(text = word.targetWord, isHintVisible = false)
                         _wordEmote.value = word.emote
-                            //emote.value.copy(text = word.emote, isHintVisible = false)
                         _wordNotes.value = word.notes
-                            //notes.value.copy(text = word.notes, isHintVisible = false)
                         _wordCategory.value = Category.getCategoryById(word.themeId)
+                        _wordDifficulty.value = word.difficulty
                     }
                 }
             }
