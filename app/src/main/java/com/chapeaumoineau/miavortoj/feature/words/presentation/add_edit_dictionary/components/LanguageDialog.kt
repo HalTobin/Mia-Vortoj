@@ -39,7 +39,7 @@ fun LanguageDialog(isVisible: Boolean, viewModel: AddEditDictionaryViewModel = h
                         label = {
                             Text(text = stringResource(R.string.search_hint), color = Color.LightGray)
                         },
-                        maxLines = 1
+                        singleLine = true
                     )
                 }
                 LazyColumn(modifier = Modifier.fillMaxWidth()) {

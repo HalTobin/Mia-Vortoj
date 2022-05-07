@@ -45,7 +45,7 @@ fun CategoryDialog(isVisible: Boolean, viewModel: AddEditWordViewModel = hiltVie
                                 color = Color.LightGray
                             )
                         },
-                        maxLines = 1
+                        singleLine = true
                     )
                 }
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
