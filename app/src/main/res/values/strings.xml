@@ -70,9 +70,12 @@
     <string name="language_phl">Cebuano</string>
     <string name="language_mwi">Chichewa</string>
     <string name="language_chn">Chinois (Mandarin)</string>
+    <string name="language_yue">Chinois (Cantonais)</string>
     <string name="language_lka">Singhalais</string>
     <string name="language_kor">Coréen</string>
     <string name="language_fr20r">Corse</string>
+    <string name="language_frbre">Breton</string>
+    <string name="language_frocc">Occitan</string>
     <string name="language_nor">Norvégien</string>
     <string name="language_dnk">Danois</string>
     <string name="language_swe">Suédois</string>
@@ -81,6 +84,11 @@
     <string name="language_est">Estonien</string>
     <string name="language_lva">Letton</string>
     <string name="language_ltu">Lituanien</string>
+    <string name="language_nl">Néerlandais</string>
+    <string name="language_fiklg">Klingon</string>
+    <string name="language_fielf">Elfique</string>
+    <string name="language_fidtk">Dothraki</string>
+    <string name="language_finavi">Lìʼfya leNaʼvi</string>
 
     <string name="theme_other">Autres</string>
     <string name="theme_number">Chiffres &amp; Nombres</string>
