@@ -46,49 +46,72 @@
     <string name="quiz_validate_answer">Valider</string>
 
     <string name="language_na">Autres</string>
+
     <string name="language_epo">Espéranto</string>
-    <string name="language_eng">Anglais</string>
+    <string name="language_tkpn">Toki Pona</string>
+    <string name="language_islv">Interslave</string>
+    <string name="language_ilng">Interlingua</string>
+
+    <string name="language_lat">Latin</string>
+    <string name="language_gre">Grec</string>
+
     <string name="language_fra">Français</string>
+    <string name="language_fr20r">Corse</string>
+    <string name="language_frbre">Breton</string>
+    <string name="language_frocc">Occitan</string>
+    <string name="language_pv">Basque</string>
     <string name="language_esp">Espagnol</string>
+    <string name="language_esct">Catalan</string>
     <string name="language_ita">Italien</string>
+    <string name="language_rum">Roumain</string>
+
+    <string name="language_eng">Anglais</string>
+
     <string name="language_deu">Allemand</string>
+    <string name="language_nor">Norvégien</string>
+    <string name="language_dnk">Danois</string>
+    <string name="language_swe">Suédois</string>
+    <string name="language_fin">Finnois</string>
+    <string name="language_est">Estonien</string>
+    <string name="language_nl">Néerlandais</string>
+
     <string name="language_svn">Slovène</string>
+    <string name="language_cze">Tchèque</string>
     <string name="language_rus">Russe</string>
+    <string name="language_blr">Biélorusse</string>
+    <string name="language_ukr">Ukrainien</string>
+    <string name="language_lva">Letton</string>
+    <string name="language_ltu">Lituanien</string>
+    <string name="language_bih">Serbo-Croate</string>
+
+    <string name="language_hin">Hindi</string>
+
+    <string name="language_tur">Turc</string>
+
     <string name="language_jpn">Japonais</string>
+    <string name="language_kor">Coréen</string>
+    <string name="language_chn">Chinois (Mandarin)</string>
+    <string name="language_yue">Chinois (Cantonais)</string>
+
     <string name="language_zaf">Africain</string>
     <string name="language_alb">Albanais</string>
     <string name="language_sau">Arabe</string>
     <string name="language_arm">Arménien</string>
     <string name="language_aze">Azéri</string>
-    <string name="language_pv">Basque</string>
+
     <string name="language_bgd">Bengali</string>
-    <string name="language_blr">Biélorusse</string>
     <string name="language_mmr">Birman</string>
-    <string name="language_bih">Serbo-Croate</string>
+
     <string name="language_bgr">Bulgare</string>
-    <string name="language_esct">Catalan</string>
     <string name="language_phl">Cebuano</string>
     <string name="language_mwi">Chichewa</string>
-    <string name="language_chn">Chinois (Mandarin)</string>
-    <string name="language_yue">Chinois (Cantonais)</string>
     <string name="language_lka">Singhalais</string>
-    <string name="language_kor">Coréen</string>
-    <string name="language_fr20r">Corse</string>
-    <string name="language_frbre">Breton</string>
-    <string name="language_frocc">Occitan</string>
-    <string name="language_nor">Norvégien</string>
-    <string name="language_dnk">Danois</string>
-    <string name="language_swe">Suédois</string>
-    <string name="language_fin">Finnois</string>
-    <string name="language_ukr">Ukrainien</string>
-    <string name="language_est">Estonien</string>
-    <string name="language_lva">Letton</string>
-    <string name="language_ltu">Lituanien</string>
-    <string name="language_nl">Néerlandais</string>
+
     <string name="language_fiklg">Klingon</string>
     <string name="language_fielf">Elfique</string>
     <string name="language_fidtk">Dothraki</string>
     <string name="language_finavi">Naʼvi</string>
+    <string name="language_filpn">Lapine</string>
 
     <string name="theme_other">Autres</string>
     <string name="theme_number">Chiffres &amp; Nombres</string>
