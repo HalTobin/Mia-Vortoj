@@ -55,9 +55,15 @@
     <string name="language_lat">Latin</string>
     <string name="language_gre">Grec</string>
 
+    <string name="language_frbre">Breton</string>
+    <string name="language_cy">Gallois</string>
+    <string name="language_kw">Cornique</string>
+    <string name="language_ga">Irlandais</string>
+    <string name="language_gd">Écossais</string>
+    <string name="language_gv">Mannois</string>
+
     <string name="language_fra">Français</string>
     <string name="language_fr20r">Corse</string>
-    <string name="language_frbre">Breton</string>
     <string name="language_frocc">Occitan</string>
     <string name="language_pv">Basque</string>
     <string name="language_esp">Espagnol</string>
@@ -73,7 +79,10 @@
     <string name="language_swe">Suédois</string>
     <string name="language_fin">Finnois</string>
     <string name="language_est">Estonien</string>
+    <string name="language_is">Islandais</string>
     <string name="language_nl">Néerlandais</string>
+
+    <string name="language_yi">Yiddish</string>
 
     <string name="language_svn">Slovène</string>
     <string name="language_cze">Tchèque</string>
@@ -85,17 +94,27 @@
     <string name="language_bih">Serbo-Croate</string>
 
     <string name="language_hin">Hindi</string>
+    <string name="language_ur">Urdu</string>
 
     <string name="language_tur">Turc</string>
+    <string name="language_tuk">Turkmène</string>
 
     <string name="language_jpn">Japonais</string>
     <string name="language_kor">Coréen</string>
     <string name="language_chn">Chinois (Mandarin)</string>
     <string name="language_yue">Chinois (Cantonais)</string>
+    <string name="language_vi">Vietnamien</string>
+    <string name="language_th">Thaï</string>
 
     <string name="language_zaf">Africain</string>
+    <string name="language_zu">Zoulou</string>
+    <string name="language_xh">Xhosa</string>
+    <string name="language_yo">Yoruba</string>
+    <string name="language_tw">Twi</string>
+
     <string name="language_alb">Albanais</string>
     <string name="language_sau">Arabe</string>
+    <string name="language_heb">Hébreu</string>
     <string name="language_arm">Arménien</string>
     <string name="language_aze">Azéri</string>
 

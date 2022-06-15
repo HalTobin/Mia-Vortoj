@@ -6,6 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chapeaumoineau.miavortoj.feature.words.domain.extensions.containsCustom
+import com.chapeaumoineau.miavortoj.feature.words.domain.extensions.formatCustom
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.FavoriteLanguage
 import com.chapeaumoineau.miavortoj.feature.words.domain.model.InvalidDictionaryException
@@ -21,6 +22,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import java.text.Normalizer
 import javax.inject.Inject
 
 @HiltViewModel
@@ -98,7 +100,7 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
             //EVENT FOR SEARCH FIELD
             is AddEditDictionaryEvent.EnteredSearch -> {
                 _languageSearch.value = event.value
-                _languagesList.value = _listFromClass.sortedBy { it.translation }.filter { l -> l.name.containsCustom(event.value) || l.iso.containsCustom(event.value) || l.translation.containsCustom(event.value)}
+                _languagesList.value = _listFromClass.sortedBy { it.translation.formatCustom() }.filter { l -> l.name.containsCustom(event.value) || l.iso.containsCustom(event.value) || l.translation.containsCustom(event.value)}
             }
 
             is AddEditDictionaryEvent.ChangeLanguage -> {
@@ -112,12 +114,12 @@ class AddEditDictionaryViewModel @Inject constructor(private val dictionaryUseCa
                 event.listOfIndex.forEach { index ->
                     _listFromClass[index].translation = event.listOfTranslation[index]
                 }
-                _languagesList.value = _listFromClass.sortedBy { it.translation }
+                _languagesList.value = _listFromClass.sortedBy { it.translation.formatCustom() }
             }
 
             is AddEditDictionaryEvent.MoreLanguage -> {
                 _languageSearch.value = ""
-                _languagesList.value = _listFromClass.sortedBy { it.translation }
+                _languagesList.value = _listFromClass.sortedBy { it.translation.formatCustom() }
                 if(_listFromClass[0].translation.isBlank()) viewModelScope.launch {
                     _eventFlow.emit(UiEvent.InitLanguageTranslations)
                 }
