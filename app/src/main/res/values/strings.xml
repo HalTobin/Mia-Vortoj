@@ -89,15 +89,21 @@
     <string name="language_rus">Russe</string>
     <string name="language_blr">Biélorusse</string>
     <string name="language_ukr">Ukrainien</string>
+    <string name="language_pl">Polonais</string>
     <string name="language_lva">Letton</string>
     <string name="language_ltu">Lituanien</string>
     <string name="language_bih">Serbo-Croate</string>
 
     <string name="language_hin">Hindi</string>
+    <string name="language_tel">Telugu</string>
+    <string name="language_tam">Tamil</string>
     <string name="language_ur">Urdu</string>
 
     <string name="language_tur">Turc</string>
+    <string name="language_tat">Tatar</string>
     <string name="language_tuk">Turkmène</string>
+    <string name="language_tgk">Tadjik</string>
+    <string name="language_per">Persan</string>
 
     <string name="language_jpn">Japonais</string>
     <string name="language_kor">Coréen</string>
@@ -111,6 +117,8 @@
     <string name="language_xh">Xhosa</string>
     <string name="language_yo">Yoruba</string>
     <string name="language_tw">Twi</string>
+    <string name="language_tso">Tsonga</string>
+    <string name="language_tir">Tigrinya</string>
 
     <string name="language_alb">Albanais</string>
     <string name="language_sau">Arabe</string>
@@ -126,11 +134,16 @@
     <string name="language_mwi">Chichewa</string>
     <string name="language_lka">Singhalais</string>
 
+    <string name="language_nah">Nahuatl</string>
+
     <string name="language_fiklg">Klingon</string>
+    <string name="language_fielfqya">Quenya</string>
+    <string name="language_fielfsjn">Sindarin</string>
     <string name="language_fielf">Elfique</string>
     <string name="language_fidtk">Dothraki</string>
     <string name="language_finavi">Naʼvi</string>
     <string name="language_filpn">Lapine</string>
+    <string name="language_fidov">Draconique</string>
 
     <string name="theme_other">Autres</string>
     <string name="theme_number">Chiffres &amp; Nombres</string>
