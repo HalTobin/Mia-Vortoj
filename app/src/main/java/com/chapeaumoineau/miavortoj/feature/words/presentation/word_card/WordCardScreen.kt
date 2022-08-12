@@ -1,5 +1,6 @@
 package com.chapeaumoineau.miavortoj.feature.words.presentation.word_card
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,6 +25,7 @@ import com.chapeaumoineau.miavortoj.R
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.WordCardViewModel
 import com.chapeaumoineau.miavortoj.presentation.Screen
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun WordCardScreen(navController: NavController,
                     viewModel: WordCardViewModel = hiltViewModel()) {

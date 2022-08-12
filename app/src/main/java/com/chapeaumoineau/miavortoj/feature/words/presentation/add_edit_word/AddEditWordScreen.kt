@@ -1,5 +1,6 @@
 package com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -26,6 +27,7 @@ import com.chapeaumoineau.miavortoj.domain.model.Rules
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.components.CategoryDialog
 import kotlinx.coroutines.flow.collectLatest
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun AddEditWordScreen(navController: NavController,
                       viewModel: AddEditWordViewModel = hiltViewModel()) {

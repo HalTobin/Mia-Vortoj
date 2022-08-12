@@ -1,5 +1,6 @@
 package com.chapeaumoineau.miavortoj.feature.quiz.presentation.quiz
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -27,6 +28,7 @@ import com.chapeaumoineau.miavortoj.ui.theme.DarkRed
 import com.chapeaumoineau.miavortoj.ui.theme.Transparent
 import kotlinx.coroutines.launch
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun QuizScreen(navController: NavController,
                viewModel: QuizViewModel = hiltViewModel()) {

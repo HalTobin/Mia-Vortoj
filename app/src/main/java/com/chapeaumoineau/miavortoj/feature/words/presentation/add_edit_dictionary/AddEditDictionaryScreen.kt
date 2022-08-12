@@ -1,5 +1,6 @@
 package com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -33,6 +34,7 @@ import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.Add
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun AddEditDictionaryScreen(navController: NavController,
                             viewModel: AddEditDictionaryViewModel = hiltViewModel()) {

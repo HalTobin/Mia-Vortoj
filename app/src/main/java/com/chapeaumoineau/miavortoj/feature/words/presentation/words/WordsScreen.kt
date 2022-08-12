@@ -1,5 +1,6 @@
 package com.chapeaumoineau.miavortoj.feature.words.presentation.words
 
+import android.annotation.SuppressLint
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.*
 import androidx.compose.foundation.*
@@ -32,6 +33,7 @@ import com.chapeaumoineau.miavortoj.feature.words.presentation.words.components.
 import com.chapeaumoineau.miavortoj.feature.words.presentation.words.components.OrderWordsSection
 import com.chapeaumoineau.miavortoj.feature.words.presentation.words.components.WordItem
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun WordsScreen(navController: NavController,
                 viewModel:WordsViewModel = hiltViewModel()) {

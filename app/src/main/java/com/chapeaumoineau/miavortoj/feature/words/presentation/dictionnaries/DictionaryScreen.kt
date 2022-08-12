@@ -1,5 +1,6 @@
 package com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries
 
+import android.annotation.SuppressLint
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.*
 import androidx.compose.foundation.clickable
@@ -24,6 +25,7 @@ import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.com
 import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.components.OrderDictionariesSection
 import com.chapeaumoineau.miavortoj.presentation.Screen
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewModel = hiltViewModel()) {
     val state = viewModel.state.value
