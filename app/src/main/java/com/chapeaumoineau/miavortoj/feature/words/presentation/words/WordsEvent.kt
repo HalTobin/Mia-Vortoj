@@ -1,7 +1,7 @@
 package com.chapeaumoineau.miavortoj.feature.words.presentation.words
 
-import com.chapeaumoineau.miavortoj.feature.words.domain.model.Word
-import com.chapeaumoineau.miavortoj.feature.words.domain.util.WordOrder
+import com.chapeaumoineau.miavortoj.domain.model.Word
+import com.chapeaumoineau.miavortoj.domain.util.WordOrder
 
 sealed class WordsEvent {
     data class Order(val wordOrder: WordOrder): WordsEvent()

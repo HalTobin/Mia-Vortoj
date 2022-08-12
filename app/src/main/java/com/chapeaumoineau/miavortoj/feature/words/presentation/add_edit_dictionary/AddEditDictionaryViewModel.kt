@@ -5,16 +5,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chapeaumoineau.miavortoj.feature.words.domain.extensions.containsCustom
-import com.chapeaumoineau.miavortoj.feature.words.domain.extensions.formatCustom
-import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
-import com.chapeaumoineau.miavortoj.feature.words.domain.model.FavoriteLanguage
-import com.chapeaumoineau.miavortoj.feature.words.domain.model.InvalidDictionaryException
-import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
-import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.DictionaryUseCases
-import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.FavoriteLanguageUseCases
-import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.AddEditWordEvent
-import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.AddEditWordViewModel
+import com.chapeaumoineau.miavortoj.domain.extensions.containsCustom
+import com.chapeaumoineau.miavortoj.domain.extensions.formatCustom
+import com.chapeaumoineau.miavortoj.domain.model.Dictionary
+import com.chapeaumoineau.miavortoj.domain.model.FavoriteLanguage
+import com.chapeaumoineau.miavortoj.domain.model.InvalidDictionaryException
+import com.chapeaumoineau.miavortoj.domain.model.Language
+import com.chapeaumoineau.miavortoj.domain.use_case.DictionaryUseCases
+import com.chapeaumoineau.miavortoj.domain.use_case.FavoriteLanguageUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -22,7 +20,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import java.text.Normalizer
 import javax.inject.Inject
 
 @HiltViewModel

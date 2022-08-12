@@ -69,10 +69,15 @@
     <string name="language_esp">Espagnol</string>
     <string name="language_esct">Catalan</string>
     <string name="language_ita">Italien</string>
+    <string name="language_srd">Sarde</string>
     <string name="language_rum">Roumain</string>
 
     <string name="language_eng">Anglais</string>
+    <string name="language_sco">Scots</string>
 
+    <string name="language_nl">Néerlandais</string>
+    <string name="language_fry">Frison Occidental</string>
+    <string name="language_frr">Frison Septentrional</string>
     <string name="language_deu">Allemand</string>
     <string name="language_nor">Norvégien</string>
     <string name="language_dnk">Danois</string>
@@ -80,7 +85,6 @@
     <string name="language_fin">Finnois</string>
     <string name="language_est">Estonien</string>
     <string name="language_is">Islandais</string>
-    <string name="language_nl">Néerlandais</string>
 
     <string name="language_yi">Yiddish</string>
 

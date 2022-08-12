@@ -27,13 +27,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.R
-import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryEvent
-import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.DictionariesEvent
-import com.chapeaumoineau.miavortoj.feature.words.presentation.util.Screen
+import com.chapeaumoineau.miavortoj.presentation.Screen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.words.components.DeleteDialog
 import com.chapeaumoineau.miavortoj.feature.words.presentation.words.components.OrderWordsSection
 import com.chapeaumoineau.miavortoj.feature.words.presentation.words.components.WordItem
-import kotlinx.coroutines.launch
 
 @Composable
 fun WordsScreen(navController: NavController,

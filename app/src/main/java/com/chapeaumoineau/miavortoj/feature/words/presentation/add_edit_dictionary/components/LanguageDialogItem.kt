@@ -15,7 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
+import com.chapeaumoineau.miavortoj.domain.model.Language
 
 @Composable
 fun LanguageDialogItem(language: Language,

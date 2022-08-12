@@ -1,28 +1,19 @@
 package com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.chapeaumoineau.miavortoj.R
-import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
-import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
-import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryEvent
-import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryViewModel
-import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.AddEditWordEvent
+import com.chapeaumoineau.miavortoj.domain.model.Dictionary
 import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.DictionariesEvent
 import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.DictionariesViewModel
 

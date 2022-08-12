@@ -6,8 +6,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.chapeaumoineau.miavortoj.R
-import com.chapeaumoineau.miavortoj.feature.words.domain.util.OrderType
-import com.chapeaumoineau.miavortoj.feature.words.domain.util.WordOrder
+import com.chapeaumoineau.miavortoj.domain.util.OrderType
+import com.chapeaumoineau.miavortoj.domain.util.WordOrder
 import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.components.DefaultRadioButton
 
 @Composable

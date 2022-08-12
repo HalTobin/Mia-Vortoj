@@ -18,12 +18,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.R
-import com.chapeaumoineau.miavortoj.feature.words.domain.model.Rules
+import com.chapeaumoineau.miavortoj.domain.model.Rules
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.components.CategoryDialog
 import kotlinx.coroutines.flow.collectLatest
 

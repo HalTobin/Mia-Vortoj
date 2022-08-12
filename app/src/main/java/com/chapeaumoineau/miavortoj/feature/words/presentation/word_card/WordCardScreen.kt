@@ -6,7 +6,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -23,8 +22,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.R
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.WordCardViewModel
-import com.chapeaumoineau.miavortoj.feature.words.presentation.util.Screen
-import com.chapeaumoineau.miavortoj.feature.words.presentation.words.WordsEvent
+import com.chapeaumoineau.miavortoj.presentation.Screen
 
 @Composable
 fun WordCardScreen(navController: NavController,

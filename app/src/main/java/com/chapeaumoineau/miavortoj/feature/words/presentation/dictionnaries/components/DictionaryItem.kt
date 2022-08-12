@@ -1,8 +1,6 @@
 package com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.components
 
 import androidx.compose.animation.*
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,9 +26,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
-import com.chapeaumoineau.miavortoj.feature.words.domain.model.Language
-import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.DictionariesEvent
+import com.chapeaumoineau.miavortoj.domain.model.Dictionary
+import com.chapeaumoineau.miavortoj.domain.model.Language
 
 @Composable
 fun DictionaryItem(modifier: Modifier = Modifier,

@@ -13,11 +13,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.chapeaumoineau.miavortoj.R
-import com.chapeaumoineau.miavortoj.feature.words.domain.model.Rules
-import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.AddEditWordEvent
+import com.chapeaumoineau.miavortoj.domain.model.Rules
 import com.chapeaumoineau.miavortoj.feature.words.presentation.words.WordsEvent
 import com.chapeaumoineau.miavortoj.feature.words.presentation.words.WordsViewModel
-import com.chapeaumoineau.miavortoj.ui.theme.LightGray
 
 @Composable
 fun RulesDialog(isVisible: Boolean,

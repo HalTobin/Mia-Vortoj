@@ -22,8 +22,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.animation.AnimatedVisibility
-import com.chapeaumoineau.miavortoj.feature.words.domain.model.Category
-import com.chapeaumoineau.miavortoj.feature.words.domain.model.Word
+import com.chapeaumoineau.miavortoj.domain.model.Category
+import com.chapeaumoineau.miavortoj.domain.model.Word
 
 @Composable
 fun WordItem(modifier: Modifier = Modifier,

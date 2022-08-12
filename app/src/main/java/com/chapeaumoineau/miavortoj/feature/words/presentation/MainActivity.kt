@@ -10,12 +10,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.chapeaumoineau.miavortoj.feature.words.domain.model.Rules
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryScreen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.AddEditWordScreen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.DictionariesScreen
-import com.chapeaumoineau.miavortoj.feature.words.presentation.quiz.QuizScreen
-import com.chapeaumoineau.miavortoj.feature.words.presentation.util.Screen
+import com.chapeaumoineau.miavortoj.feature.quiz.presentation.quiz.QuizScreen
+import com.chapeaumoineau.miavortoj.presentation.Screen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.word_card.WordCardScreen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.words.WordsScreen
 import com.chapeaumoineau.miavortoj.ui.theme.VortojAppTheme

@@ -4,12 +4,11 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chapeaumoineau.miavortoj.R
-import com.chapeaumoineau.miavortoj.feature.words.domain.model.Dictionary
-import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.DictionaryUseCases
-import com.chapeaumoineau.miavortoj.feature.words.domain.use_case.WordUseCases
-import com.chapeaumoineau.miavortoj.feature.words.domain.util.DictionaryOrder
-import com.chapeaumoineau.miavortoj.feature.words.domain.util.OrderType
+import com.chapeaumoineau.miavortoj.domain.model.Dictionary
+import com.chapeaumoineau.miavortoj.domain.use_case.DictionaryUseCases
+import com.chapeaumoineau.miavortoj.domain.use_case.WordUseCases
+import com.chapeaumoineau.miavortoj.domain.util.DictionaryOrder
+import com.chapeaumoineau.miavortoj.domain.util.OrderType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
