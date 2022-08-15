@@ -41,6 +41,9 @@ class QuizViewModel @Inject constructor(private val wordUseCases: WordUseCases,
     private val _userEntry = mutableStateOf("")
     val userEntry: State<String> = _userEntry
 
+    private val _progress = mutableStateOf(0.0f)
+    val progress = _progress
+
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
@@ -78,6 +81,7 @@ class QuizViewModel @Inject constructor(private val wordUseCases: WordUseCases,
     private suspend fun proceed() {
         _userEntry.value = ""
         val next = gameSet.next()
+        _progress.value = (gameSet.currentIndex).toFloat() / (gameSet.rules.duration).toFloat()
         if (next != null) _word.value = next
         else _eventFlow.emit(UiEvent.CloseQuiz)
     }
@@ -105,7 +109,6 @@ class QuizViewModel @Inject constructor(private val wordUseCases: WordUseCases,
             is QuizEvent.NextWord -> {
                 viewModelScope.launch {
                     _word.value.id?.let {
-                        //wordUseCases.changeWordLastTimestamp(it, System.currentTimeMillis())
                         wordUseCases.changeWordNbPlayed(it, _word.value.nbPlayed+1)
                     }
                     proceed()

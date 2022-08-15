@@ -114,7 +114,7 @@ fun WordsScreen(navController: NavController,
 
             Button(modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .clip(RoundedCornerShape(32.dp)),
+                .clip(RoundedCornerShape(8.dp)),
                 colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.dark_green)),
                 onClick = { navController.navigate(Screen.QuizScreen.route + "?dictionaryId=${dictionaryId}") },
                 contentPadding = PaddingValues(

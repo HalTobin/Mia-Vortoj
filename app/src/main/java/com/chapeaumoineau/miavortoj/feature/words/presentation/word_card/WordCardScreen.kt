@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.R
-import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.WordCardViewModel
 import com.chapeaumoineau.miavortoj.presentation.Screen
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")

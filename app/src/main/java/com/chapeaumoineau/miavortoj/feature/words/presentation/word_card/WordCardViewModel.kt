@@ -1,4 +1,4 @@
-package com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word
+package com.chapeaumoineau.miavortoj.feature.words.presentation.word_card
 
 import android.app.Application
 import android.speech.tts.TextToSpeech
@@ -13,7 +13,6 @@ import com.chapeaumoineau.miavortoj.domain.model.Language
 import com.chapeaumoineau.miavortoj.domain.model.Word
 import com.chapeaumoineau.miavortoj.domain.use_case.DictionaryUseCases
 import com.chapeaumoineau.miavortoj.domain.use_case.WordUseCases
-import com.chapeaumoineau.miavortoj.feature.words.presentation.word_card.WordCardEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -21,15 +20,17 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class WordCardViewModel @Inject constructor(application: Application,
-                                            private val wordUseCases: WordUseCases,
-                                            private val dictionaryUseCases: DictionaryUseCases,
-                                            savedStateHandle: SavedStateHandle): AndroidViewModel(application) {
+class WordCardViewModel @Inject constructor(
+    application: Application,
+    private val wordUseCases: WordUseCases,
+    private val dictionaryUseCases: DictionaryUseCases,
+    savedStateHandle: SavedStateHandle
+) : AndroidViewModel(application) {
 
-    private val _word = mutableStateOf(Word("", "", "", "", 0, 0, 0,0, 0, 0, 0, 0))
+    private val _word = mutableStateOf(Word("", "", "", "", 0, 0, 0, 0, 0, 0, 0, 0))
     val word: State<Word> = _word
 
-    private val _dictionary = mutableStateOf(Dictionary("", "","", 0))
+    private val _dictionary = mutableStateOf(Dictionary("", "", "", 0))
     val dictionary: State<Dictionary> = _dictionary
 
     private val _language = mutableStateOf(Language.getDefault())
@@ -53,22 +54,26 @@ class WordCardViewModel @Inject constructor(application: Application,
                     wordUseCases.getWord(wordId)?.also { wordDb ->
                         _word.value = wordDb
                         _category.value = Category.getCategoryById(wordDb.themeId)
-                        dictionaryUseCases.getDictionary(wordDb.dictionaryId)?.also { dictionaryDb ->
-                            _dictionary.value = dictionaryDb
-                            _language.value = Language.getLanguageByIso(dictionaryDb.languageIso)
-
-                            if(_language.value.locale != null) {
-                                tts = TextToSpeech(getApplication<Application>().applicationContext) {
-                                    if (it == TextToSpeech.SUCCESS) {
-                                        if(tts.isLanguageAvailable(_language.value.locale) == TextToSpeech.LANG_AVAILABLE)
-                                            _speech.value = true
-                                            tts.language = _language.value.locale
-                                    }
-                                }
+                        dictionaryUseCases.getDictionary(wordDb.dictionaryId)
+                            ?.also { dictionaryDb ->
+                                _dictionary.value = dictionaryDb
+                                _language.value =
+                                    Language.getLanguageByIso(dictionaryDb.languageIso)
+                                initTextToSpeech()
                             }
-
-                        }
                     }
+                }
+            }
+        }
+    }
+
+    private fun initTextToSpeech() {
+        if(_language.value.locale != null) {
+            tts = TextToSpeech(getApplication<Application>().applicationContext) {
+                if (it == TextToSpeech.SUCCESS) {
+                    if(tts.isLanguageAvailable(_language.value.locale) == TextToSpeech.LANG_AVAILABLE)
+                        _speech.value = true
+                    tts.language = _language.value.locale
                 }
             }
         }
@@ -78,10 +83,8 @@ class WordCardViewModel @Inject constructor(application: Application,
 
     /* TODO - Look for API to get word in context */
 
-    /* TODO - Text To Speech */
-
     fun onEvent(event: WordCardEvent) {
-        when(event) {
+        when (event) {
             is WordCardEvent.EditWord -> {
 
             }
@@ -95,7 +98,7 @@ class WordCardViewModel @Inject constructor(application: Application,
     }
 
     sealed class UiEvent {
-        data class ShowSnackBar(val message: String): UiEvent()
+
     }
 
 }
