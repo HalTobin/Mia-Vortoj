@@ -70,9 +70,10 @@ data class Language(
             Language("ייִדיש", "YID", R.drawable.flag_simple_yi, R.string.language_yi,0xFFFFFFFF, 0xFF000000,false),
 
             Language("Bosanski", "BIH", R.drawable.flag_simple_ba, R.string.language_bih,0xFFFFE062, 0xFF000081,false, Locale("sr")),
-            Language("Čeština", "CZE", R.drawable.flag_simple_cz, R.string.language_cze,0xFF4570A0, 0xFF0E3968,false, Locale("sl")),
-            Language("Slovenščina", "SVN", R.drawable.flag_simple_si, R.string.language_svn,0xFF515292, 0xFF272769,false, Locale("sl")),
-            Language("Русский", "RUS", R.drawable.flag_simple_ru, R.string.language_rus,0xFF4669AD, 0xFF002875,false, Locale("ru")),
+            Language("Čeština", "CZE", R.drawable.flag_simple_cz, R.string.language_cze,0xFF4570A0, 0xFF0E3968,false),
+            Language("Slovenščina", "SVN", R.drawable.flag_simple_si, R.string.language_svn,0xFF797ADF, 0xFF272769,false),
+            Language("Slovenčina", "SVK", R.drawable.flag_simple_sk, R.string.language_svk,0xFF5184C4, 0xFF093770,false),
+            Language("Русский", "RUS", R.drawable.flag_simple_ru, R.string.language_rus,0xFF4679DA, 0xFF002875,false, Locale("ru")),
             Language("Беларуская", "BLR", R.drawable.flag_simple_by, R.string.language_blr,0xFFB35353, 0xFF810000,false, Locale("be")),
             Language("Українська", "UKR", R.drawable.flag_simple_ua, R.string.language_ukr,0xFFFFEA77, 0xFF004592,false, Locale("uk")),
             Language("Polski", "POL", R.drawable.flag_simple_pl, R.string.language_pl,0xFFF74B6D, 0xFF970623,false, Locale("pl")),
@@ -128,8 +129,8 @@ data class Language(
             Language("Dovahzul", "FI-DOV", R.drawable.flag_simple_fidov, R.string.language_fidov,0xFFFFFFFF, 0xFF000000,false)
         )
 
-        val testl: Color = Color(0xFF2C67DF)
-        val testd: Color = Color(0xFF8D0F14)
+        val testl: Color = Color(0xFF4679DA)
+        val testd: Color = Color(0xFF093770)
 
         val defaultList = listOf(getDefault(), getDefault(), getDefault(), getDefault())
 
