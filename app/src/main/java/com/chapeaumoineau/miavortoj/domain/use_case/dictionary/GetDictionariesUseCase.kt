@@ -2,8 +2,8 @@ package com.chapeaumoineau.miavortoj.domain.use_case.dictionary
 
 import com.chapeaumoineau.miavortoj.domain.model.Dictionary
 import com.chapeaumoineau.miavortoj.domain.repository.DictionaryRepository
-import com.chapeaumoineau.miavortoj.domain.util.DictionaryOrder
-import com.chapeaumoineau.miavortoj.domain.util.OrderType
+import com.chapeaumoineau.miavortoj.feature.words.presentation.util.DictionaryOrder
+import com.chapeaumoineau.miavortoj.feature.words.presentation.util.OrderType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

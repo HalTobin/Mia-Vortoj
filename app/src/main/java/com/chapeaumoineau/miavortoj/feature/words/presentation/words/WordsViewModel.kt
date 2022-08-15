@@ -8,12 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.chapeaumoineau.miavortoj.domain.extensions.*
 import com.chapeaumoineau.miavortoj.domain.model.Dictionary
 import com.chapeaumoineau.miavortoj.domain.model.Language
-import com.chapeaumoineau.miavortoj.domain.model.Rules
+import com.chapeaumoineau.miavortoj.feature.quiz.model.Rules
 import com.chapeaumoineau.miavortoj.domain.model.Word
 import com.chapeaumoineau.miavortoj.domain.use_case.DictionaryUseCases
 import com.chapeaumoineau.miavortoj.domain.use_case.WordUseCases
-import com.chapeaumoineau.miavortoj.domain.util.OrderType
-import com.chapeaumoineau.miavortoj.domain.util.WordOrder
+import com.chapeaumoineau.miavortoj.feature.words.presentation.util.OrderType
+import com.chapeaumoineau.miavortoj.feature.words.presentation.util.WordOrder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn

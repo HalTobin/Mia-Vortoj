@@ -43,6 +43,7 @@
     <string name="words_start_quiz">QUIZ</string>
 
     <string name="quiz_enter_response">Réponse</string>
+    <string name="quiz_ask_answer">Suivant</string>
     <string name="quiz_validate_answer">Valider</string>
 
     <string name="language_na">Autres</string>

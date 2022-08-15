@@ -26,6 +26,14 @@ class WordRepositoryImpl(private val dao: WordDao) : WordRepository {
         dao.changeWordLastTimestamp(id, timestamp)
     }
 
+    override suspend fun changeWordNbSucceed(id: Int, nbSucceed: Int) {
+        dao.changeWordNbSucceed(id, nbSucceed)
+    }
+
+    override suspend fun changeWordNbPlayed(id: Int, nbPlayed: Int) {
+        dao.changeWordNbPlayed(id, nbPlayed)
+    }
+
     override suspend fun insertWord(word: Word) {
         dao.insertWord(word)
     }

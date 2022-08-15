@@ -8,6 +8,8 @@ data class WordUseCases(val getWords: GetWordsUseCase,
                         val deleteWordsFromDictionary: DeleteWordsFromDictionaryUseCase,
                         val deleteWord: DeleteWordUseCase,
                         val changeWordLastTimestamp: ChangeWordLastTimestampUseCase,
+                        val changeWordNbPlayed: ChangeWordNbPlayedUseCase,
+                        val changeWordNbSucceed: ChangeWordNbSucceedUseCase,
                         val addWord: AddWordUseCase,
                         val getWord: GetWordUseCase
 )

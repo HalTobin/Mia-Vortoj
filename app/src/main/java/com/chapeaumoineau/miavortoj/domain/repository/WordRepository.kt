@@ -17,6 +17,10 @@ interface WordRepository {
 
     suspend fun changeWordLastTimestamp(id: Int, timestamp: Long)
 
+    suspend fun changeWordNbSucceed(id: Int, nbSucceed: Int)
+
+    suspend fun changeWordNbPlayed(id: Int, nbPlayed: Int)
+
     suspend fun deleteWordsFromDictionary(dictionaryId: Int)
 
     suspend fun deleteWord(word: Word)

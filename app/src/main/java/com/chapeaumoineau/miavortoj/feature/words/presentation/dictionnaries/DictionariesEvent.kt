@@ -1,7 +1,7 @@
 package com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries
 
 import com.chapeaumoineau.miavortoj.domain.model.Dictionary
-import com.chapeaumoineau.miavortoj.domain.util.DictionaryOrder
+import com.chapeaumoineau.miavortoj.feature.words.presentation.util.DictionaryOrder
 
 sealed class DictionariesEvent {
     data class Order(val dictionaryOrder: DictionaryOrder): DictionariesEvent()

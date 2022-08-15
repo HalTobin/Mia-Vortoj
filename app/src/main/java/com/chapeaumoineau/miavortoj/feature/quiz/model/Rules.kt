@@ -1,4 +1,4 @@
-package com.chapeaumoineau.miavortoj.domain.model
+package com.chapeaumoineau.miavortoj.feature.quiz.model
 
 import android.content.Context
 import com.google.gson.Gson
@@ -9,16 +9,18 @@ import java.nio.charset.Charset
 
 data class Rules(
     //val dictionaryId: Int,
-    val duration: Int,
-    val categoriesId: ArrayList<Int>,
+    var duration: Int,
+    val categoryId: Int,
     val difficulty: Int,
     //val gameRulesId: Int,
-    val auto: Boolean
+    //val auto: Boolean
     ) {
 
     companion object {
 
-        const val ALL = 0
+        const val CATEGORY_ALL = 0
+
+        const val RULES_ALL = 0
         const val SOURCE_TO_TARGET_TEXT = 1
         const val TARGET_TO_SOURCE_TEXT = 2
         const val TARGET_TO_TARGET_SOUND = 3
@@ -30,7 +32,7 @@ data class Rules(
         const val DIFFICULTY_ALL = 2
 
         fun getDefault(): Rules {
-            return Rules(10, arrayListOf(1), DIFFICULTY_ALL,true)
+            return Rules(10, CATEGORY_ALL, DIFFICULTY_ALL,)
         }
     }
 }

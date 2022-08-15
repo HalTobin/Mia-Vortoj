@@ -11,9 +11,13 @@ import com.chapeaumoineau.miavortoj.domain.model.Language
 import com.chapeaumoineau.miavortoj.domain.model.Word
 import com.chapeaumoineau.miavortoj.domain.use_case.DictionaryUseCases
 import com.chapeaumoineau.miavortoj.domain.use_case.WordUseCases
+import com.chapeaumoineau.miavortoj.domain.util.addMostPertinentWords
+import com.chapeaumoineau.miavortoj.feature.quiz.model.GameSet
+import com.chapeaumoineau.miavortoj.feature.quiz.model.Rules
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -40,6 +44,8 @@ class QuizViewModel @Inject constructor(private val wordUseCases: WordUseCases,
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
+    private val gameSet = GameSet(rules = Rules(duration = 10, categoryId = Rules.CATEGORY_ALL, difficulty = Rules.DIFFICULTY_ALL))
+
     init {
         savedStateHandle.get<Int>("dictionaryId")?.let { dictionaryId ->
             if (dictionaryId != -1) {
@@ -47,19 +53,35 @@ class QuizViewModel @Inject constructor(private val wordUseCases: WordUseCases,
                     dictionaryUseCases.getDictionary(dictionaryId)?.also { dictionaryFromDb ->
                         _dictionary.value = dictionaryFromDb
                         _language.value = Language.getLanguageByIso(dictionaryFromDb.languageIso)
-                        findAndSelectOldestWord()
+                        //findAndSelectOldestWord()
+                        initializeGameSet()
                     }
                 }
             }
         }
     }
 
-    private suspend fun findAndSelectOldestWord() {
+    /*private suspend fun findAndSelectOldestWord() {
         _dictionary.value.id?.let {
             wordUseCases.getOldWordByDictionaryId(it)?.also { wordFromDb ->
                 _word.value = wordFromDb
                 _category.value = Category.getCategoryById(wordFromDb.themeId)
             }
+        }
+    }*/
+
+    private suspend fun initializeGameSet() {
+        _dictionary.value.id?.let {
+            val words = wordUseCases.getWordsFromDictionary(it).first().toMutableList()
+
+            val gameWords: MutableList<Word> = mutableListOf()
+            val duration = if(gameSet.rules.duration > words.size) words.size else gameSet.rules.duration
+
+            gameWords.addMostPertinentWords(words, duration)
+
+            gameSet.setGameWords(gameWords)
+
+            _word.value = gameSet.getWordCurrentWord()
         }
     }
 
@@ -73,12 +95,30 @@ class QuizViewModel @Inject constructor(private val wordUseCases: WordUseCases,
             is QuizEvent.CheckAnswer -> {
                 if(_word.value.isValid(_userEntry.value)) {
                     viewModelScope.launch {
-                        _word.value.id?.let { wordUseCases.changeWordLastTimestamp(it, System.currentTimeMillis()) }
-                        findAndSelectOldestWord()
+                        _word.value.id?.let {
+                            wordUseCases.changeWordLastTimestamp(it, System.currentTimeMillis())
+                            wordUseCases.changeWordNbPlayed(it, _word.value.nbPlayed+1)
+                            wordUseCases.changeWordNbSucceed(it, _word.value.nbSucceed+1)
+                        }
+                        val next = gameSet.next()
+                        if (next != null) _word.value = next
                         _userEntry.value = ""
                     }
                 }
             }
+
+            is QuizEvent.NextWord -> {
+                viewModelScope.launch {
+                    _word.value.id?.let {
+                        wordUseCases.changeWordLastTimestamp(it, System.currentTimeMillis())
+                        wordUseCases.changeWordNbPlayed(it, _word.value.nbPlayed+1)
+                    }
+                    val next = gameSet.next()
+                    if (next != null) _word.value = next
+                    _userEntry.value = ""
+                }
+            }
+
             else -> {}
         }
     }

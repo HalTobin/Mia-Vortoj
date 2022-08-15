@@ -9,6 +9,7 @@ val LightGray = Color(0xFFA0A0A0)
 
 val Transparent = Color(0x00000000)
 val DarkGreen = Color(0xFF00B600)
+val DarkOrange = Color(0xFFDB4819)
 val DarkRed = Color(0xFFB60000)
 
 val RedOrange = Color(0xffffab91)

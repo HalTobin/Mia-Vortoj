@@ -24,6 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.R
 import com.chapeaumoineau.miavortoj.ui.theme.DarkGreen
+import com.chapeaumoineau.miavortoj.ui.theme.DarkOrange
 import com.chapeaumoineau.miavortoj.ui.theme.DarkRed
 import com.chapeaumoineau.miavortoj.ui.theme.Transparent
 import kotlinx.coroutines.launch
@@ -52,7 +53,7 @@ fun QuizScreen(navController: NavController,
             .fillMaxSize()
             .background(language.getDarkColor())
             .padding(16.dp)) {
-            Row() {
+            Row {
                 Icon(modifier = Modifier
                     .size(60.dp)
                     .padding(end = 16.dp)
@@ -92,34 +93,67 @@ fun QuizScreen(navController: NavController,
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            Button(modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .clip(RoundedCornerShape(32.dp)),
-                colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.dark_green)),
-                onClick = {
-                    textFieldColor = if(word.isValid(userEntry)) DarkGreen else DarkRed
-                    scope.launch {
-                        viewModel.onEvent(QuizEvent.CheckAnswer)
-                        textFieldBackgroundAnimated.animateTo(
-                            targetValue = textFieldColor,
-                            animationSpec = tween(durationMillis = 250),
-                        )
-                        textFieldColor = Transparent
-                        textFieldBackgroundAnimated.animateTo(
-                            targetValue = textFieldColor,
-                            animationSpec = tween(durationMillis = 500),
-                        )
-                    }
-                },
-                contentPadding = PaddingValues(
-                    start = 20.dp,
-                    top = 8.dp,
-                    end = 20.dp,
-                    bottom = 8.dp
-                )
-            ) {
-                Text(text = stringResource(R.string.quiz_validate_answer), style = MaterialTheme.typography.h6)
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 32.dp, end = 32.dp)) {
+
+                Button(modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .clip(RoundedCornerShape(6.dp)),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.dark_red)),
+                    onClick = {
+                        scope.launch {
+                            viewModel.onEvent(QuizEvent.NextWord)
+                        }
+                    },
+                    contentPadding = PaddingValues(
+                        start = 20.dp,
+                        top = 8.dp,
+                        end = 20.dp,
+                        bottom = 8.dp
+                    )
+                ) {
+                    Text(text = stringResource(R.string.quiz_ask_answer), style = MaterialTheme.typography.h6)
+                }
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Button(modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .clip(RoundedCornerShape(6.dp)),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.dark_green)),
+                    onClick = {
+                        textFieldColor =
+                            if(word.isValid(userEntry)) DarkGreen
+                            else if (word.isClose(userEntry)) DarkOrange
+                                else DarkRed
+                        scope.launch {
+                            viewModel.onEvent(QuizEvent.CheckAnswer)
+                            textFieldBackgroundAnimated.animateTo(
+                                targetValue = textFieldColor,
+                                animationSpec = tween(durationMillis = 250),
+                            )
+                            textFieldColor = Transparent
+                            textFieldBackgroundAnimated.animateTo(
+                                targetValue = textFieldColor,
+                                animationSpec = tween(durationMillis = 500),
+                            )
+                        }
+                    },
+                    contentPadding = PaddingValues(
+                        start = 20.dp,
+                        top = 8.dp,
+                        end = 20.dp,
+                        bottom = 8.dp
+                    )
+                ) {
+                    Text(text = stringResource(R.string.quiz_validate_answer), style = MaterialTheme.typography.h6)
+                }
+
             }
+
         }
     }
 

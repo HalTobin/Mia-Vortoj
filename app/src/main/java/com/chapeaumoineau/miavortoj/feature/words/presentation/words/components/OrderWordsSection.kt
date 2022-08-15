@@ -6,14 +6,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.chapeaumoineau.miavortoj.R
-import com.chapeaumoineau.miavortoj.domain.util.OrderType
-import com.chapeaumoineau.miavortoj.domain.util.WordOrder
+import com.chapeaumoineau.miavortoj.feature.words.presentation.util.OrderType
+import com.chapeaumoineau.miavortoj.feature.words.presentation.util.WordOrder
 import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.components.DefaultRadioButton
 
 @Composable
 fun OrderWordsSection(modifier: Modifier = Modifier,
-                 wordOrder: WordOrder = WordOrder.Source(OrderType.Ascending),
-                 onOrderChange: (WordOrder) -> Unit) {
+                      wordOrder: WordOrder = WordOrder.Source(OrderType.Ascending),
+                      onOrderChange: (WordOrder) -> Unit) {
     Column(modifier = modifier) {
         Row(modifier = modifier.fillMaxWidth()) {
             DefaultRadioButton(text = stringResource(id = R.string.order_word_source),

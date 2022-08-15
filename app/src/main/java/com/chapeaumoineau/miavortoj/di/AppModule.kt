@@ -39,6 +39,7 @@ class AppModule {
             VocabularyDatabase.DATABASE_NAME)
             .addCallback(VocabularyDatabase.prepopulate)
             .addMigrations(VocabularyDatabase.MIGRATION_2_3)
+            .addMigrations(VocabularyDatabase.MIGRATION_3_4)
             .build()
     }
 
@@ -69,6 +70,8 @@ class AppModule {
                             deleteWordsFromDictionary = DeleteWordsFromDictionaryUseCase(repository),
                             deleteWord = DeleteWordUseCase(repository),
                             changeWordLastTimestamp = ChangeWordLastTimestampUseCase(repository),
+                            changeWordNbPlayed = ChangeWordNbPlayedUseCase(repository),
+                            changeWordNbSucceed = ChangeWordNbSucceedUseCase(repository),
                             addWord = AddWordUseCase(repository),
                             getWord = GetWordUseCase(repository))
     }

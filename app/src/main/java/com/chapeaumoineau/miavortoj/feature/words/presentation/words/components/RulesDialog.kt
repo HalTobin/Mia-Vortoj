@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.chapeaumoineau.miavortoj.R
-import com.chapeaumoineau.miavortoj.domain.model.Rules
+import com.chapeaumoineau.miavortoj.feature.quiz.model.Rules
 import com.chapeaumoineau.miavortoj.feature.words.presentation.words.WordsEvent
 import com.chapeaumoineau.miavortoj.feature.words.presentation.words.WordsViewModel
 

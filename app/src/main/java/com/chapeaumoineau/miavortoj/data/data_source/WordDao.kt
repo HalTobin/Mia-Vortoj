@@ -22,6 +22,12 @@ interface WordDao {
     @Query("UPDATE word SET lastTestTimestamp = :timestamp WHERE id = :id")
     suspend fun changeWordLastTimestamp(id: Int, timestamp: Long)
 
+    @Query("UPDATE word SET nbPlayed = :nbPlayed WHERE id = :id")
+    suspend fun changeWordNbPlayed(id: Int, nbPlayed: Int)
+
+    @Query("UPDATE word SET nbSucceed = :nbSucceed WHERE id = :id")
+    suspend fun changeWordNbSucceed(id: Int, nbSucceed: Int)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWord(word: Word)
 

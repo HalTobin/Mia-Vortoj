@@ -1,8 +1,8 @@
 package com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries
 
 import com.chapeaumoineau.miavortoj.domain.model.Dictionary
-import com.chapeaumoineau.miavortoj.domain.util.DictionaryOrder
-import com.chapeaumoineau.miavortoj.domain.util.OrderType
+import com.chapeaumoineau.miavortoj.feature.words.presentation.util.DictionaryOrder
+import com.chapeaumoineau.miavortoj.feature.words.presentation.util.OrderType
 
 data class DictionariesState(
     val dictionaries: List<Dictionary> = emptyList(),

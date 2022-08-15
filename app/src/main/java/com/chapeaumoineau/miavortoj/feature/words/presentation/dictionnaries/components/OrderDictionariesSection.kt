@@ -7,13 +7,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.chapeaumoineau.miavortoj.R
 
-import com.chapeaumoineau.miavortoj.domain.util.DictionaryOrder
-import com.chapeaumoineau.miavortoj.domain.util.OrderType
+import com.chapeaumoineau.miavortoj.feature.words.presentation.util.DictionaryOrder
+import com.chapeaumoineau.miavortoj.feature.words.presentation.util.OrderType
 
 @Composable
 fun OrderDictionariesSection(modifier: Modifier = Modifier,
-                 dictionaryOrder: DictionaryOrder = DictionaryOrder.Language(OrderType.Ascending),
-                 onOrderChange: (DictionaryOrder) -> Unit) {
+                             dictionaryOrder: DictionaryOrder = DictionaryOrder.Language(OrderType.Ascending),
+                             onOrderChange: (DictionaryOrder) -> Unit) {
     Column(modifier = modifier) {
         Row(modifier = modifier.fillMaxWidth()) {
             DefaultRadioButton(text = stringResource(id = R.string.order_dictionary_language),

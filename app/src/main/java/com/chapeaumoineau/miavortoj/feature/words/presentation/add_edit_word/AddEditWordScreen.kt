@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.R
-import com.chapeaumoineau.miavortoj.domain.model.Rules
+import com.chapeaumoineau.miavortoj.feature.quiz.model.Rules
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.components.CategoryDialog
 import kotlinx.coroutines.flow.collectLatest
 
