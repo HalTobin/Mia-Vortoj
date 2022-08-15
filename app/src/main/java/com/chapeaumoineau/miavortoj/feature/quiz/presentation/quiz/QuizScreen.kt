@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -27,6 +28,7 @@ import com.chapeaumoineau.miavortoj.ui.theme.DarkGreen
 import com.chapeaumoineau.miavortoj.ui.theme.DarkOrange
 import com.chapeaumoineau.miavortoj.ui.theme.DarkRed
 import com.chapeaumoineau.miavortoj.ui.theme.Transparent
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -46,6 +48,16 @@ fun QuizScreen(navController: NavController,
 
     val textFieldBackgroundAnimated = remember {
         Animatable(textFieldColor)
+    }
+
+    LaunchedEffect(key1 = true) {
+        viewModel.eventFlow.collectLatest { event ->
+            when(event) {
+                is QuizViewModel.UiEvent.CloseQuiz -> {
+                    navController.navigateUp()
+                }
+            }
+        }
     }
 
     Scaffold(scaffoldState = scaffoldState) {

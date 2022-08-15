@@ -25,7 +25,7 @@ data class Word (
     fun getScore(): Long {
         val time = (System.currentTimeMillis() - lastTestTimestamp) / 360000
 
-        val successRate = if((nbSucceed!=0) && (nbPlayed!=0)) 100 - ((nbSucceed / nbPlayed) * 100) else 0
+        val successRate = if((nbSucceed!=0) && (nbPlayed!=0)) 100 - ((nbSucceed / nbPlayed) * 100) else 100
 
         return time + successRate
     }

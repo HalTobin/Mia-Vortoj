@@ -53,22 +53,12 @@ class QuizViewModel @Inject constructor(private val wordUseCases: WordUseCases,
                     dictionaryUseCases.getDictionary(dictionaryId)?.also { dictionaryFromDb ->
                         _dictionary.value = dictionaryFromDb
                         _language.value = Language.getLanguageByIso(dictionaryFromDb.languageIso)
-                        //findAndSelectOldestWord()
                         initializeGameSet()
                     }
                 }
             }
         }
     }
-
-    /*private suspend fun findAndSelectOldestWord() {
-        _dictionary.value.id?.let {
-            wordUseCases.getOldWordByDictionaryId(it)?.also { wordFromDb ->
-                _word.value = wordFromDb
-                _category.value = Category.getCategoryById(wordFromDb.themeId)
-            }
-        }
-    }*/
 
     private suspend fun initializeGameSet() {
         _dictionary.value.id?.let {
@@ -83,6 +73,13 @@ class QuizViewModel @Inject constructor(private val wordUseCases: WordUseCases,
 
             _word.value = gameSet.getWordCurrentWord()
         }
+    }
+
+    private suspend fun proceed() {
+        _userEntry.value = ""
+        val next = gameSet.next()
+        if (next != null) _word.value = next
+        else _eventFlow.emit(UiEvent.CloseQuiz)
     }
 
     fun onEvent(event: QuizEvent) {
@@ -100,9 +97,7 @@ class QuizViewModel @Inject constructor(private val wordUseCases: WordUseCases,
                             wordUseCases.changeWordNbPlayed(it, _word.value.nbPlayed+1)
                             wordUseCases.changeWordNbSucceed(it, _word.value.nbSucceed+1)
                         }
-                        val next = gameSet.next()
-                        if (next != null) _word.value = next
-                        _userEntry.value = ""
+                        proceed()
                     }
                 }
             }
@@ -110,12 +105,10 @@ class QuizViewModel @Inject constructor(private val wordUseCases: WordUseCases,
             is QuizEvent.NextWord -> {
                 viewModelScope.launch {
                     _word.value.id?.let {
-                        wordUseCases.changeWordLastTimestamp(it, System.currentTimeMillis())
+                        //wordUseCases.changeWordLastTimestamp(it, System.currentTimeMillis())
                         wordUseCases.changeWordNbPlayed(it, _word.value.nbPlayed+1)
                     }
-                    val next = gameSet.next()
-                    if (next != null) _word.value = next
-                    _userEntry.value = ""
+                    proceed()
                 }
             }
 
@@ -124,8 +117,7 @@ class QuizViewModel @Inject constructor(private val wordUseCases: WordUseCases,
     }
 
     sealed class UiEvent {
-        data class ShowSnackBar(val message: String): UiEvent()
-        object SaveWord: UiEvent()
+        object CloseQuiz: UiEvent()
     }
 
 }
