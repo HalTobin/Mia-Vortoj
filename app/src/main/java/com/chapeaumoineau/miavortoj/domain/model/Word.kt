@@ -30,12 +30,12 @@ data class Word (
         return time + successRate
     }
 
-    fun isValid(input: String): Boolean {
+    /*fun isValid(input: String): Boolean {
         return targetWord.equalsCustom(input)
     }
 
     fun isClose(input: String): Boolean {
         return (targetWord.difference(input) < 3)
-    }
+    }*/
 
 }

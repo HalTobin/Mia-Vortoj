@@ -12,8 +12,10 @@ import com.chapeaumoineau.miavortoj.domain.model.Word
 import com.chapeaumoineau.miavortoj.domain.use_case.DictionaryUseCases
 import com.chapeaumoineau.miavortoj.domain.use_case.WordUseCases
 import com.chapeaumoineau.miavortoj.domain.util.addMostPertinentWords
+import com.chapeaumoineau.miavortoj.feature.quiz.model.Answer
 import com.chapeaumoineau.miavortoj.feature.quiz.model.GameSet
 import com.chapeaumoineau.miavortoj.feature.quiz.model.Rules
+import com.chapeaumoineau.miavortoj.feature.quiz.util.AnswerType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -26,8 +28,8 @@ class QuizViewModel @Inject constructor(private val wordUseCases: WordUseCases,
                                         private val dictionaryUseCases: DictionaryUseCases,
                                         savedStateHandle: SavedStateHandle): ViewModel() {
 
-    private val _word = mutableStateOf(Word("", "", "", "", 0, 0, 0,0, 0, 0, 0, 0))
-    val word: State<Word> = _word
+    private val _answer = mutableStateOf(Answer())
+    val answer: State<Answer> = _answer
 
     private val _dictionary = mutableStateOf(Dictionary("", "","", 0))
     val dictionary: State<Dictionary> = _dictionary
@@ -43,6 +45,9 @@ class QuizViewModel @Inject constructor(private val wordUseCases: WordUseCases,
 
     private val _progress = mutableStateOf(0.0f)
     val progress = _progress
+
+    private val _isTtsAvailable = mutableStateOf(false)
+    val isTtsAvailable = _isTtsAvailable
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
@@ -74,7 +79,7 @@ class QuizViewModel @Inject constructor(private val wordUseCases: WordUseCases,
 
             gameSet.setGameWords(gameWords)
 
-            _word.value = gameSet.getWordCurrentWord()
+            _answer.value = gameSet.getCurrentAnswer()
         }
     }
 
@@ -82,7 +87,7 @@ class QuizViewModel @Inject constructor(private val wordUseCases: WordUseCases,
         _userEntry.value = ""
         val next = gameSet.next()
         _progress.value = (gameSet.currentIndex).toFloat() / (gameSet.rules.duration).toFloat()
-        if (next != null) _word.value = next
+        if (next != null) _answer.value = next
         else _eventFlow.emit(UiEvent.CloseQuiz)
     }
 
@@ -94,33 +99,37 @@ class QuizViewModel @Inject constructor(private val wordUseCases: WordUseCases,
             }
 
             is QuizEvent.CheckAnswer -> {
-                if(_word.value.isValid(_userEntry.value)) {
-                    viewModelScope.launch {
-                        _word.value.id?.let {
-                            wordUseCases.changeWordLastTimestamp(it, System.currentTimeMillis())
-                            wordUseCases.changeWordNbPlayed(it, _word.value.nbPlayed+1)
-                            wordUseCases.changeWordNbSucceed(it, _word.value.nbSucceed+1)
+                viewModelScope.launch {
+                    when(_answer.value.getResult(_userEntry.value)) {
+                        is AnswerType.GOOD -> {
+                            _eventFlow.emit(UiEvent.AnswerValid)
+                            _answer.value.wordId.let {
+                                wordUseCases.changeWordLastTimestamp(it, System.currentTimeMillis())
+                                wordUseCases.changeWordNbPlayed(it, _answer.value.played+1)
+                                wordUseCases.changeWordNbSucceed(it, _answer.value.succeed+1)
+                            }
+                            proceed()
                         }
-                        proceed()
+                        is AnswerType.CLOSE -> _eventFlow.emit(UiEvent.AnswerClose)
+                        is AnswerType.BAD -> _eventFlow.emit(UiEvent.AnswerWrong)
                     }
                 }
             }
 
             is QuizEvent.NextWord -> {
                 viewModelScope.launch {
-                    _word.value.id?.let {
-                        wordUseCases.changeWordNbPlayed(it, _word.value.nbPlayed+1)
-                    }
+                    wordUseCases.changeWordNbPlayed(_answer.value.wordId, _answer.value.played+1)
                     proceed()
                 }
             }
-
-            else -> {}
         }
     }
 
     sealed class UiEvent {
         object CloseQuiz: UiEvent()
+        object AnswerValid: UiEvent()
+        object AnswerClose: UiEvent()
+        object AnswerWrong: UiEvent()
     }
 
 }

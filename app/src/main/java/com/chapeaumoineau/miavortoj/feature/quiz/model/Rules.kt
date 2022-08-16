@@ -17,7 +17,6 @@ data class Rules(
     ) {
 
     companion object {
-
         const val CATEGORY_ALL = 0
 
         const val RULES_ALL = 0
@@ -36,8 +35,6 @@ data class Rules(
         }
     }
 }
-
-
 
 fun Rules.getAsJsonString(): String {
 

@@ -39,11 +39,12 @@ import kotlinx.coroutines.launch
 fun QuizScreen(navController: NavController,
                viewModel: QuizViewModel = hiltViewModel()) {
 
-    val word = viewModel.word.value
+    val answer = viewModel.answer.value
     val category = viewModel.category.value
     val userEntry = viewModel.userEntry.value
     val language = viewModel.language.value
     val progress = viewModel.progress.value
+    val isTtsAvailable = viewModel.isTtsAvailable.value
 
     var textFieldColor = Transparent
 
@@ -54,12 +55,27 @@ fun QuizScreen(navController: NavController,
         Animatable(textFieldColor)
     }
 
+    fun animateTextFieldBackgroundColorTo(color: Color) {
+        scope.launch {
+            textFieldBackgroundAnimated.animateTo(
+                targetValue = color,
+                animationSpec = tween(durationMillis = 250),
+            )
+            textFieldColor = Transparent
+            textFieldBackgroundAnimated.animateTo(
+                targetValue = textFieldColor,
+                animationSpec = tween(durationMillis = 500),
+            )
+        }
+    }
+
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when(event) {
-                is QuizViewModel.UiEvent.CloseQuiz -> {
-                    navController.navigateUp()
-                }
+                is QuizViewModel.UiEvent.CloseQuiz -> navController.navigateUp()
+                is QuizViewModel.UiEvent.AnswerValid -> animateTextFieldBackgroundColorTo(DarkGreen)
+                is QuizViewModel.UiEvent.AnswerClose -> animateTextFieldBackgroundColorTo(DarkOrange)
+                is QuizViewModel.UiEvent.AnswerWrong -> animateTextFieldBackgroundColorTo(DarkRed)
             }
         }
     }
@@ -83,32 +99,32 @@ fun QuizScreen(navController: NavController,
             Row(modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.CenterHorizontally), horizontalArrangement = Arrangement.Center) {
-                Text(text = word.emote, style = MaterialTheme.typography.h1)
+                Text(text = answer.emote, style = MaterialTheme.typography.h1)
             }
 
             Spacer(modifier = Modifier.height(64.dp))
 
-            /** Start speech **/
-
             Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
                 Text(modifier = Modifier.align(Alignment.CenterVertically),
-                    text = word.sourceWord,
+                    text = answer.question,
                     style = MaterialTheme.typography.h5,
                     fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.width(32.dp))
-                Button(modifier = Modifier
-                    //.align(Alignment.CenterHorizontally)
-                    .clip(RoundedCornerShape(8.dp)),
-                    //colors = ButtonDefaults.buttonColors(backgroundColor = if(speech) colorResource(R.color.dark_green) else colorResource(R.color.dark_gray)),
-                    onClick = {
-                        //viewModel.onEvent(WordCardEvent.PlayWord)
+                if(isTtsAvailable && answer.isFromTarget) {
+                    Button(modifier = Modifier
+                        //.align(Alignment.CenterHorizontally)
+                        .clip(RoundedCornerShape(8.dp)),
+                        //colors = ButtonDefaults.buttonColors(backgroundColor = if(speech) colorResource(R.color.dark_green) else colorResource(R.color.dark_gray)),
+                        onClick = {
+                            //viewModel.onEvent(WordCardEvent.PlayWord)
+                        }
+                    ) {
+                        Icon(
+                            Icons.Default.VolumeUp,
+                            contentDescription = "Text to speech",
+                            modifier = Modifier.size(24.dp)
+                        )
                     }
-                ) {
-                    Icon(
-                        Icons.Default.VolumeUp,
-                        contentDescription = "Text to speech",
-                        modifier = Modifier.size(24.dp)
-                    )
                 }
             }
 
@@ -163,21 +179,8 @@ fun QuizScreen(navController: NavController,
                     .clip(RoundedCornerShape(6.dp)),
                     colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.dark_green)),
                     onClick = {
-                        textFieldColor =
-                            if(word.isValid(userEntry)) DarkGreen
-                            else if (word.isClose(userEntry)) DarkOrange
-                                else DarkRed
                         scope.launch {
                             viewModel.onEvent(QuizEvent.CheckAnswer)
-                            textFieldBackgroundAnimated.animateTo(
-                                targetValue = textFieldColor,
-                                animationSpec = tween(durationMillis = 250),
-                            )
-                            textFieldColor = Transparent
-                            textFieldBackgroundAnimated.animateTo(
-                                targetValue = textFieldColor,
-                                animationSpec = tween(durationMillis = 500),
-                            )
                         }
                     },
                     contentPadding = PaddingValues(
