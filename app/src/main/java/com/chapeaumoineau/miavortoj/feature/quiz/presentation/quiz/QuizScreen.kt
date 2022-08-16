@@ -49,7 +49,13 @@ fun QuizScreen(navController: NavController,
 
     var textFieldColor = Transparent
 
-    val scaffoldState = rememberScaffoldState()
+    val sheetState = rememberBottomSheetState(
+        initialValue = BottomSheetValue.Collapsed
+    )
+    val scaffoldState = rememberBottomSheetScaffoldState(
+        bottomSheetState = sheetState
+    )
+
     val scope = rememberCoroutineScope()
 
     val textFieldBackgroundAnimated = remember {
@@ -81,7 +87,50 @@ fun QuizScreen(navController: NavController,
         }
     }
 
-    Scaffold(scaffoldState = scaffoldState) {
+    BottomSheetScaffold(
+        scaffoldState = scaffoldState,
+        sheetPeekHeight = 0.dp,
+        sheetGesturesEnabled = false,
+        sheetBackgroundColor = Color.DarkGray,
+        sheetContent = {
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+        ) {
+            Text(
+                text = stringResource(id = R.string.quiz_answer_was),
+                style = MaterialTheme.typography.subtitle1,
+                color = Color.White
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = answer.answer,
+                style = MaterialTheme.typography.h5,
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Button(modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(6.dp)),
+                colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.dark_green)),
+                onClick = {
+                    scope.launch {
+                        sheetState.collapse()
+                        viewModel.onEvent(QuizEvent.NextWord)
+                    }
+                },
+                contentPadding = PaddingValues(
+                    start = 20.dp,
+                    top = 8.dp,
+                    end = 20.dp,
+                    bottom = 8.dp
+                )
+            ) {
+                Text(text = stringResource(R.string.quiz_validate_continue), style = MaterialTheme.typography.h6)
+            }
+        }
+    }) {
         Column(modifier = Modifier
             .fillMaxSize()
             .background(language.getDarkColor())
@@ -90,7 +139,8 @@ fun QuizScreen(navController: NavController,
             Spacer(modifier = Modifier.height(16.dp))
 
             Row {
-                LinearProgressIndicator(modifier = Modifier.fillMaxWidth()
+                LinearProgressIndicator(modifier = Modifier
+                    .fillMaxWidth()
                     .padding(start = 8.dp, end = 8.dp),
                     progress = progress)
             }
@@ -148,7 +198,8 @@ fun QuizScreen(navController: NavController,
                 },
                 colors = TextFieldDefaults.textFieldColors(backgroundColor = textFieldBackgroundAnimated.value),
                 textStyle = MaterialTheme.typography.h6,
-                maxLines = 1
+                maxLines = 1,
+                readOnly = sheetState.isExpanded
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -161,10 +212,13 @@ fun QuizScreen(navController: NavController,
                     .fillMaxWidth()
                     .weight(1f)
                     .clip(RoundedCornerShape(6.dp)),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.dark_red)),
+                    enabled = sheetState.isCollapsed,
+                    colors =
+                        if (sheetState.isCollapsed) ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.dark_red))
+                        else ButtonDefaults.buttonColors(backgroundColor = Color.LightGray),
                     onClick = {
-                        scope.launch {
-                            viewModel.onEvent(QuizEvent.NextWord)
+                        if (sheetState.isCollapsed) scope.launch {
+                            sheetState.expand()
                         }
                     },
                     contentPadding = PaddingValues(
@@ -183,9 +237,12 @@ fun QuizScreen(navController: NavController,
                     .fillMaxWidth()
                     .weight(1f)
                     .clip(RoundedCornerShape(6.dp)),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.dark_green)),
+                    enabled = sheetState.isCollapsed,
+                    colors =
+                        if (sheetState.isCollapsed) ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.dark_green))
+                        else ButtonDefaults.buttonColors(backgroundColor = Color.LightGray),
                     onClick = {
-                        scope.launch {
+                        if (sheetState.isCollapsed) scope.launch {
                             viewModel.onEvent(QuizEvent.CheckAnswer)
                         }
                     },

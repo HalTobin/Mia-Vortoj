@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Kartoj</string>
 
     <string name="search_hint">Recherche</string>
@@ -19,12 +19,15 @@
 
     <string name="dictionary_screen_title">Vos dictionnaires</string>
 
-    <string name="dictionary_screen_delete_text_p1">La suppression d\'un dictionnaire est définitive,</string>
-    <string name="dictionary_screen_delete_text_p2">ainsi que toutes les entrées associées seront perdues...\nEntrez le texte suivant pour confirmer la suppression :</string>
+    <string name="dictionary_screen_delete_text" tools:ignore="TypographyEllipsis">
+        La suppression d\'un dictionnaire est définitive,
+        %s ainsi que toutes les entrées associées seront perdues...\nEntrez le texte suivant pour confirmer la suppression :
+    </string>
+
     <string name="dictionary_screen_delete_to_enter">Supprimer</string>
 
-    <string name="add_edit_dictionary_screen_title_hint">Entrez un titre...</string>
-    <string name="add_edit_dictionary_screen_description_hint">Entrez une description...</string>
+    <string name="add_edit_dictionary_screen_title_hint" tools:ignore="TypographyEllipsis">Entrez un titre...</string>
+    <string name="add_edit_dictionary_screen_description_hint" tools:ignore="TypographyEllipsis">Entrez une description...</string>
 
     <string name="word_screen_delete_text">Êtes-vous sûr de vouloir supprimer le mot suivant :</string>
 
@@ -45,6 +48,8 @@
     <string name="quiz_enter_response">Réponse</string>
     <string name="quiz_ask_answer">Suivant</string>
     <string name="quiz_validate_answer">Valider</string>
+    <string name="quiz_validate_continue">Continuer</string>
+    <string name="quiz_answer_was">La réponse était :</string>
 
     <string name="language_na">Autres</string>
 

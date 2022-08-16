@@ -34,14 +34,7 @@ fun DeleteDialog(isVisible: Boolean,
                     Text(text = stringResource(R.string.dialog_warning),
                         style = MaterialTheme.typography.h6)
                     Spacer(modifier = Modifier.height(16.dp))
-
-                    /* TODO - Using regex would be better */
-
-                    Text(text =
-                    stringResource(R.string.dictionary_screen_delete_text_p1) + " "
-                            + dictionary.title + " "
-                            + stringResource(R.string.dictionary_screen_delete_text_p2) + " "
-                            + stringResource(R.string.dictionary_screen_delete_to_enter),
+                    Text(text = stringResource(id = R.string.dictionary_screen_delete_text, dictionary.title),
                         style = MaterialTheme.typography.subtitle1)
                     Spacer(modifier = Modifier.height(16.dp))
 

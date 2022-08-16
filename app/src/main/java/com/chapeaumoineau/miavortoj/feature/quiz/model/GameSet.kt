@@ -36,7 +36,6 @@ data class GameSet(
                     wordId = it.id!!,
                     question = it.targetWord,
                     answer = it.sourceWord,
-                    emote = it.emote,
                     played = it.nbPlayed,
                     succeed = it.nbSucceed
                 )

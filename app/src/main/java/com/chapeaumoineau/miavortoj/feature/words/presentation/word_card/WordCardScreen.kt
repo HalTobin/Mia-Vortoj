@@ -31,7 +31,6 @@ fun WordCardScreen(navController: NavController,
 
     val word = viewModel.word.value
     val category = viewModel.category.value
-    val dictionary = viewModel.dictionary.value
     val language = viewModel.language.value
 
     val speech = viewModel.speech.value

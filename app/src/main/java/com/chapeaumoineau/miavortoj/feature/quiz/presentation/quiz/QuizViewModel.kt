@@ -106,7 +106,6 @@ class QuizViewModel @Inject constructor(
             is QuizEvent.EnteredEntry -> {
                 _userEntry.value = event.value
             }
-
             is QuizEvent.CheckAnswer -> {
                 viewModelScope.launch {
                     when(_answer.value.getResult(_userEntry.value)) {
@@ -130,9 +129,7 @@ class QuizViewModel @Inject constructor(
                     proceed()
                 }
             }
-            is QuizEvent.SpeakWord -> {
-                if(_answer.value.isFromTarget) tts.speak(_answer.value.question)
-            }
+            is QuizEvent.SpeakWord -> if(_answer.value.isFromTarget) tts.speak(_answer.value.question)
         }
     }
 
