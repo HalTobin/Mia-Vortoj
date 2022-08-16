@@ -13,6 +13,7 @@ import com.chapeaumoineau.miavortoj.domain.model.Language
 import com.chapeaumoineau.miavortoj.domain.model.Word
 import com.chapeaumoineau.miavortoj.domain.use_case.DictionaryUseCases
 import com.chapeaumoineau.miavortoj.domain.use_case.WordUseCases
+import com.chapeaumoineau.miavortoj.util.CustomTextToSpeech
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -25,7 +26,7 @@ class WordCardViewModel @Inject constructor(
     private val wordUseCases: WordUseCases,
     private val dictionaryUseCases: DictionaryUseCases,
     savedStateHandle: SavedStateHandle
-) : AndroidViewModel(application) {
+) : AndroidViewModel(application), CustomTextToSpeech.OnTextToSpeechReady {
 
     private val _word = mutableStateOf(Word("", "", "", "", 0, 0, 0, 0, 0, 0, 0, 0))
     val word: State<Word> = _word
@@ -45,7 +46,7 @@ class WordCardViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
-    lateinit var tts: TextToSpeech
+    private var tts = CustomTextToSpeech(this)
 
     init {
         savedStateHandle.get<Int>("wordId")?.let { wordId ->
@@ -59,21 +60,9 @@ class WordCardViewModel @Inject constructor(
                                 _dictionary.value = dictionaryDb
                                 _language.value =
                                     Language.getLanguageByIso(dictionaryDb.languageIso)
-                                initTextToSpeech()
+                                tts.initTextToSpeech(getApplication<Application>().applicationContext, _language.value)
                             }
                     }
-                }
-            }
-        }
-    }
-
-    private fun initTextToSpeech() {
-        if(_language.value.locale != null) {
-            tts = TextToSpeech(getApplication<Application>().applicationContext) {
-                if (it == TextToSpeech.SUCCESS) {
-                    if(tts.isLanguageAvailable(_language.value.locale) == TextToSpeech.LANG_AVAILABLE)
-                        _speech.value = true
-                    tts.language = _language.value.locale
                 }
             }
         }
@@ -89,16 +78,17 @@ class WordCardViewModel @Inject constructor(
 
             }
             is WordCardEvent.PlayWord -> {
-                if(_speech.value) {
-                    tts.setPitch(1f)
-                    tts.speak(_word.value.targetWord, TextToSpeech.QUEUE_ADD, null, null)
-                }
+                tts.speak(_word.value.targetWord)
             }
         }
     }
 
     sealed class UiEvent {
 
+    }
+
+    override fun onTextToSpeechReady(isTextToSpeechReady: Boolean) {
+        _speech.value = isTextToSpeechReady
     }
 
 }
