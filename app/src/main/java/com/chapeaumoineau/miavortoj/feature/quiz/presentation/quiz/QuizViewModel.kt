@@ -1,7 +1,9 @@
 package com.chapeaumoineau.miavortoj.feature.quiz.presentation.quiz
 
+import android.app.Application
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,6 +18,7 @@ import com.chapeaumoineau.miavortoj.feature.quiz.model.Answer
 import com.chapeaumoineau.miavortoj.feature.quiz.model.GameSet
 import com.chapeaumoineau.miavortoj.feature.quiz.model.Rules
 import com.chapeaumoineau.miavortoj.feature.quiz.util.AnswerType
+import com.chapeaumoineau.miavortoj.util.CustomTextToSpeech
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -24,9 +27,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class QuizViewModel @Inject constructor(private val wordUseCases: WordUseCases,
-                                        private val dictionaryUseCases: DictionaryUseCases,
-                                        savedStateHandle: SavedStateHandle): ViewModel() {
+class QuizViewModel @Inject constructor(
+    application: Application,
+    private val wordUseCases: WordUseCases,
+    private val dictionaryUseCases: DictionaryUseCases,
+    savedStateHandle: SavedStateHandle
+): AndroidViewModel(application), CustomTextToSpeech.OnTextToSpeechReady {
 
     private val _answer = mutableStateOf(Answer())
     val answer: State<Answer> = _answer
@@ -52,6 +58,8 @@ class QuizViewModel @Inject constructor(private val wordUseCases: WordUseCases,
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
+    private var tts = CustomTextToSpeech(this)
+
     private val gameSet = GameSet(rules = Rules(duration = 10, categoryId = Rules.CATEGORY_ALL, difficulty = Rules.DIFFICULTY_ALL))
 
     init {
@@ -61,6 +69,7 @@ class QuizViewModel @Inject constructor(private val wordUseCases: WordUseCases,
                     dictionaryUseCases.getDictionary(dictionaryId)?.also { dictionaryFromDb ->
                         _dictionary.value = dictionaryFromDb
                         _language.value = Language.getLanguageByIso(dictionaryFromDb.languageIso)
+                        tts.initTextToSpeech(getApplication<Application>().applicationContext, _language.value)
                         initializeGameSet()
                     }
                 }
@@ -115,12 +124,14 @@ class QuizViewModel @Inject constructor(private val wordUseCases: WordUseCases,
                     }
                 }
             }
-
             is QuizEvent.NextWord -> {
                 viewModelScope.launch {
                     wordUseCases.changeWordNbPlayed(_answer.value.wordId, _answer.value.played+1)
                     proceed()
                 }
+            }
+            is QuizEvent.SpeakWord -> {
+                if(_answer.value.isFromTarget) tts.speak(_answer.value.question)
             }
         }
     }
@@ -130,6 +141,10 @@ class QuizViewModel @Inject constructor(private val wordUseCases: WordUseCases,
         object AnswerValid: UiEvent()
         object AnswerClose: UiEvent()
         object AnswerWrong: UiEvent()
+    }
+
+    override fun onTextToSpeechReady(isTextToSpeechReady: Boolean) {
+        _isTtsAvailable.value = isTextToSpeechReady
     }
 
 }

@@ -1,7 +1,6 @@
 package com.chapeaumoineau.miavortoj.feature.words.presentation.word_card
 
 import android.app.Application
-import android.speech.tts.TextToSpeech
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel

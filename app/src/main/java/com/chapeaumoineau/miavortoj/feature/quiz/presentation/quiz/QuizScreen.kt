@@ -22,6 +22,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -105,23 +106,28 @@ fun QuizScreen(navController: NavController,
             Spacer(modifier = Modifier.height(64.dp))
 
             Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
-                Text(modifier = Modifier.align(Alignment.CenterVertically),
+                Text(modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .fillMaxWidth(0.75f),
                     text = answer.question,
+                    textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.h5,
-                    fontWeight = FontWeight.Bold)
-                Spacer(modifier = Modifier.width(32.dp))
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 4)
+                Spacer(modifier = Modifier.width(16.dp))
                 if(isTtsAvailable && answer.isFromTarget) {
                     Button(modifier = Modifier
-                        //.align(Alignment.CenterHorizontally)
+                        .align(Alignment.CenterVertically)
                         .clip(RoundedCornerShape(8.dp)),
-                        //colors = ButtonDefaults.buttonColors(backgroundColor = if(speech) colorResource(R.color.dark_green) else colorResource(R.color.dark_gray)),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = language.getLightColor()),
                         onClick = {
-                            //viewModel.onEvent(WordCardEvent.PlayWord)
+                            viewModel.onEvent(QuizEvent.SpeakWord)
                         }
                     ) {
                         Icon(
                             Icons.Default.VolumeUp,
                             contentDescription = "Text to speech",
+                            tint = Color.Black,
                             modifier = Modifier.size(24.dp)
                         )
                     }
