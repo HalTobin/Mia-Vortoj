@@ -6,6 +6,8 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.VolumeUp
@@ -22,6 +24,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -48,6 +51,8 @@ fun QuizScreen(navController: NavController,
     val isTtsAvailable = viewModel.isTtsAvailable.value
 
     var textFieldColor = Transparent
+    var buttonNextColor = DarkRed
+    var buttonValidateColor = DarkGreen
 
     val sheetState = rememberBottomSheetState(
         initialValue = BottomSheetValue.Collapsed
@@ -62,6 +67,14 @@ fun QuizScreen(navController: NavController,
         Animatable(textFieldColor)
     }
 
+    val buttonNextBackgroundAnimated = remember {
+        Animatable(buttonNextColor)
+    }
+
+    val buttonValidateBackgroundAnimated = remember {
+        Animatable(buttonValidateColor)
+    }
+    
     fun animateTextFieldBackgroundColorTo(color: Color) {
         scope.launch {
             textFieldBackgroundAnimated.animateTo(
@@ -73,6 +86,41 @@ fun QuizScreen(navController: NavController,
                 targetValue = textFieldColor,
                 animationSpec = tween(durationMillis = 500),
             )
+        }
+    }
+    
+    fun animateNextAndValidateButtonsColors(on: Boolean) {
+        scope.launch { 
+            if (on) {
+                buttonNextBackgroundAnimated.animateTo(
+                    targetValue = DarkRed,
+                    animationSpec = tween(durationMillis = 200)
+                )
+            } else {
+                buttonNextBackgroundAnimated.animateTo(
+                    targetValue = Color.LightGray,
+                    animationSpec = tween(durationMillis = 200)
+                )
+            }
+        }
+        scope.launch {
+            if (on) {
+                buttonValidateBackgroundAnimated.animateTo(
+                    targetValue = DarkGreen,
+                    animationSpec = tween(durationMillis = 200)
+                )
+            } else {
+                buttonValidateBackgroundAnimated.animateTo(
+                    targetValue = Color.LightGray,
+                    animationSpec = tween(durationMillis = 200)
+                )
+            }
+        }
+    }
+
+    fun validateAnswer() {
+        if (sheetState.isCollapsed) scope.launch {
+            viewModel.onEvent(QuizEvent.CheckAnswer)
         }
     }
 
@@ -91,6 +139,7 @@ fun QuizScreen(navController: NavController,
         scaffoldState = scaffoldState,
         sheetPeekHeight = 0.dp,
         sheetGesturesEnabled = false,
+        sheetShape = MaterialTheme.shapes.small,
         sheetBackgroundColor = Color.DarkGray,
         sheetContent = {
         Column(modifier = Modifier
@@ -117,6 +166,7 @@ fun QuizScreen(navController: NavController,
                 onClick = {
                     scope.launch {
                         sheetState.collapse()
+                        animateNextAndValidateButtonsColors(true)
                         viewModel.onEvent(QuizEvent.NextWord)
                     }
                 },
@@ -184,81 +234,92 @@ fun QuizScreen(navController: NavController,
                 }
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
-
-            TextField(modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 32.dp, end = 32.dp),
-                value = userEntry,
-                onValueChange = {
-                    viewModel.onEvent(QuizEvent.EnteredEntry(it))
-                },
-                label = {
-                    Text(text = stringResource(R.string.quiz_enter_response), style = MaterialTheme.typography.h6, color = Color.LightGray)
-                },
-                colors = TextFieldDefaults.textFieldColors(backgroundColor = textFieldBackgroundAnimated.value),
-                textStyle = MaterialTheme.typography.h6,
-                maxLines = 1,
-                readOnly = sheetState.isExpanded
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 32.dp, end = 32.dp)) {
-
-                Button(modifier = Modifier
+            Column(modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Transparent),
+            verticalArrangement = Arrangement.Bottom) {
+                TextField(modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f)
-                    .clip(RoundedCornerShape(6.dp)),
-                    enabled = sheetState.isCollapsed,
-                    colors =
-                        if (sheetState.isCollapsed) ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.dark_red))
-                        else ButtonDefaults.buttonColors(backgroundColor = Color.LightGray),
-                    onClick = {
-                        if (sheetState.isCollapsed) scope.launch {
-                            sheetState.expand()
-                        }
+                    .padding(start = 32.dp, end = 32.dp),
+                    value = userEntry,
+                    singleLine = true,
+                    onValueChange = {
+                        viewModel.onEvent(QuizEvent.EnteredEntry(it))
                     },
-                    contentPadding = PaddingValues(
-                        start = 20.dp,
-                        top = 8.dp,
-                        end = 20.dp,
-                        bottom = 8.dp
-                    )
-                ) {
-                    Text(text = stringResource(R.string.quiz_ask_answer), style = MaterialTheme.typography.h6)
-                }
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            validateAnswer()
+                        },
+                        onPrevious = {
+                            //sheetState.
+                        }
+                    ),
+                    label = {
+                        Text(text = stringResource(R.string.quiz_enter_response), style = MaterialTheme.typography.h6, color = Color.LightGray)
+                    },
+                    colors = TextFieldDefaults.textFieldColors(backgroundColor = textFieldBackgroundAnimated.value),
+                    textStyle = MaterialTheme.typography.h6,
+                    maxLines = 1,
+                    readOnly = sheetState.isExpanded
+                )
 
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.height(8.dp))
 
-                Button(modifier = Modifier
+                Row(modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f)
-                    .clip(RoundedCornerShape(6.dp)),
-                    enabled = sheetState.isCollapsed,
-                    colors =
-                        if (sheetState.isCollapsed) ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.dark_green))
-                        else ButtonDefaults.buttonColors(backgroundColor = Color.LightGray),
-                    onClick = {
-                        if (sheetState.isCollapsed) scope.launch {
-                            viewModel.onEvent(QuizEvent.CheckAnswer)
-                        }
-                    },
-                    contentPadding = PaddingValues(
-                        start = 20.dp,
-                        top = 8.dp,
-                        end = 20.dp,
-                        bottom = 8.dp
-                    )
-                ) {
-                    Text(text = stringResource(R.string.quiz_validate_answer), style = MaterialTheme.typography.h6)
-                }
+                    .padding(start = 32.dp, end = 32.dp)) {
 
+                    Button(modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .clip(RoundedCornerShape(6.dp)),
+                        enabled = sheetState.isCollapsed,
+                        colors =
+                        if (sheetState.isCollapsed) ButtonDefaults.buttonColors(backgroundColor = buttonNextBackgroundAnimated.value)
+                        else ButtonDefaults.buttonColors(backgroundColor = Color.LightGray),
+                        onClick = {
+                            if (sheetState.isCollapsed) scope.launch {
+                                sheetState.expand()
+                                animateNextAndValidateButtonsColors(false)
+                            }
+                        },
+                        contentPadding = PaddingValues(
+                            start = 20.dp,
+                            top = 8.dp,
+                            end = 20.dp,
+                            bottom = 8.dp
+                        )
+                    ) {
+                        Text(text = stringResource(R.string.quiz_ask_answer), style = MaterialTheme.typography.h6)
+                    }
+
+                    Spacer(modifier = Modifier.width(8.dp))
+
+                    Button(modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .clip(RoundedCornerShape(6.dp)),
+                        enabled = sheetState.isCollapsed,
+                        colors =
+                        if (sheetState.isCollapsed) ButtonDefaults.buttonColors(backgroundColor = buttonValidateBackgroundAnimated.value)
+                        else ButtonDefaults.buttonColors(backgroundColor = Color.LightGray),
+                        onClick = { validateAnswer() },
+                        contentPadding = PaddingValues(
+                            start = 20.dp,
+                            top = 8.dp,
+                            end = 20.dp,
+                            bottom = 8.dp
+                        )
+                    ) {
+                        Text(text = stringResource(R.string.quiz_validate_answer), style = MaterialTheme.typography.h6)
+                    }
+
+                }
             }
 
         }
+
     }
 
 }

@@ -12,7 +12,8 @@
         <activity
             android:name="com.chapeaumoineau.miavortoj.feature.words.presentation.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.CleanArchitectureNoteApp">
+            android:theme="@style/Theme.CleanArchitectureNoteApp"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
