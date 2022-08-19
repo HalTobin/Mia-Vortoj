@@ -108,9 +108,9 @@ class WordsViewModel @Inject constructor(private val wordUseCases: WordUseCases,
                 _state.value = state.value.copy(wordDelete = event.word)
                 _state.value = state.value.copy(isDeleteDialogVisible = true)
             }
-            is WordsEvent.DismissDeleteDialog -> {
-                _state.value = state.value.copy(isDeleteDialogVisible = false)
-            }
+            is WordsEvent.ToggleWarningDialog -> _state.value = state.value.copy(isWarningDialogVisible = true)
+            is WordsEvent.DismissWarningDialog -> _state.value = state.value.copy(isWarningDialogVisible = false)
+            is WordsEvent.DismissDeleteDialog -> _state.value = state.value.copy(isDeleteDialogVisible = false)
             else -> {}
         }
     }

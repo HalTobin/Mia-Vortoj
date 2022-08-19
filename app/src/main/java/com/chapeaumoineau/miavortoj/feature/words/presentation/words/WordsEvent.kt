@@ -10,7 +10,9 @@ sealed class WordsEvent {
     object ToggleOrderSection: WordsEvent()
     data class ToggleEditMode(val wordId: Int? = -1): WordsEvent()
     data class ToggleDeleteDialog(var word: Word): WordsEvent()
+    object ToggleWarningDialog: WordsEvent()
     object DismissDeleteDialog: WordsEvent()
+    object DismissWarningDialog: WordsEvent()
 
     object DismissRulesDialog: WordsEvent()
 }

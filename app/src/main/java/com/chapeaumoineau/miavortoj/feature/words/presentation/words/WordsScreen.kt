@@ -26,12 +26,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.R
 import com.chapeaumoineau.miavortoj.presentation.Screen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.words.components.DeleteDialog
 import com.chapeaumoineau.miavortoj.feature.words.presentation.words.components.OrderWordsSection
+import com.chapeaumoineau.miavortoj.feature.words.presentation.words.components.WarningDialog
 import com.chapeaumoineau.miavortoj.feature.words.presentation.words.components.WordItem
+import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -67,6 +70,7 @@ fun WordsScreen(navController: NavController,
         state.wordDelete?.let { it1 ->
             DeleteDialog(isVisible = state.isDeleteDialogVisible, word = it1)
         }
+        WarningDialog(isVisible = state.isWarningDialogVisible)
 
         Column(modifier = Modifier
             .fillMaxSize()
@@ -116,7 +120,13 @@ fun WordsScreen(navController: NavController,
                 .align(Alignment.CenterHorizontally)
                 .clip(RoundedCornerShape(8.dp)),
                 colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.dark_green)),
-                onClick = { navController.navigate(Screen.QuizScreen.route + "?dictionaryId=${dictionaryId}") },
+                onClick = {
+                    if (state.words.isNotEmpty())
+                        navController.navigate(Screen.QuizScreen.route + "?dictionaryId=${dictionaryId}")
+                    else {
+                        viewModel.onEvent(WordsEvent.ToggleWarningDialog)
+                    }
+                          },
                 contentPadding = PaddingValues(
                     start = 16.dp,
                     top = 8.dp,

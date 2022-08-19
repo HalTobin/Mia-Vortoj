@@ -8,5 +8,6 @@ data class WordsState(val words: List<Word> = emptyList(),
                       val wordOrder: WordOrder = WordOrder.Source(OrderType.Ascending),
                       val isOrderSectionVisible: Boolean = false,
                       val isDeleteDialogVisible: Boolean = false,
+                      val isWarningDialogVisible: Boolean = false,
                       val wordEdit: Int = 1,
                       val wordDelete: Word? = null)
