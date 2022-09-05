@@ -30,8 +30,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.R
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.components.LanguageDialog
-import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.AddEditWordEvent
-import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.AddEditWordViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 

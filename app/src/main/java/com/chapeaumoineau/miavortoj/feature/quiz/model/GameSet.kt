@@ -14,8 +14,15 @@ data class GameSet(
     var answers: MutableList<Answer> = mutableListOf()
 ) {
 
+    fun findAndSetGameWords(wordsFromDB : List<Word>, duration: Int) {
+        val words = wordsFromDB.sortedBy { it.getScore() }
+        val listSize = if(duration > wordsFromDB.size) wordsFromDB.size else duration
+
+        setGameWords(words.subList(0, listSize))
+    }
+
     // Generate the list of question / answers for the test
-    fun setGameWords(wordsList: List<Word>) {
+    private fun setGameWords(wordsList: List<Word>) {
         wordsList.forEach {
             /* Use a random boolean to choose if the user will be asked to find the word
             in its language, or in the language he's learning */
@@ -49,14 +56,14 @@ data class GameSet(
         return answers[currentIndex]
     }
 
-    fun isEnd(): Boolean {
-        return (currentIndex + 1 >= rules.duration)
-    }
-
     fun next(): Answer? {
         currentIndex++
         return if (currentIndex >= rules.duration) null
         else answers[currentIndex]
+    }
+
+    fun getDuration(): Int {
+        return rules.duration
     }
 
 }

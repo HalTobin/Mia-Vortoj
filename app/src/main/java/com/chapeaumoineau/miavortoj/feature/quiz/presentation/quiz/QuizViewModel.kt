@@ -5,17 +5,15 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chapeaumoineau.miavortoj.domain.model.Category
 import com.chapeaumoineau.miavortoj.domain.model.Dictionary
 import com.chapeaumoineau.miavortoj.domain.model.Language
-import com.chapeaumoineau.miavortoj.domain.model.Word
 import com.chapeaumoineau.miavortoj.domain.use_case.DictionaryUseCases
 import com.chapeaumoineau.miavortoj.domain.use_case.WordUseCases
-import com.chapeaumoineau.miavortoj.domain.util.addMostPertinentWords
 import com.chapeaumoineau.miavortoj.feature.quiz.model.Answer
 import com.chapeaumoineau.miavortoj.feature.quiz.model.GameSet
+import com.chapeaumoineau.miavortoj.feature.quiz.model.Results
 import com.chapeaumoineau.miavortoj.feature.quiz.model.Rules
 import com.chapeaumoineau.miavortoj.feature.quiz.util.AnswerType
 import com.chapeaumoineau.miavortoj.util.CustomTextToSpeech
@@ -55,12 +53,20 @@ class QuizViewModel @Inject constructor(
     private val _isTtsAvailable = mutableStateOf(false)
     val isTtsAvailable = _isTtsAvailable
 
+    private val _results = mutableStateOf(Results())
+    val results = _results
+
+    private val _resultDialogState = mutableStateOf(false)
+    val resultDialogState = _resultDialogState
+
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
     private var tts = CustomTextToSpeech(this)
 
     private val gameSet = GameSet(rules = Rules(duration = 10, categoryId = Rules.CATEGORY_ALL, difficulty = Rules.DIFFICULTY_ALL))
+
+    private var errors = 0
 
     init {
         savedStateHandle.get<Int>("dictionaryId")?.let { dictionaryId ->
@@ -80,24 +86,22 @@ class QuizViewModel @Inject constructor(
     private suspend fun initializeGameSet() {
         _dictionary.value.id?.let {
             val words = wordUseCases.getWordsFromDictionary(it).first().toMutableList()
-
-            val gameWords: MutableList<Word> = mutableListOf()
-            val duration = if(gameSet.rules.duration > words.size) words.size else gameSet.rules.duration
-
-            gameWords.addMostPertinentWords(words, duration)
-
-            gameSet.setGameWords(gameWords)
-
+            gameSet.findAndSetGameWords(words, gameSet.rules.duration)
             _answer.value = gameSet.getCurrentAnswer()
         }
     }
 
-    private suspend fun proceed() {
+    private fun proceed() {
         _userEntry.value = ""
         val next = gameSet.next()
         _progress.value = (gameSet.currentIndex).toFloat() / (gameSet.rules.duration).toFloat()
         if (next != null) _answer.value = next
-        else _eventFlow.emit(UiEvent.CloseQuiz)
+        else {
+            _results.value.duration = gameSet.getDuration()
+            _results.value.correctAnswers = gameSet.getDuration() - errors
+            _results.value.wrongAnswers = errors
+            _resultDialogState.value = true
+        }
     }
 
     fun onEvent(event: QuizEvent) {
@@ -126,10 +130,15 @@ class QuizViewModel @Inject constructor(
             is QuizEvent.NextWord -> {
                 viewModelScope.launch {
                     wordUseCases.changeWordNbPlayed(_answer.value.wordId, _answer.value.played+1)
+                    errors += 1
                     proceed()
                 }
             }
             is QuizEvent.SpeakWord -> if(_answer.value.isFromTarget) tts.speak(_answer.value.question)
+            is QuizEvent.EndQuiz -> {
+                _resultDialogState.value = false
+                viewModelScope.launch { _eventFlow.emit(UiEvent.CloseQuiz) }
+            }
         }
     }
 

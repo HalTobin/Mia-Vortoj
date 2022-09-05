@@ -57,6 +57,8 @@
     <string name="quiz_validate_continue">Continuer</string>
     <string name="quiz_answer_was">La réponse était :</string>
 
+    <string name="quiz_finished">Quiz terminé !</string>
+
     <string name="language_na">Autres</string>
 
     <string name="language_epo">Espéranto</string>

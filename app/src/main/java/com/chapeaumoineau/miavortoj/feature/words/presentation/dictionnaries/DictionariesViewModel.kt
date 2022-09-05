@@ -34,7 +34,6 @@ class DictionariesViewModel @Inject constructor(private val dictionaryUseCases: 
         getDictionaries(DictionaryOrder.Language(OrderType.Ascending))
     }
 
-
     fun onEvent(event: DictionariesEvent) {
         when(event) {
             is DictionariesEvent.Order -> {

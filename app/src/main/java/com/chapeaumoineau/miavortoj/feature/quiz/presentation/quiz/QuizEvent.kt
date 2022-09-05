@@ -6,4 +6,5 @@ sealed class QuizEvent {
     object SpeakWord: QuizEvent()
     object CheckAnswer: QuizEvent()
     object NextWord: QuizEvent()
+    object EndQuiz: QuizEvent()
 }

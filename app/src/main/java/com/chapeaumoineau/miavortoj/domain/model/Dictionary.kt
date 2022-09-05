@@ -16,4 +16,5 @@ data class Dictionary (
         }
     }
 }
+
 class InvalidDictionaryException(message: String): Exception(message)

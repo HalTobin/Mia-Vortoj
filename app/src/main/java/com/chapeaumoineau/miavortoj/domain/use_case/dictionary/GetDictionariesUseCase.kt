@@ -24,7 +24,8 @@ class GetDictionariesUseCase(private val repository: DictionaryRepository) {
                         is DictionaryOrder.Language -> dictionaries.sortedByDescending { it.languageIso }
                     }
                 }
-        }
+            }
         }
     }
+
 }
