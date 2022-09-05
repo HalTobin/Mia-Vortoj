@@ -15,6 +15,7 @@ import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictiona
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.AddEditWordScreen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.DictionariesScreen
 import com.chapeaumoineau.miavortoj.feature.quiz.presentation.quiz.QuizScreen
+import com.chapeaumoineau.miavortoj.feature.quiz.presentation.results.ResultsScreen
 import com.chapeaumoineau.miavortoj.presentation.Screen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.word_card.WordCardScreen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.words.WordsScreen
@@ -29,19 +30,24 @@ class MainActivity : ComponentActivity() {
             VortojAppTheme {
                 Surface(color = MaterialTheme.colors.background) {
                     val navController = rememberNavController()
-                    NavHost(navController = navController, startDestination = Screen.DictionariesScreen.route) {
+                    NavHost(
+                        navController = navController,
+                        startDestination = Screen.DictionariesScreen.route
+                    ) {
                         composable(route = Screen.DictionariesScreen.route) {
                             DictionariesScreen(navController = navController)
                         }
-                        composable(route = Screen.AddEditDictionaryScreen.route + "?dictionaryId={dictionaryId}&dictionaryLanguage={dictionaryLanguage}",
-                            arguments = listOf(navArgument(name = "dictionaryId") {
-                                type = NavType.IntType
-                                defaultValue = -1
-                            },
-                            navArgument(name = "dictionaryLanguage") {
-                                type = NavType.IntType
-                                defaultValue = -1
-                            },
+                        composable(
+                            route = Screen.AddEditDictionaryScreen.route + "?dictionaryId={dictionaryId}&dictionaryLanguage={dictionaryLanguage}",
+                            arguments = listOf(
+                                navArgument(name = "dictionaryId") {
+                                    type = NavType.IntType
+                                    defaultValue = -1
+                                },
+                                navArgument(name = "dictionaryLanguage") {
+                                    type = NavType.IntType
+                                    defaultValue = -1
+                                },
                             )
                         ) {
                             AddEditDictionaryScreen(navController = navController)
@@ -54,38 +60,64 @@ class MainActivity : ComponentActivity() {
                             )
                         ) {
                             WordsScreen(navController = navController)
-                            }
-                        composable(route = Screen.AddEditWordScreen.route + "?dictionaryId={dictionaryId}&wordId={wordId}", arguments = listOf(
-                            navArgument(name = "dictionaryId") {
-                                type = NavType.IntType
-                                defaultValue = -1
-                            },
-                            navArgument(name = "wordId") {
-                                type = NavType.IntType
-                                defaultValue = -1
-                            })) {
+                        }
+                        composable(
+                            route = Screen.AddEditWordScreen.route + "?dictionaryId={dictionaryId}&wordId={wordId}",
+                            arguments = listOf(
+                                navArgument(name = "dictionaryId") {
+                                    type = NavType.IntType
+                                    defaultValue = -1
+                                },
+                                navArgument(name = "wordId") {
+                                    type = NavType.IntType
+                                    defaultValue = -1
+                                })
+                        ) {
                             AddEditWordScreen(navController = navController)
                         }
-                        composable(route = Screen.WordCardScreen.route + "?wordId={wordId}", arguments = listOf(
-                            navArgument(name = "wordId") {
-                                type = NavType.IntType
-                                defaultValue = -1
-                            }
-                        )) {
+                        composable(route = Screen.WordCardScreen.route + "?wordId={wordId}",
+                            arguments = listOf(
+                                navArgument(name = "wordId") {
+                                    type = NavType.IntType
+                                    defaultValue = -1
+                                }
+                            )) {
                             WordCardScreen(navController = navController)
                         }
-                        composable(route = Screen.QuizScreen.route + "?dictionaryId={dictionaryId}", arguments = listOf(
-                        //composable(route = Screen.QuizScreen.route + "?dictionaryId={dictionaryId}&rules={rules}", arguments = listOf(
-                            navArgument(name = "dictionaryId") {
-                                type = NavType.IntType
-                                defaultValue = -1
-                            },
-                            /*navArgument(name = "rules") {
-                                type = NavType.ParcelableType(Rules::class.java)
-                                defaultValue = null
-                            }*/
-                        )) {
+                        composable(
+                            route = Screen.QuizScreen.route + "?dictionaryId={dictionaryId}",
+                            arguments = listOf(
+                                //composable(route = Screen.QuizScreen.route + "?dictionaryId={dictionaryId}&rules={rules}", arguments = listOf(
+                                navArgument(name = "dictionaryId") {
+                                    type = NavType.IntType
+                                    defaultValue = -1
+                                },
+                                /*navArgument(name = "rules") {
+                                    type = NavType.ParcelableType(Rules::class.java)
+                                    defaultValue = null
+                                }*/
+                            )
+                        ) {
                             QuizScreen(navController = navController)
+                        }
+                        composable(
+                            route = Screen.ResultsScreen.route + "?nbQuestions={nbQuestions}&nbErrors={nbErrors}&nbCorrects={nbCorrects}",
+                            arguments = listOf(
+                                navArgument(name = "nbQuestions") {
+                                    type = NavType.IntType
+                                    defaultValue = 0
+                                },
+                                navArgument(name = "nbErrors") {
+                                    type = NavType.IntType
+                                    defaultValue = 0
+                                },
+                                navArgument(name = "nbCorrects") {
+                                    type = NavType.IntType
+                                    defaultValue = 0
+                                }
+                            )
+                        ) {
+                            ResultsScreen(navController = navController)
                         }
                     }
                 }

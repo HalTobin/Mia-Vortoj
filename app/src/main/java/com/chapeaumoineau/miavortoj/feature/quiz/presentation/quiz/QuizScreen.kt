@@ -19,21 +19,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.R
-import com.chapeaumoineau.miavortoj.feature.quiz.presentation.quiz.components.ResultDialog
-import com.chapeaumoineau.miavortoj.feature.words.presentation.word_card.WordCardEvent
+import com.chapeaumoineau.miavortoj.presentation.Screen
 import com.chapeaumoineau.miavortoj.ui.theme.DarkGreen
 import com.chapeaumoineau.miavortoj.ui.theme.DarkOrange
 import com.chapeaumoineau.miavortoj.ui.theme.DarkRed
@@ -52,8 +47,6 @@ fun QuizScreen(navController: NavController,
     val language = viewModel.language.value
     val progress = viewModel.progress.value
     val isTtsAvailable = viewModel.isTtsAvailable.value
-
-    val resultDialogState = viewModel.resultDialogState.value
 
     var textFieldColor = Transparent
     val buttonNextColor = DarkRed
@@ -136,6 +129,14 @@ fun QuizScreen(navController: NavController,
                 is QuizViewModel.UiEvent.AnswerValid -> animateTextFieldBackgroundColorTo(DarkGreen)
                 is QuizViewModel.UiEvent.AnswerClose -> animateTextFieldBackgroundColorTo(DarkOrange)
                 is QuizViewModel.UiEvent.AnswerWrong -> animateTextFieldBackgroundColorTo(DarkRed)
+                is QuizViewModel.UiEvent.OpenResults -> {
+                    navController.navigate(
+                        Screen.ResultsScreen.route
+                                + "?nbQuestions=${event.results.duration}"
+                                + "&nbErrors=${event.results.wrongAnswers}"
+                                + "&nbCorrects=${event.results.correctAnswers}"
+                    )
+                }
             }
         }
     }
@@ -148,7 +149,7 @@ fun QuizScreen(navController: NavController,
         sheetBackgroundColor = Color.DarkGray,
         sheetContent = {
 
-        ResultDialog(isVisible = resultDialogState)
+        //ResultDialog(isVisible = resultDialogState)
 
         Column(modifier = Modifier
             .fillMaxWidth()

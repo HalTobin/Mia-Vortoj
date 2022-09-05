@@ -14,8 +14,11 @@ import com.chapeaumoineau.miavortoj.domain.model.Word
 import com.chapeaumoineau.miavortoj.domain.use_case.DictionaryUseCases
 import com.chapeaumoineau.miavortoj.domain.use_case.WordUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,6 +26,8 @@ import javax.inject.Inject
 class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUseCases,
                                                private val dictionaryUseCases: DictionaryUseCases,
                                                savedStateHandle: SavedStateHandle): ViewModel() {
+
+    private var getWordJob: Job? = null
 
     private val _wordSource = mutableStateOf("")
     val source: State<String> = _wordSource
@@ -83,7 +88,8 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
         }
         savedStateHandle.get<Int>("wordId")?.let { wordId ->
             if (wordId != -1) {
-                viewModelScope.launch {
+                getWord(wordId)
+                /*viewModelScope.launch {
                     wordUseCases.getWord(wordId)?.also { word ->
                         currentWordId = word.id
                         _wordSource.value = word.sourceWord
@@ -93,7 +99,7 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
                         _wordCategory.value = Category.getCategoryById(word.themeId)
                         _wordDifficulty.value = word.difficulty
                     }
-                }
+                }*/
             }
         }
     }
@@ -183,6 +189,21 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
         data class ShowSnackBar(val message: String): UiEvent()
         object SaveWord: UiEvent()
         object InitWordTranslations: UiEvent()
+    }
+
+    private fun getWord(id: Int?) {
+        getWordJob?.cancel()
+        getWordJob = id?.let {
+            wordUseCases.getWord(id)?.onEach { word ->
+                currentWordId = word.id
+                _wordSource.value = word.sourceWord
+                _wordTarget.value = word.targetWord
+                _wordEmote.value = word.emote
+                _wordNotes.value = word.notes
+                _wordCategory.value = Category.getCategoryById(word.themeId)
+                _wordDifficulty.value = word.difficulty
+            }?.launchIn(viewModelScope)
+        }
     }
 
 }

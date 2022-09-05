@@ -9,7 +9,7 @@ interface WordRepository {
 
     fun getWordsFromDictionary(dictionaryId: Int): Flow<List<Word>>
 
-    suspend fun getWordById(id: Int): Word?
+    fun getWordById(id: Int): Flow<Word>?
 
     suspend fun getOldWordByDictionaryId(dictionaryId: Int): Word?
 

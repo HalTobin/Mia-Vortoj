@@ -14,8 +14,8 @@ import com.chapeaumoineau.miavortoj.domain.use_case.DictionaryUseCases
 import com.chapeaumoineau.miavortoj.domain.use_case.WordUseCases
 import com.chapeaumoineau.miavortoj.util.CustomTextToSpeech
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,6 +26,8 @@ class WordCardViewModel @Inject constructor(
     private val dictionaryUseCases: DictionaryUseCases,
     savedStateHandle: SavedStateHandle
 ) : AndroidViewModel(application), CustomTextToSpeech.OnTextToSpeechReady {
+
+    private var getWordJob: Job? = null
 
     private val _word = mutableStateOf(Word("", "", "", "", 0, 0, 0, 0, 0, 0, 0, 0))
     val word: State<Word> = _word
@@ -50,10 +52,9 @@ class WordCardViewModel @Inject constructor(
     init {
         savedStateHandle.get<Int>("wordId")?.let { wordId ->
             if (wordId != -1) {
-                viewModelScope.launch {
+                /*viewModelScope.launch {
                     wordUseCases.getWord(wordId)?.also { wordDb ->
                         _word.value = wordDb
-                        _category.value = Category.getCategoryById(wordDb.themeId)
                         dictionaryUseCases.getDictionary(wordDb.dictionaryId)
                             ?.also { dictionaryDb ->
                                 _dictionary.value = dictionaryDb
@@ -62,7 +63,8 @@ class WordCardViewModel @Inject constructor(
                                 tts.initTextToSpeech(getApplication<Application>().applicationContext, _language.value)
                             }
                     }
-                }
+                }*/
+                getWord(wordId)
             }
         }
     }
@@ -88,6 +90,23 @@ class WordCardViewModel @Inject constructor(
 
     override fun onTextToSpeechReady(isTextToSpeechReady: Boolean) {
         _speech.value = isTextToSpeechReady
+    }
+
+    private fun getWord(id: Int?) {
+        getWordJob?.cancel()
+        getWordJob = id?.let {
+            wordUseCases.getWord(id)?.onEach { word ->
+                _word.value = word
+                dictionaryUseCases.getDictionary(word.dictionaryId)
+                    ?.also { dictionaryDb ->
+                        _category.value = Category.getCategoryById(word.themeId)
+                        _dictionary.value = dictionaryDb
+                        _language.value =
+                            Language.getLanguageByIso(dictionaryDb.languageIso)
+                        tts.initTextToSpeech(getApplication<Application>().applicationContext, _language.value)
+                    }
+            }?.launchIn(viewModelScope)
+        }
     }
 
 }

@@ -14,7 +14,7 @@ class WordRepositoryImpl(private val dao: WordDao) : WordRepository {
         return dao.getWordsFromDictionary(dictionaryId)
     }
 
-    override suspend fun getWordById(id: Int): Word? {
+    override fun getWordById(id: Int): Flow<Word>? {
         return dao.getWordById(id)
     }
 

@@ -14,7 +14,7 @@ interface WordDao {
     fun getWordsFromDictionary(dictionaryId: Int): Flow<List<Word>>
 
     @Query("SELECT * FROM word WHERE id = :id")
-    suspend fun getWordById(id: Int): Word?
+    fun getWordById(id: Int): Flow<Word>?
 
     @Query("SELECT * FROM word WHERE lastTestTimestamp = (SELECT MIN(lastTestTimestamp) FROM word WHERE dictionaryId = :dictionaryId)")
     suspend fun getOldWordByDictionaryId(dictionaryId: Int): Word?

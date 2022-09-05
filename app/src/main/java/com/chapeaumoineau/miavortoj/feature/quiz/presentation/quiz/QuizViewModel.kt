@@ -53,12 +53,6 @@ class QuizViewModel @Inject constructor(
     private val _isTtsAvailable = mutableStateOf(false)
     val isTtsAvailable = _isTtsAvailable
 
-    private val _results = mutableStateOf(Results())
-    val results = _results
-
-    private val _resultDialogState = mutableStateOf(false)
-    val resultDialogState = _resultDialogState
-
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
@@ -97,10 +91,17 @@ class QuizViewModel @Inject constructor(
         _progress.value = (gameSet.currentIndex).toFloat() / (gameSet.rules.duration).toFloat()
         if (next != null) _answer.value = next
         else {
-            _results.value.duration = gameSet.getDuration()
-            _results.value.correctAnswers = gameSet.getDuration() - errors
-            _results.value.wrongAnswers = errors
-            _resultDialogState.value = true
+            viewModelScope.launch {
+                _eventFlow.emit(
+                    UiEvent.OpenResults(
+                        Results(
+                            duration = gameSet.getDuration(),
+                            correctAnswers = gameSet.getDuration() - errors,
+                            wrongAnswers = errors
+                        )
+                    )
+                )
+            }
         }
     }
 
@@ -136,7 +137,6 @@ class QuizViewModel @Inject constructor(
             }
             is QuizEvent.SpeakWord -> if(_answer.value.isFromTarget) tts.speak(_answer.value.question)
             is QuizEvent.EndQuiz -> {
-                _resultDialogState.value = false
                 viewModelScope.launch { _eventFlow.emit(UiEvent.CloseQuiz) }
             }
         }
@@ -147,6 +147,7 @@ class QuizViewModel @Inject constructor(
         object AnswerValid: UiEvent()
         object AnswerClose: UiEvent()
         object AnswerWrong: UiEvent()
+        data class OpenResults(val results: Results): UiEvent()
     }
 
     override fun onTextToSpeechReady(isTextToSpeechReady: Boolean) {
