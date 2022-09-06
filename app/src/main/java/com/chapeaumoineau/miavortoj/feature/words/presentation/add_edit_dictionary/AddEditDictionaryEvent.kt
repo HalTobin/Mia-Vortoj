@@ -5,7 +5,6 @@ sealed class AddEditDictionaryEvent{
     data class EnteredDescription(val value: String): AddEditDictionaryEvent()
     data class EnteredSearch(val value: String): AddEditDictionaryEvent()
     data class ChangeLanguage(val language: String): AddEditDictionaryEvent()
-    data class GetLanguageTranslation(val listOfIndex: ArrayList<Int>, val listOfTranslation: ArrayList<String>): AddEditDictionaryEvent()
     object MoreLanguage: AddEditDictionaryEvent()
     data class OnNewLanguageSelected(val language: String): AddEditDictionaryEvent()
     object DismissLanguageDialog: AddEditDictionaryEvent()

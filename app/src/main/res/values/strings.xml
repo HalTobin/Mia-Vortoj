@@ -59,6 +59,7 @@
 
     <string name="quiz_finished">Quiz terminé !</string>
 
+    <!--
     <string name="language_na">Autres</string>
 
     <string name="language_epo">Espéranto</string>
@@ -163,6 +164,7 @@
     <string name="language_finavi">Naʼvi</string>
     <string name="language_filpn">Lapine</string>
     <string name="language_fidov">Draconique</string>
+    -->
 
     <string name="theme_other">Autres</string>
     <string name="theme_number">Chiffres &amp; Nombres</string>

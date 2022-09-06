@@ -69,15 +69,6 @@ fun AddEditDictionaryScreen(navController: NavController,
                 is AddEditDictionaryViewModel.UiEvent.SaveDictionary -> {
                     navController.navigateUp()
                 }
-                is AddEditDictionaryViewModel.UiEvent.InitLanguageTranslations -> {
-                    val listOfTranslations = ArrayList<String>()
-                    val listOfIndex = ArrayList<Int>()
-                    languageListState.forEachIndexed { index, category ->
-                        listOfIndex.add(index)
-                        listOfTranslations.add(context.resources.getString(category.text))
-                    }
-                    viewModel.onEvent(AddEditDictionaryEvent.GetLanguageTranslation(listOfIndex, listOfTranslations))
-                }
             }
         }
     }

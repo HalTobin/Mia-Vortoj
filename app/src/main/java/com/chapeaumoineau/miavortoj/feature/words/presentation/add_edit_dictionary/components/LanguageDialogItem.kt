@@ -25,7 +25,7 @@ fun LanguageDialogItem(language: Language,
             .fillMaxSize()
             .align(Alignment.Center)
             .padding(start = 16.dp)) {
-            Text(text = stringResource(language.text),
+            Text(text = language.name,
                 style = MaterialTheme.typography.subtitle1,
                 fontWeight = FontWeight.Bold,
                 maxLines = 1,
