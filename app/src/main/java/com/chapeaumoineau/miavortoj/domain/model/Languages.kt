@@ -151,6 +151,8 @@ data class Language(
             Language("Tiếng Việt", "VIE", R.drawable.flag_simple_vn,0xFFF06874, 0xFF8A000C,false),
             Language("ภาษาไทย", "THA", R.drawable.flag_simple_th,0xF2C9485E, 0xFF272441,false),
 
+            // African languages
+            Language("Kiswahili", "SWA", R.drawable.flag_simple_tz,0xFF66B966, 0xFF005700,false),
             Language("isiZulu", "ZUL", R.drawable.flag_simple_za,0xFF4B8B74, 0xFF006F25,false),
             Language("isiXhosa", "XHO", R.drawable.flag_simple_xh,0xFF91B1E2, 0xFF004BB9,false),
             Language("Yorùbá", "YOR", R.drawable.flag_simple_ng,0xFF4ABD91, 0xFF01643E,false),
@@ -171,8 +173,8 @@ data class Language(
             Language("Nawatlahtolli", "NAH", R.drawable.flag_simple_mx,0xFF68BBA1, 0xFF005339,false),
         )
 
-        val testl: Color = Color(0xFF529958)
-        val testd: Color = Color(0xFF094B0F)
+        val testl: Color = Color(0xFF66B966)
+        val testd: Color = Color(0xFF005700)
 
         val defaultList = listOf(getDefault(), getDefault(), getDefault(), getDefault())
 
