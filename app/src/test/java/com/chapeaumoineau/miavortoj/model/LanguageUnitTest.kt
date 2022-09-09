@@ -8,8 +8,15 @@ import org.junit.Test
 class LanguageUnitTest {
 
     @Test
-    fun addition_isCorrect() {
-        Assert.assertEquals(4, 2 + 2)
+    fun `how many languages`() {
+        // Given
+        val nbLanguages = Language.languagesList.size - 1
+
+        // When
+        println("Number of languages : ".plus(nbLanguages))
+
+        // Assert
+        assertThat(nbLanguages).isEqualTo(nbLanguages)
     }
 
     @Test
