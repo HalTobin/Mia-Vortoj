@@ -136,18 +136,53 @@ data class Language(
             Language("Qazaq", "KAZ", R.drawable.flag_simple_kz,0xFF63C6D3, 0xFF006F7E,false),
 
             // West & South Asian languages
-            Language("日本語", "JPN", R.drawable.flag_simple_jp,0xFFFFFFFF, 0xFF74001C,false, Locale.JAPANESE),
             Language("官话", "CHN", R.drawable.flag_simple_cn,0xFFDB6A5A, 0xFFA7200E,false, Locale.CHINESE),
+            Language("閩南話", "HBL", R.drawable.flag_simple_cn,0xFFDB6A5A, 0xFFA7200E,false),
             Language("粤语", "YUE", R.drawable.flag_simple_yue,0xFFDB6A5A, 0xFFA01319,false, Locale.CHINESE),
             Language("한국어", "KOR", R.drawable.flag_simple_kr,0xFFFFFFFF, 0xFF003B85,false, Locale.KOREAN),
             Language("Tiếng Việt", "VIE", R.drawable.flag_simple_vn,0xFFF06874, 0xFF8A000C,false),
             Language("ภาษาไทย", "THA", R.drawable.flag_simple_th,0xF2C9485E, 0xFF272441,false),
+            Language("Bahasa Melayu", "MAY", R.drawable.flag_simple_my,0xFFC77D7D, 0xFF470000,false),
             Language("Basa Sunda", "SUN", R.drawable.flag_simple_id,0xFFFF7C86, 0xFF720008,false),
             Language("Basa Jawa", "JAV", R.drawable.flag_simple_id,0xFFFF7C86, 0xFF720008,false),
 
+            // Japan's languages
+            Language("日本語", "JPN", R.drawable.flag_simple_jp,0xFFFFFFFF, 0xFF74001C,false, Locale.JAPANESE),
+            Language("アイヌ", "AIN", R.drawable.flag_simple_ain,0xFF8A8CC7, 0xFF212236,false),
+            Language("シマユミタ", "KZG", R.drawable.flag_simple_jp_kagoshima,0xFFFFFFFF, 0xFF000000,false),
+            Language("島口/シマユムタ", "RYN", R.drawable.flag_simple_jp_kagoshima,0xFFFFFFFF, 0xFF000000,false),
+            Language("シマユミィタ", "TKN", R.drawable.flag_simple_jp_kagoshima,0xFFFFFFFF, 0xFF000000,false),
+            Language("島ムニ", "OKN", R.drawable.flag_simple_jp_kagoshima,0xFFFFFFFF, 0xFF000000,false),
+            Language("ユンヌフトゥバ", "YOX", R.drawable.flag_simple_jp_kagoshima,0xFFFFFFFF, 0xFF000000,false),
+            Language("山原言葉/ヤンバルクトゥーバ", "XUG", R.drawable.flag_simple_jp_kagoshima,0xFFFFFFFF, 0xFF000000,false),
+            Language("沖縄口", "RYU", R.drawable.flag_simple_jp_okinawa,0xFFFFFFFF, 0xFF610723,false),
+            Language("宮古口/ミャークフツ", "MVI", R.drawable.ic_flag_simple_jp_miyako,0xFF88BDAB, 0xFF002D49,false),
+            Language("宮古口/ミャークフツ", "MVI", R.drawable.ic_flag_simple_jp_miyako,0xFF88BDAB, 0xFF002D49,false),
+
+            // Philippin's languages
+            Language("Aklan", "AKL", R.drawable.flag_simple_ph,0xFFFFFFFF, 0xFF9E0D1D,false),
+            Language("Bikol Sentral", "BCL", R.drawable.flag_simple_ph,0xFFFFFFFF, 0xFF9E0D1D,false),
+            Language("Cebuano", "PHL", R.drawable.flag_simple_ph,0xFFFFFFFF, 0xFF9E0D1D,false),
+            Language("Chabacano", "CBK", R.drawable.flag_simple_ph,0xFFFFFFFF, 0xFF9E0D1D,false),
+            Language("Ilonggo", "HIL", R.drawable.flag_simple_ph,0xFFFFFFFF, 0xFF9E0D1D,false),
+            Language("Ybanag", "IBG", R.drawable.flag_simple_ph,0xFFFFFFFF, 0xFF9E0D1D,false),
+            Language("Ilokano", "ILO", R.drawable.flag_simple_ph,0xFFFFFFFF, 0xFF9E0D1D,false),
+            Language("Ibatan", "IVV", R.drawable.flag_simple_ph,0xFFFFFFFF, 0xFF9E0D1D,false),
+            Language("Pampangan", "PAM", R.drawable.flag_simple_ph,0xFFFFFFFF, 0xFF9E0D1D,false),
+            Language("Harayan", "KRJ", R.drawable.flag_simple_ph,0xFFFFFFFF, 0xFF9E0D1D,false),
+            Language("Basa Magindanaw", "MDH", R.drawable.flag_simple_ph,0xFFFFFFFF, 0xFF9E0D1D,false),
+            Language("Ranao", "MRW", R.drawable.flag_simple_ph,0xFFFFFFFF, 0xFF9E0D1D,false),
+            Language("Pangasinense", "PAG", R.drawable.flag_simple_ph,0xFFFFFFFF, 0xFF9E0D1D,false),
+            Language("Sambali", "XSB", R.drawable.flag_simple_ph,0xFFFFFFFF, 0xFF9E0D1D,false),
+            Language("Tandaganon", "TGN", R.drawable.flag_simple_ph,0xFFFFFFFF, 0xFF9E0D1D,false),
+            Language("Bahasa Sūg", "TSG", R.drawable.flag_simple_ph,0xFFFFFFFF, 0xFF9E0D1D,false),
+            Language("Waray-Waray", "WAR", R.drawable.flag_simple_ph,0xFFFFFFFF, 0xFF9E0D1D,false),
+            Language("Yakan", "YKA", R.drawable.flag_simple_ph,0xFFFFFFFF, 0xFF9E0D1D,false),
+
             // Indian languages
-            Language("संस्कृत-", "SAN", R.drawable.flag_simple_in,0xFFFFBE7E, 0xFFA35100,false),
             Language("हिन्दी", "HIN", R.drawable.flag_simple_in,0xFFFFBE7E, 0xFFA35100,false),
+            Language("پنجابی", "PAN", R.drawable.flag_simple_in,0xFFFFBE7E, 0xFFA35100,false),
+            Language("संस्कृत-", "SAN", R.drawable.flag_simple_in,0xFFFFBE7E, 0xFFA35100,false),
             Language("తెలుగు", "TEL", R.drawable.flag_simple_in,0xFFFFBE7E, 0xFFA35100,false),
             Language("தமிழ்", "TAM", R.drawable.flag_simple_tam,0xFF8ACEFA, 0xFF175B86,false),
             Language("اُردُو", "URD", R.drawable.flag_simple_pk,0xFF4E864D, 0xFF0A4E09,false),
@@ -166,22 +201,25 @@ data class Language(
             Language("chiShona", "TIR", R.drawable.flag_simple_zw,0xFFFFEE9E, 0xFF7A6500,false),
             Language("Sesotho", "SOT", R.drawable.flag_simple_ls,0xFF8494D5, 0xFF00104E,false),
 
+            // Others
             Language("Shqiptare", "ALB", R.drawable.flag_simple_al,0xFFE46869, 0xFFAC1516,false),
             Language("العربية", "SAU", R.drawable.flag_simple_sa,0xFF5B9151, 0xFF137700,false, Locale("ar")),
             Language("עִבְרִית", "HEB", R.drawable.flag_simple_il,0xFFFFFFFF, 0xFF0101BB,false),
             Language("Հայերեն", "ARM", R.drawable.flag_simple_am,0xFFFFC967, 0xFF915D00,false),
             Language("বাংলা", "BGD", R.drawable.flag_simple_bd,0xFF45685E, 0xFF00523C,false, Locale("bn")),
             Language("မြန်မာစာ", "MMR", R.drawable.flag_simple_mm,0xFF75AC75, 0xFF1E6D1E,false),
-            Language("Cebuano", "PHL", R.drawable.flag_simple_ph,0xFFFFFFFF, 0xFF9E0D1D,false),
             Language("Chichewa", "MWI", R.drawable.flag_simple_mw,0xFFF36962, 0xFFAA0D05,false),
             Language("සිංහල", "LKA", R.drawable.flag_simple_lk,0xFFFFD977, 0xFF771C23,false),
             Language("ייִדיש", "YID", R.drawable.flag_simple_yi,0xFFFFFFFF, 0xFF000000,false),
+            Language("Gagana faʻa Sāmoa", "SMO", R.drawable.flag_simple_ws,0xFFCE7E87, 0xFF640812,false),
 
             Language("Nawatlahtolli", "NAH", R.drawable.flag_simple_mx,0xFF68BBA1, 0xFF005339,false),
+            Language("Kechua", "QWE", R.drawable.flag_simple_pe,0xFFD57D85, 0xFF5C070F,false),
+
         )
 
-        val testl: Color = Color(0xFF7ACEA4)
-        val testd: Color = Color(0xFF004B26)
+        val testl: Color = Color(0xFF88BDAB)
+        val testd: Color = Color(0xFF002D49)
 
         val defaultList = listOf(getDefault(), getDefault(), getDefault(), getDefault())
 
