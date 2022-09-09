@@ -83,13 +83,6 @@ data class Language(
             Language("Svenska", "SWE", R.drawable.flag_simple_se,0xFF4A83A7, 0xFF045586,false, Locale("sv")),
             Language("íslenska", "ice", R.drawable.flag_simple_is,0xFF4A88F1, 0xFF003081,false),
 
-            // Finnic languages
-            Language("Magyar nyelv", "HUN", R.drawable.flag_simple_hu,0xFF67B136, 0xFF245C00,false),
-            Language("Eesti keel", "EST", R.drawable.flag_simple_ee,0xFF74BFFF, 0xFF0D60A8,false, Locale("es")),
-            Language("Suomi", "FIN", R.drawable.flag_simple_fi,0xFFFFFFFF, 0xFF003074,false, Locale("fi")),
-            Language("Līvõ kēļ", "LIV", R.drawable.flag_simple_livonians,0xFF529958, 0xFF094B0F,false),
-            Language("Karjala", "RU-KRL", R.drawable.flag_simple_ru_kr,0xFF51B6E9, 0xFF004F77,false, Locale("fi")),
-
             // Balto-Slavic languages
             Language("Latviešu valoda", "LVA", R.drawable.flag_simple_lv,0xFF9C5A65, 0xFF721625,false, Locale("lv")),
             Language("Lietuvių kalba", "LTU", R.drawable.flag_simple_lt,0xFF548171, 0xFF005033,false, Locale("lt")),
@@ -104,6 +97,26 @@ data class Language(
             Language("Українська", "UKR", R.drawable.flag_simple_ua,0xFFFFEA77, 0xFF004592,false, Locale("uk")),
             Language("Беларуская", "BLR", R.drawable.flag_simple_by,0xFFB35353, 0xFF810000,false, Locale("be")),
             Language("Русский", "RUS", R.drawable.flag_simple_ru,0xFF4679DA, 0xFF002875,false, Locale("ru")),
+
+            // Indo-Iranian languages
+            Language("پښتو", "PUS", R.drawable.flag_simple_af,0xFF83C783, 0xFF000000,false),
+            Language("Тоҷикӣ", "TGK", R.drawable.flag_simple_tj,0xFF4AA04A, 0xFF004400,false),
+            Language("فارسی ", "PER", R.drawable.flag_simple_ir,0xFF68A877, 0xFF145C24,false),
+            Language("پښتو", "HIN", R.drawable.flag_simple_in,0xFFFFBE7E, 0xFFA35100,false),
+            Language("हिन्दी", "HIN", R.drawable.flag_simple_in,0xFFFFBE7E, 0xFFA35100,false),
+            Language("پنجابی", "PAN", R.drawable.flag_simple_in,0xFFFFBE7E, 0xFFA35100,false),
+            Language("संस्कृत-", "SAN", R.drawable.flag_simple_in,0xFFFFBE7E, 0xFFA35100,false),
+            Language("తెలుగు", "TEL", R.drawable.flag_simple_in,0xFFFFBE7E, 0xFFA35100,false),
+            Language("தமிழ்", "TAM", R.drawable.flag_simple_tam,0xFF8ACEFA, 0xFF175B86,false),
+            Language("اُردُو", "URD", R.drawable.flag_simple_pk,0xFF4E864D, 0xFF0A4E09,false),
+            Language("سنڌي", "SND", R.drawable.flag_simple_snd,0xFF72B99B, 0xFF002C1A,false),
+
+            // Finnic languages
+            Language("Magyar nyelv", "HUN", R.drawable.flag_simple_hu,0xFF67B136, 0xFF245C00,false),
+            Language("Eesti keel", "EST", R.drawable.flag_simple_ee,0xFF74BFFF, 0xFF0D60A8,false, Locale("es")),
+            Language("Suomi", "FIN", R.drawable.flag_simple_fi,0xFFFFFFFF, 0xFF003074,false, Locale("fi")),
+            Language("Līvõ kēļ", "LIV", R.drawable.flag_simple_livonians,0xFF529958, 0xFF094B0F,false),
+            Language("Karjala", "RU-KRL", R.drawable.flag_simple_ru_kr,0xFF51B6E9, 0xFF004F77,false, Locale("fi")),
 
             // Caucasian languages
             Language("Къырымтатар тили", "CRH", R.drawable.flag_simple_crimea,0xFFFFFFFF, 0xFF00466F,false),
@@ -124,23 +137,29 @@ data class Language(
             Language("Къарачай-малкъар тил", "RU-KRC", R.drawable.flag_simple_ru_kb,0xFF69B4FF, 0xFF0A5299,false),
             Language("Zuhun tati", "RU-TTT", R.drawable.flag_simple_az,0xFF47DCFF, 0xFF006C85, false),
 
-            // Turkic languages || Middle Asian languages
+            // Siberian languages
+            Language("Нивхгу диф", "RU-NIV", R.drawable.flag_simple_ru_sakhalin,0xFF80B3B8, 0xFF2C5F64, false),
+            Language("Orok", "RU-OAA", R.drawable.flag_simple_ru_sakhalin,0xFF80B3B8, 0xFF2C5F64, false),
+
+            // Turkic languages
             Language("Azəri", "AZE", R.drawable.flag_simple_az,0xFF47DCFF, 0xFF006C85,false),
             Language("Türkçe", "TUR", R.drawable.flag_simple_tr, 0xFFDD5E66, 0xFFA0000A,false),
             Language("Татар теле", "TAT", R.drawable.flag_simple_ruta,0xFF60BD60, 0xFF004B00,false),
             Language("Türkmençe", "TUK", R.drawable.flag_simple_tm,0xFF39AF70, 0xFF005326,false),
-            Language("Тоҷикӣ", "TGK", R.drawable.flag_simple_tj,0xFF4AA04A, 0xFF004400,false),
-            Language("پارسی", "PER", R.drawable.flag_simple_ir,0xFF73C486, 0xFF136426,false),
             Language("Oʻzbekcha", "UZB", R.drawable.flag_simple_uz,0xFF4BAABB, 0xFF006A7E,false),
             Language("Qaraqalpaq tili", "UZ-KAA", R.drawable.flag_simple_uz_kaa,0xFFFFD56A, 0xFF916800,false),
             Language("Qazaq", "KAZ", R.drawable.flag_simple_kz,0xFF63C6D3, 0xFF006F7E,false),
+            Language("ئۇيغۇر تىلى", "UIG", R.drawable.flag_simple_xinjiang,0xFF8DE0FF, 0xFF004863,false),
 
             // West & South Asian languages
             Language("官话", "CHN", R.drawable.flag_simple_cn,0xFFDB6A5A, 0xFFA7200E,false, Locale.CHINESE),
             Language("閩南話", "HBL", R.drawable.flag_simple_cn,0xFFDB6A5A, 0xFFA7200E,false),
             Language("粤语", "YUE", R.drawable.flag_simple_yue,0xFFDB6A5A, 0xFFA01319,false, Locale.CHINESE),
             Language("한국어", "KOR", R.drawable.flag_simple_kr,0xFFFFFFFF, 0xFF003B85,false, Locale.KOREAN),
+            Language("재일한국어", "KO-JP", R.drawable.flag_simple_kr,0xFFFFFFFF, 0xFF003B85,false),
             Language("Tiếng Việt", "VIE", R.drawable.flag_simple_vn,0xFFF06874, 0xFF8A000C,false),
+            Language("ភាសាខ្មែរ", "KHM", R.drawable.flag_simple_kh,0xFFCF6B7C, 0xFF50000D,false),
+            Language("ພາສາລາວ", "LAO", R.drawable.flag_simple_la,0xFF4B6692, 0xFF001638,false),
             Language("ภาษาไทย", "THA", R.drawable.flag_simple_th,0xF2C9485E, 0xFF272441,false),
             Language("Bahasa Melayu", "MAY", R.drawable.flag_simple_my,0xFFC77D7D, 0xFF470000,false),
             Language("Basa Sunda", "SUN", R.drawable.flag_simple_id,0xFFFF7C86, 0xFF720008,false),
@@ -179,15 +198,6 @@ data class Language(
             Language("Waray-Waray", "WAR", R.drawable.flag_simple_ph,0xFFFFFFFF, 0xFF9E0D1D,false),
             Language("Yakan", "YKA", R.drawable.flag_simple_ph,0xFFFFFFFF, 0xFF9E0D1D,false),
 
-            // Indian languages
-            Language("हिन्दी", "HIN", R.drawable.flag_simple_in,0xFFFFBE7E, 0xFFA35100,false),
-            Language("پنجابی", "PAN", R.drawable.flag_simple_in,0xFFFFBE7E, 0xFFA35100,false),
-            Language("संस्कृत-", "SAN", R.drawable.flag_simple_in,0xFFFFBE7E, 0xFFA35100,false),
-            Language("తెలుగు", "TEL", R.drawable.flag_simple_in,0xFFFFBE7E, 0xFFA35100,false),
-            Language("தமிழ்", "TAM", R.drawable.flag_simple_tam,0xFF8ACEFA, 0xFF175B86,false),
-            Language("اُردُو", "URD", R.drawable.flag_simple_pk,0xFF4E864D, 0xFF0A4E09,false),
-            Language("سنڌي", "SND", R.drawable.flag_simple_snd,0xFF72B99B, 0xFF002C1A,false),
-
             // African languages
             Language("Af Soomaal", "SOM", R.drawable.flag_simple_so,0xFF84C6FF, 0xFF005096,false),
             Language("Kiswahili", "SWA", R.drawable.flag_simple_tz,0xFF66B966, 0xFF005700,false),
@@ -213,13 +223,15 @@ data class Language(
             Language("ייִדיש", "YID", R.drawable.flag_simple_yi,0xFFFFFFFF, 0xFF000000,false),
             Language("Gagana faʻa Sāmoa", "SMO", R.drawable.flag_simple_ws,0xFFCE7E87, 0xFF640812,false),
 
+            // South America languages
             Language("Nawatlahtolli", "NAH", R.drawable.flag_simple_mx,0xFF68BBA1, 0xFF005339,false),
             Language("Kechua", "QWE", R.drawable.flag_simple_pe,0xFFD57D85, 0xFF5C070F,false),
 
+
         )
 
-        val testl: Color = Color(0xFF88BDAB)
-        val testd: Color = Color(0xFF002D49)
+        val testl: Color = Color(0xFF8DE0FF)
+        val testd: Color = Color(0xFF004863)
 
         val defaultList = listOf(getDefault(), getDefault(), getDefault(), getDefault())
 
