@@ -277,13 +277,15 @@ data class Language(
             Language("Aymar aru", "AYM", R.drawable.flag_simple_bo,0xFFE2D99B, 0xFF003115,false),
             Language("Avañeʼẽ", "GUG", R.drawable.flag_simple_py,0xFF7895CF, 0xFF001847,false),
 
-            // Creole
+            // French-Based Creole
             Language("Kreyòl ayisyen", "HAT", R.drawable.flag_simple_ht,0xFF6877AF, 0xFF000E46,false),
+            Language("Kréyòl La Lwizyàn", "LOU", R.drawable.flag_simple_louisiane,0xFF648EB1, 0xFF002B4E,false),
+            Language("Kwéyòl, Patois", "GCF", R.drawable.flag_simple_antilles,0xFF7288BB, 0xFF0F2047,false),
 
         )
 
-        val c1: Color = Color(0xFFFF7373)
-        val c2: Color = Color(0xFF690000)
+        val c1: Color = Color(0xFF7288BB)
+        val c2: Color = Color(0xFF0F2047)
 
         val defaultList = listOf(getDefault(), getDefault(), getDefault(), getDefault())
 
