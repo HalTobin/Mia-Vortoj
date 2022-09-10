@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">Kartoj</string>
+    <string name="app_name" translatable="false">Kartoj</string>
 
     <string name="ok">D\'accord</string>
 
@@ -12,18 +12,19 @@
     <string name="order_ascending">Ascendant</string>
     <string name="order_descending">Descendant</string>
 
-    <string name="order_dictionary_language">Language</string>
+    <string name="order_dictionary_language">Langue</string>
     <string name="order_dictionary_title">Titre</string>
 
-    <string name="order_word_source">Source</string>
+    <string name="order_word_source">À traduire</string>
     <string name="order_word_target">Cible</string>
     <string name="order_word_theme">Thème</string>
 
     <string name="dictionary_screen_title">Vos dictionnaires</string>
 
     <string name="dictionary_screen_delete_text" tools:ignore="TypographyEllipsis">
-        La suppression d\'un dictionnaire est définitive,
-        %s ainsi que toutes les entrées associées seront perdues...\nEntrez le texte suivant pour confirmer la suppression :
+        "La suppression d'un dictionnaire est définitive,
+        %s ainsi que toutes les entrées associées seront perdues...
+        Entrez le texte suivant pour confirmer la suppression : "
     </string>
 
     <string name="dictionary_screen_delete_to_enter">Supprimer</string>
@@ -33,11 +34,9 @@
 
     <string name="word_screen_delete_text">Êtes-vous sûr de vouloir supprimer le mot suivant :</string>
 
-    <string name="word_screen_no_words_for_quiz" tools:ignore="TypographyEllipsis">
-        Il est impossible de lancer un quiz si aucun mot n\'a été enregistré dans le dictionnaire...
-    </string>
+    <string name="word_screen_no_words_for_quiz" tools:ignore="TypographyEllipsis">"Il est impossible de lancer un quiz si aucun mot n'a été enregistré dans le dictionnaire...     "</string>
 
-    <string name="add_edit_word_source_hint">Source</string>
+    <string name="add_edit_word_source_hint">À traduire</string>
     <string name="add_edit_word_target_hint">Cible</string>
     <string name="add_edit_word_emote_hint">Emote</string>
     <string name="add_edit_word_notes_hint">Notes</string>
