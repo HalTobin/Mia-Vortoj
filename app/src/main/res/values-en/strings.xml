@@ -9,21 +9,17 @@
     <string name="order_descending">Descending</string>
     <string name="order_dictionary_language">Language</string>
     <string name="order_dictionary_title">Title</string>
-    <string name="order_word_source">Input</string>
-    <string name="order_word_target">Output</string>
+    <string name="order_word_source">Word</string>
+    <string name="order_word_target">Translation</string>
     <string name="order_word_theme">Theme</string>
     <string name="dictionary_screen_title">Your dictionaries</string>
-    <string name="dictionary_screen_delete_text"  tools:ignore="TypographyEllipsis">
-        "Deleting a dictionary is permanent,
-        %s and all its entries will be lost...
-        Enter the following text to confirm deletion : "
-    </string>
+    <string name="dictionary_screen_delete_text"  tools:ignore="TypographyEllipsis">"         Deleting a dictionary is permanent,         %s and all its entries will be lost...         Enter the following text to confirm deletion :      "</string>
     <string name="dictionary_screen_delete_to_enter">Delete</string>
     <string name="add_edit_dictionary_screen_title_hint">Add a title...</string>
     <string name="add_edit_dictionary_screen_description_hint">Add a description</string>
     <string name="word_screen_delete_text">Are you sure you want to delete the following word :</string>
     <string name="word_screen_no_words_for_quiz">It is impossible to launch a quiz if now word has been added to the dictionnary...</string>
-    <string name="add_edit_word_source_hint">Input</string>
+    <string name="add_edit_word_source_hint">Word</string>
     <string name="add_edit_word_target_hint">Output</string>
     <string name="add_edit_word_emote_hint">Emote</string>
     <string name="add_edit_word_notes_hint">Notes</string>
@@ -56,8 +52,8 @@
     <string name="theme_music">Music</string>
     <string name="theme_art">Art</string>
     <string name="theme_color">Colors</string>
-    <string name="theme_adjective">Adjective</string>
-    <string name="theme_verb">Verb</string>
+    <string name="theme_adjective">Adjectives</string>
+    <string name="theme_verb">Verbs</string>
     <string name="theme_communication">Communication</string>
     <string name="theme_health">Health</string>
     <string name="theme_movie">Movie</string>
