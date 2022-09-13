@@ -140,7 +140,10 @@ fun WordsScreen(navController: NavController,
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                Text(text = stringResource(R.string.words_start_quiz), style = MaterialTheme.typography.subtitle1)
+                Text(
+                    text = stringResource(R.string.words_start_quiz).uppercase(),
+                    style = MaterialTheme.typography.subtitle1
+                )
             }
 
             Spacer(modifier = Modifier.height(12.dp))

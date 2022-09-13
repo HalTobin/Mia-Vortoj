@@ -2,7 +2,6 @@ package com.chapeaumoineau.miavortoj.model
 
 import com.chapeaumoineau.miavortoj.domain.model.Language
 import com.google.common.truth.Truth.assertThat
-import org.junit.Assert
 import org.junit.Test
 
 class LanguageUnitTest {

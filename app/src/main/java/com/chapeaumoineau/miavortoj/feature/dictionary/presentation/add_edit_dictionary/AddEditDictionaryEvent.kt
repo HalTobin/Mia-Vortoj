@@ -1,4 +1,4 @@
-package com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary
+package com.chapeaumoineau.miavortoj.feature.dictionary.presentation.add_edit_dictionary
 
 sealed class AddEditDictionaryEvent{
     data class EnteredTitle(val value: String): AddEditDictionaryEvent()

@@ -15,17 +15,13 @@
     <string name="order_dictionary_language">Langue</string>
     <string name="order_dictionary_title">Titre</string>
 
-    <string name="order_word_source">À traduire</string>
-    <string name="order_word_target">Cible</string>
+    <string name="order_word_source">Mot</string>
+    <string name="order_word_target">Traduction</string>
     <string name="order_word_theme">Thème</string>
 
     <string name="dictionary_screen_title">Vos dictionnaires</string>
 
-    <string name="dictionary_screen_delete_text" tools:ignore="TypographyEllipsis">
-        "La suppression d'un dictionnaire est définitive,
-        %s ainsi que toutes les entrées associées seront perdues...
-        Entrez le texte suivant pour confirmer la suppression : "
-    </string>
+    <string name="dictionary_screen_delete_text" tools:ignore="TypographyEllipsis">"La suppression d'un dictionnaire est définitive, %s ainsi que toutes les entrées associées seront perdues... Entrez le texte suivant pour confirmer la suppression :"</string>
 
     <string name="dictionary_screen_delete_to_enter">Supprimer</string>
 
@@ -36,7 +32,7 @@
 
     <string name="word_screen_no_words_for_quiz" tools:ignore="TypographyEllipsis">"Il est impossible de lancer un quiz si aucun mot n'a été enregistré dans le dictionnaire...     "</string>
 
-    <string name="add_edit_word_source_hint">À traduire</string>
+    <string name="add_edit_word_source_hint">Mot</string>
     <string name="add_edit_word_target_hint">Cible</string>
     <string name="add_edit_word_emote_hint">Emote</string>
     <string name="add_edit_word_notes_hint">Notes</string>
@@ -48,7 +44,7 @@
     <string name="difficulty_medium">Moyen</string>
     <string name="difficulty_hard">Difficile</string>
 
-    <string name="words_start_quiz">QUIZ</string>
+    <string name="words_start_quiz">Quiz</string>
 
     <string name="quiz_enter_response">Réponse</string>
     <string name="quiz_ask_answer">Suivant</string>
@@ -182,8 +178,8 @@
     <string name="theme_music">Musique</string>
     <string name="theme_art">Art</string>
     <string name="theme_color">Couleurs</string>
-    <string name="theme_adjective">Adjectif</string>
-    <string name="theme_verb">Verbe</string>
+    <string name="theme_adjective">Adjectifs</string>
+    <string name="theme_verb">Verbes</string>
     <string name="theme_communication">Communication</string>
     <string name="theme_health">Santé</string>
     <string name="theme_movie">Film</string>

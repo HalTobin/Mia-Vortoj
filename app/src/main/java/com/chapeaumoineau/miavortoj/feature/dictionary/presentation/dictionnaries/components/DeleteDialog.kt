@@ -1,4 +1,4 @@
-package com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.components
+package com.chapeaumoineau.miavortoj.feature.dictionary.presentation.dictionnaries.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -14,8 +14,8 @@ import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.chapeaumoineau.miavortoj.R
 import com.chapeaumoineau.miavortoj.domain.model.Dictionary
-import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.DictionariesEvent
-import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.DictionariesViewModel
+import com.chapeaumoineau.miavortoj.feature.dictionary.presentation.dictionnaries.DictionariesEvent
+import com.chapeaumoineau.miavortoj.feature.dictionary.presentation.dictionnaries.DictionariesViewModel
 
 @Composable
 fun DeleteDialog(isVisible: Boolean,

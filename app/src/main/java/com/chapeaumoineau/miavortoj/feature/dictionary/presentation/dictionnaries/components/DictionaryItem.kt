@@ -1,4 +1,4 @@
-package com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.components
+package com.chapeaumoineau.miavortoj.feature.dictionary.presentation.dictionnaries.components
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.Canvas

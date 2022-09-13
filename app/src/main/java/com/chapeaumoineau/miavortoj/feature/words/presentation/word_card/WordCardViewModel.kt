@@ -29,7 +29,7 @@ class WordCardViewModel @Inject constructor(
 
     private var getWordJob: Job? = null
 
-    private val _word = mutableStateOf(Word("", "", "", "", 0, 0, 0, 0, 0, 0, 0, 0))
+    private val _word = mutableStateOf(Word("", "", "", "", 0, 0, 0, 0, 0, 0))
     val word: State<Word> = _word
 
     private val _dictionary = mutableStateOf(Dictionary("", "", "", 0))

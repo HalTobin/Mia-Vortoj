@@ -40,6 +40,7 @@ class AppModule {
             .addCallback(VocabularyDatabase.prepopulate)
             .addMigrations(VocabularyDatabase.MIGRATION_2_3)
             .addMigrations(VocabularyDatabase.MIGRATION_3_4)
+            .addMigrations(VocabularyDatabase.MIGRATION_4_5)
             .build()
     }
 

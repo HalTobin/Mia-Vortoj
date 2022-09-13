@@ -47,9 +47,6 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
     private val _wordTargetHint = mutableStateOf("")
     val targetHint: State<String> = _wordTargetHint
 
-    private val _wordDifficulty = mutableStateOf(1)
-    val difficulty: State<Int> = _wordDifficulty
-
     private val _color = mutableStateOf(Language.getDefault().getDarkColor())
     val color: State<Color> = _color
 
@@ -157,11 +154,6 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
                 _isCategoryDialogVisible.value = false
             }
 
-            //EVENT FOR DIFFICULTY
-            is AddEditWordEvent.ChangeDifficulty -> {
-                _wordDifficulty.value = event.difficulty
-            }
-
             is AddEditWordEvent.SaveWord -> {
                 viewModelScope.launch {
                     try {
@@ -170,8 +162,6 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
                             emote = emote.value,
                             notes = notes.value,
                             themeId = category.value.id,
-                            difficulty = difficulty.value,
-                            mastery = 0,
                             dictionaryId = currentDictionaryId!!,
                             timestamp = System.currentTimeMillis(),
                             lastTestTimestamp = System.currentTimeMillis(),
@@ -201,7 +191,6 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
                 _wordEmote.value = word.emote
                 _wordNotes.value = word.notes
                 _wordCategory.value = Category.getCategoryById(word.themeId)
-                _wordDifficulty.value = word.difficulty
             }?.launchIn(viewModelScope)
         }
     }

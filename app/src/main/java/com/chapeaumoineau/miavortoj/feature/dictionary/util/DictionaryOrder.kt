@@ -1,4 +1,6 @@
-package com.chapeaumoineau.miavortoj.feature.words.presentation.util
+package com.chapeaumoineau.miavortoj.feature.dictionary.util
+
+import com.chapeaumoineau.miavortoj.util.OrderType
 
 sealed class DictionaryOrder(val orderType: OrderType) {
     class Title(orderType: OrderType): DictionaryOrder(orderType)

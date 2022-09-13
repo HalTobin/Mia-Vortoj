@@ -1,4 +1,4 @@
-package com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.components
+package com.chapeaumoineau.miavortoj.feature.dictionary.presentation.dictionnaries.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
@@ -7,8 +7,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.chapeaumoineau.miavortoj.R
 
-import com.chapeaumoineau.miavortoj.feature.words.presentation.util.DictionaryOrder
-import com.chapeaumoineau.miavortoj.feature.words.presentation.util.OrderType
+import com.chapeaumoineau.miavortoj.feature.dictionary.util.DictionaryOrder
+import com.chapeaumoineau.miavortoj.util.OrderType
 
 @Composable
 fun OrderDictionariesSection(modifier: Modifier = Modifier,

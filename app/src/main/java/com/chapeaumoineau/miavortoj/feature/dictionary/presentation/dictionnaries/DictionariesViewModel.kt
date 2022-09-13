@@ -1,4 +1,4 @@
-package com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries
+package com.chapeaumoineau.miavortoj.feature.dictionary.presentation.dictionnaries
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.chapeaumoineau.miavortoj.domain.model.Dictionary
 import com.chapeaumoineau.miavortoj.domain.use_case.DictionaryUseCases
 import com.chapeaumoineau.miavortoj.domain.use_case.WordUseCases
-import com.chapeaumoineau.miavortoj.feature.words.presentation.util.DictionaryOrder
-import com.chapeaumoineau.miavortoj.feature.words.presentation.util.OrderType
+import com.chapeaumoineau.miavortoj.feature.dictionary.util.DictionaryOrder
+import com.chapeaumoineau.miavortoj.util.OrderType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn

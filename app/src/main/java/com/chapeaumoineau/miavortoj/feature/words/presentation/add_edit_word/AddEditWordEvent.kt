@@ -10,6 +10,5 @@ sealed class AddEditWordEvent{
     object MoreCategory: AddEditWordEvent()
     data class OnNewCategorySelected(val category: Int): AddEditWordEvent()
     object DismissCategoryDialog: AddEditWordEvent()
-    data class ChangeDifficulty(val difficulty: Int): AddEditWordEvent()
     object SaveWord: AddEditWordEvent()
 }

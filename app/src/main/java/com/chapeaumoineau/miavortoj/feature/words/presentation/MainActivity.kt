@@ -1,7 +1,6 @@
 package com.chapeaumoineau.miavortoj.feature.words.presentation
 
 import android.os.Bundle
-import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
@@ -11,9 +10,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryScreen
+import com.chapeaumoineau.miavortoj.feature.dictionary.presentation.add_edit_dictionary.AddEditDictionaryScreen
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.AddEditWordScreen
-import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.DictionariesScreen
+import com.chapeaumoineau.miavortoj.feature.dictionary.presentation.dictionnaries.DictionariesScreen
 import com.chapeaumoineau.miavortoj.feature.quiz.presentation.quiz.QuizScreen
 import com.chapeaumoineau.miavortoj.feature.quiz.presentation.results.ResultsScreen
 import com.chapeaumoineau.miavortoj.presentation.Screen

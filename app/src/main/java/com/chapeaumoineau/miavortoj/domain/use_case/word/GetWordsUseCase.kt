@@ -2,8 +2,8 @@ package com.chapeaumoineau.miavortoj.domain.use_case.word
 
 import com.chapeaumoineau.miavortoj.domain.model.Word
 import com.chapeaumoineau.miavortoj.domain.repository.WordRepository
-import com.chapeaumoineau.miavortoj.feature.words.presentation.util.OrderType
-import com.chapeaumoineau.miavortoj.feature.words.presentation.util.WordOrder
+import com.chapeaumoineau.miavortoj.util.OrderType
+import com.chapeaumoineau.miavortoj.feature.words.util.WordOrder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

@@ -1,4 +1,4 @@
-package com.chapeaumoineau.miavortoj.feature.words.presentation.components
+package com.chapeaumoineau.miavortoj.presentation.components
 
 data class TextFieldState(
     val text: String = "",

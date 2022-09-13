@@ -1,4 +1,4 @@
-package com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.components
+package com.chapeaumoineau.miavortoj.feature.dictionary.presentation.add_edit_dictionary.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,8 +16,8 @@ import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.chapeaumoineau.miavortoj.R
 import com.chapeaumoineau.miavortoj.domain.model.Language
-import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryEvent
-import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.AddEditDictionaryViewModel
+import com.chapeaumoineau.miavortoj.feature.dictionary.presentation.add_edit_dictionary.AddEditDictionaryEvent
+import com.chapeaumoineau.miavortoj.feature.dictionary.presentation.add_edit_dictionary.AddEditDictionaryViewModel
 
 @Composable
 fun LanguageDialog(isVisible: Boolean, viewModel: AddEditDictionaryViewModel = hiltViewModel()) {

@@ -1,4 +1,4 @@
-package com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries
+package com.chapeaumoineau.miavortoj.feature.dictionary.presentation.dictionnaries
 
 import android.annotation.SuppressLint
 import androidx.activity.compose.BackHandler
@@ -20,9 +20,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.R
-import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.components.DeleteDialog
-import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.components.DictionaryItem
-import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.components.OrderDictionariesSection
+import com.chapeaumoineau.miavortoj.feature.dictionary.presentation.dictionnaries.components.DeleteDialog
+import com.chapeaumoineau.miavortoj.feature.dictionary.presentation.dictionnaries.components.DictionaryItem
+import com.chapeaumoineau.miavortoj.feature.dictionary.presentation.dictionnaries.components.OrderDictionariesSection
 import com.chapeaumoineau.miavortoj.presentation.Screen
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")

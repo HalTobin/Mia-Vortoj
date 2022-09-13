@@ -6,9 +6,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.chapeaumoineau.miavortoj.R
-import com.chapeaumoineau.miavortoj.feature.words.presentation.util.OrderType
-import com.chapeaumoineau.miavortoj.feature.words.presentation.util.WordOrder
-import com.chapeaumoineau.miavortoj.feature.words.presentation.dictionnaries.components.DefaultRadioButton
+import com.chapeaumoineau.miavortoj.util.OrderType
+import com.chapeaumoineau.miavortoj.feature.words.util.WordOrder
+import com.chapeaumoineau.miavortoj.feature.dictionary.presentation.dictionnaries.components.DefaultRadioButton
 
 @Composable
 fun OrderWordsSection(modifier: Modifier = Modifier,

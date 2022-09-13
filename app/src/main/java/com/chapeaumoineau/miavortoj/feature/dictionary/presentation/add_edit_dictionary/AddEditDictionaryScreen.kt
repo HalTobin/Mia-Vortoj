@@ -1,4 +1,4 @@
-package com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary
+package com.chapeaumoineau.miavortoj.feature.dictionary.presentation.add_edit_dictionary
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.Animatable
@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.R
-import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_dictionary.components.LanguageDialog
+import com.chapeaumoineau.miavortoj.feature.dictionary.presentation.add_edit_dictionary.components.LanguageDialog
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 

@@ -13,7 +13,7 @@ import com.chapeaumoineau.miavortoj.domain.model.Word
 
 @Database(
     entities = [Dictionary::class, Word::class, FavoriteLanguage::class],
-    version = 4
+    version = 5
 )
 abstract class VocabularyDatabase: RoomDatabase() {
 
@@ -75,6 +75,27 @@ abstract class VocabularyDatabase: RoomDatabase() {
                         "'dictionaryId' INTEGER NOT NULL," +
                         "'themeId' INTEGER NOT NULL)")
                 database.execSQL("INSERT INTO WordNew(id,sourceWord,targetWord,emote,notes,difficulty,mastery,timestamp,lastTestTimestamp,nbPlayed,nbSucceed,dictionaryId,themeId) SELECT id,sourceWord,targetWord,emote,notes,difficulty,mastery,timestamp,lastTestTimestamp,nbPlayed,nbSucceed,dictionaryId,themeId FROM Word;");
+                database.execSQL("DROP TABLE Word;");
+                database.execSQL("ALTER TABLE 'WordNew' RENAME TO 'Word';");
+                database.execSQL("COMMIT;");
+            }
+        }
+
+        val MIGRATION_4_5: Migration = object : Migration(4, 5) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("BEGIN TRANSACTION;");
+                database.execSQL("CREATE TABLE WordNew('id' INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "'sourceWord' TEXT NOT NULL," +
+                        "'targetWord' TEXT NOT NULL," +
+                        "'emote' TEXT NOT NULL," +
+                        "'notes' TEXT NOT NULL," +
+                        "'timestamp' INTEGER NOT NULL," +
+                        "'lastTestTimestamp' INTEGER NOT NULL," +
+                        "'nbPlayed' INTEGER NOT NULL DEFAULT 0," +
+                        "'nbSucceed' INTEGER NOT NULL DEFAULT 0," +
+                        "'dictionaryId' INTEGER NOT NULL," +
+                        "'themeId' INTEGER NOT NULL)")
+                database.execSQL("INSERT INTO WordNew(id,sourceWord,targetWord,emote,notes,timestamp,lastTestTimestamp,nbPlayed,nbSucceed,dictionaryId,themeId) SELECT id,sourceWord,targetWord,emote,notes,timestamp,lastTestTimestamp,nbPlayed,nbSucceed,dictionaryId,themeId FROM Word;");
                 database.execSQL("DROP TABLE Word;");
                 database.execSQL("ALTER TABLE 'WordNew' RENAME TO 'Word';");
                 database.execSQL("COMMIT;");

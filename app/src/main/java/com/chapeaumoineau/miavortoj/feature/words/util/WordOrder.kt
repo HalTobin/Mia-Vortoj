@@ -1,4 +1,6 @@
-package com.chapeaumoineau.miavortoj.feature.words.presentation.util
+package com.chapeaumoineau.miavortoj.feature.words.util
+
+import com.chapeaumoineau.miavortoj.util.OrderType
 
 sealed class WordOrder(val orderType: OrderType) {
     class Source(orderType: OrderType): WordOrder(orderType)
