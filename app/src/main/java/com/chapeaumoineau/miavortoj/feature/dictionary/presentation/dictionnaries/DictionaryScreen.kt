@@ -11,8 +11,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Sort
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -68,13 +67,13 @@ fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewM
             AnimatedVisibility(visible = state.isOrderSectionVisible, enter = fadeIn() + slideInVertically(), exit = fadeOut() + slideOutVertically()) {
                 OrderDictionariesSection(modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 16.dp), dictionaryOrder = state.dictionaryOrder, onOrderChange = {
+                    .padding(vertical = 8.dp), dictionaryOrder = state.dictionaryOrder, onOrderChange = {
                     viewModel.onEvent(DictionariesEvent.Order(it))
                 })
             }
             Spacer(modifier = Modifier.height(16.dp))
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(state.dictionaries) { dictionary ->
+                items(state.dictionaries, key = { it.id!! } ) { dictionary ->
                     DictionaryItem(
                         dictionary = dictionary,
                         dictionaryEdited = state.dictionaryEdit,
@@ -94,6 +93,7 @@ fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewM
                         },
                         modifier = Modifier
                             .fillMaxWidth()
+                            .animateItemPlacement()
                             .clickable(
                                 onClick = {
                                     viewModel.onEvent(DictionariesEvent.ToggleEditMode(-1))

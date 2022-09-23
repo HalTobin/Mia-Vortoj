@@ -9,19 +9,21 @@ import kotlinx.coroutines.flow.map
 
 class GetDictionariesUseCase(private val repository: DictionaryRepository) {
 
-    operator fun invoke(dictionaryOrder: DictionaryOrder = DictionaryOrder.Language(OrderType.Ascending)): Flow<List<Dictionary>> {
+    operator fun invoke(dictionaryOrder: DictionaryOrder = DictionaryOrder.Words(OrderType.Ascending)): Flow<List<Dictionary>> {
         return repository.getDictionaries().map {
             dictionaries -> when(dictionaryOrder.orderType) {
                 is OrderType.Ascending -> {
                     when(dictionaryOrder) {
                         is DictionaryOrder.Title -> dictionaries.sortedBy { it.title.lowercase() }
                         is DictionaryOrder.Language -> dictionaries.sortedBy { it.languageIso }
+                        is DictionaryOrder.Words -> dictionaries.sortedBy { it.nbWords }
                     }
                 }
                 is OrderType.Descending -> {
                     when(dictionaryOrder) {
                         is DictionaryOrder.Title -> dictionaries.sortedByDescending { it.title.lowercase() }
                         is DictionaryOrder.Language -> dictionaries.sortedByDescending { it.languageIso }
+                        is DictionaryOrder.Words -> dictionaries.sortedByDescending { it.nbWords }
                     }
                 }
             }

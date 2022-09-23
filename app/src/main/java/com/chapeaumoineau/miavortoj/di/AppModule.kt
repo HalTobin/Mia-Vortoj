@@ -41,6 +41,8 @@ class AppModule {
             .addMigrations(VocabularyDatabase.MIGRATION_2_3)
             .addMigrations(VocabularyDatabase.MIGRATION_3_4)
             .addMigrations(VocabularyDatabase.MIGRATION_4_5)
+            .addMigrations(VocabularyDatabase.MIGRATION_5_6)
+            .addMigrations(VocabularyDatabase.MIGRATION_6_7)
             .build()
     }
 

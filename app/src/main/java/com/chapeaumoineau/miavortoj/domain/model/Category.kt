@@ -22,7 +22,7 @@ data class Category(
             Category("Foods & Drinks", R.drawable.theme_food_drink, R.string.theme_food_drink,4),
             Category("Greetings", R.drawable.theme_greetings, R.string.theme_greetings,5),
             Category("Family", R.drawable.theme_family, R.string.theme_family,6),
-            Category("Religion", R.drawable.theme_religion, R.string.theme_religion,7),
+            //Category("Religion", R.drawable.theme_religion, R.string.theme_religion,7),
             Category("Body", R.drawable.theme_body, R.string.theme_body,8),
             Category("Clothes", R.drawable.theme_clothes, R.string.theme_clothes,9),
             Category("Weather", R.drawable.theme_weather, R.string.theme_weather,10),

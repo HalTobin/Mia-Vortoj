@@ -13,7 +13,7 @@ import com.chapeaumoineau.miavortoj.domain.model.Word
 
 @Database(
     entities = [Dictionary::class, Word::class, FavoriteLanguage::class],
-    version = 5
+    version = 7
 )
 abstract class VocabularyDatabase: RoomDatabase() {
 
@@ -52,9 +52,9 @@ abstract class VocabularyDatabase: RoomDatabase() {
         }
 
         val MIGRATION_2_3: Migration = object : Migration(2, 3) {
-            override fun migrate(db: SupportSQLiteDatabase) {
-                db.execSQL("ALTER TABLE 'Word' ADD COLUMN 'nbPlayed' INTEGER DEFAULT 0");
-                db.execSQL("ALTER TABLE 'Word' ADD COLUMN 'nbSucceed' INTEGER DEFAULT 0");
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE 'Word' ADD COLUMN 'nbPlayed' INTEGER DEFAULT 0");
+                database.execSQL("ALTER TABLE 'Word' ADD COLUMN 'nbSucceed' INTEGER DEFAULT 0");
             }
         }
 
@@ -98,6 +98,26 @@ abstract class VocabularyDatabase: RoomDatabase() {
                 database.execSQL("INSERT INTO WordNew(id,sourceWord,targetWord,emote,notes,timestamp,lastTestTimestamp,nbPlayed,nbSucceed,dictionaryId,themeId) SELECT id,sourceWord,targetWord,emote,notes,timestamp,lastTestTimestamp,nbPlayed,nbSucceed,dictionaryId,themeId FROM Word;");
                 database.execSQL("DROP TABLE Word;");
                 database.execSQL("ALTER TABLE 'WordNew' RENAME TO 'Word';");
+                database.execSQL("COMMIT;");
+            }
+        }
+
+        val MIGRATION_5_6: Migration = object : Migration(5, 6) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE 'Dictionary' ADD COLUMN 'number' INTEGER NOT NULL DEFAULT 0");
+            }
+        }
+
+        val MIGRATION_6_7: Migration = object : Migration(6, 7) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("BEGIN TRANSACTION;");
+                database.execSQL("CREATE TABLE DictionaryNew('id' INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "'title' TEXT NOT NULL," +
+                        "'description' TEXT NOT NULL," +
+                        "'languageIso' TEXT NOT NULL)")
+                database.execSQL("INSERT INTO DictionaryNew(id,title,description,languageIso) SELECT id,title,description,languageIso FROM Dictionary;");
+                database.execSQL("DROP TABLE Dictionary;");
+                database.execSQL("ALTER TABLE 'DictionaryNew' RENAME TO 'Dictionary';");
                 database.execSQL("COMMIT;");
             }
         }

@@ -14,6 +14,7 @@
 
     <string name="order_dictionary_language">Langue</string>
     <string name="order_dictionary_title">Titre</string>
+    <string name="order_dictionary_words">Mots</string>
 
     <string name="order_word_source">Mot</string>
     <string name="order_word_target">Traduction</string>
