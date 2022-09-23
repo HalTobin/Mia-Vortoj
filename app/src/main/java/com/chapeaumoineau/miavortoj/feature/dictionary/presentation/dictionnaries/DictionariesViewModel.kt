@@ -32,7 +32,7 @@ class DictionariesViewModel @Inject constructor(private val dictionaryUseCases: 
     private var getWordsJob: Job? = null
 
     init {
-        getDictionaries(DictionaryOrder.Language(OrderType.Ascending))
+        getDictionaries(DictionaryOrder.Words(OrderType.Ascending))
     }
 
     fun onEvent(event: DictionariesEvent) {
