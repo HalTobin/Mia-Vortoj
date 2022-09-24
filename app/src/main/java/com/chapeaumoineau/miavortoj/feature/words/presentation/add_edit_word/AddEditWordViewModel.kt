@@ -69,9 +69,6 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
     private var currentDictionaryId: Int? = null
 
     init {
-        viewModelScope.launch {
-            _eventFlow.emit(UiEvent.InitWordTranslations)
-        }
         savedStateHandle.get<Int>("dictionaryId")?.let { dictionaryId ->
             if (dictionaryId != -1) {
                 currentDictionaryId = dictionaryId
@@ -123,29 +120,12 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
                 _wordEmote.value = event.value
             }
 
-            //EVENT FOR CATEGORY SELECTION
-            is AddEditWordEvent.MoreCategory -> {
-                _categorySearch.value = ""
-                _categoryList.value = _listFromClass.sortedBy { it.translation }
-                if(_listFromClass[0].translation.isBlank()) viewModelScope.launch {
-                    _eventFlow.emit(UiEvent.InitWordTranslations)
-                }
-                _isCategoryDialogVisible.value = true
-            }
-
-            is AddEditWordEvent.GetCategoryTranslation -> {
-                event.listOfIndex.forEach { index ->
-                    _listFromClass[index].translation = event.listOfTranslation[index]
-                }
-                _categoryList.value = _listFromClass.sortedBy { it.translation }
-            }
-
             is AddEditWordEvent.EnteredSearch -> {
                 _categorySearch.value = event.value
                 _categoryList.value = _listFromClass.sortedBy { it.translation }.filter { l -> l.title.containsCustom(event.value) || l.translation.containsCustom(event.value)}
             }
 
-            is AddEditWordEvent.OnNewCategorySelected -> {
+            is AddEditWordEvent.OnCategorySelected -> {
                 _isCategoryDialogVisible.value = false
                 _wordCategory.value = Category.getCategoryById(event.category)
             }
@@ -178,7 +158,6 @@ class AddEditWordViewModel @Inject constructor(private val wordUseCases: WordUse
     sealed class UiEvent {
         data class ShowSnackBar(val message: String): UiEvent()
         object SaveWord: UiEvent()
-        object InitWordTranslations: UiEvent()
     }
 
     private fun getWord(id: Int?) {

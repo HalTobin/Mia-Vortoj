@@ -65,4 +65,5 @@
     <string name="theme_place">Places</string>
     <string name="theme_science">Science</string>
     <string name="order_dictionary_words">Words</string>
+    <string name="add_edit_word_category_hint">Category</string>
 </resources>

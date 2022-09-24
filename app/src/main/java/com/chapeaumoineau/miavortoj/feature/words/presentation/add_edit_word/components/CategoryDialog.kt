@@ -56,7 +56,7 @@ fun CategoryDialog(isVisible: Boolean, viewModel: AddEditWordViewModel = hiltVie
                                 .fillMaxWidth()
                                 .clickable {
                                     viewModel.onEvent(
-                                        AddEditWordEvent.OnNewCategorySelected(
+                                        AddEditWordEvent.OnCategorySelected(
                                             category.id
                                         )
                                     )

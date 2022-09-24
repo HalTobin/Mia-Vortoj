@@ -2,28 +2,25 @@ package com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Save
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.chapeaumoineau.miavortoj.R
-import com.chapeaumoineau.miavortoj.feature.quiz.model.Rules
 import com.chapeaumoineau.miavortoj.feature.words.presentation.add_edit_word.components.CategoryDialog
 import kotlinx.coroutines.flow.collectLatest
 
@@ -48,6 +45,8 @@ fun AddEditWordScreen(navController: NavController,
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
 
+    var expanded by remember { mutableStateOf(false) }
+
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when(event) {
@@ -56,15 +55,6 @@ fun AddEditWordScreen(navController: NavController,
                 }
                 is AddEditWordViewModel.UiEvent.SaveWord -> {
                     navController.navigateUp()
-                }
-                is AddEditWordViewModel.UiEvent.InitWordTranslations -> {
-                    val listOfTranslations = ArrayList<String>()
-                    val listOfIndex = ArrayList<Int>()
-                    categoryListState.forEachIndexed { index, category ->
-                        listOfIndex.add(index)
-                        listOfTranslations.add(context.resources.getString(category.text))
-                    }
-                    viewModel.onEvent(AddEditWordEvent.GetCategoryTranslation(listOfIndex, listOfTranslations))
                 }
             }
         }
@@ -117,45 +107,75 @@ fun AddEditWordScreen(navController: NavController,
             Spacer(modifier = Modifier.height(16.dp))
 
             Row(Modifier, Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
-                Column(modifier = Modifier.weight(1f)) {
-                    TextField(modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 16.dp, end = 32.dp),
-                        value = emoteState,
-                        onValueChange = {
-                            viewModel.onEvent(AddEditWordEvent.EnteredEmote(it))
-                        },
-                        label = {
-                            Text(text = stringResource(R.string.add_edit_word_emote_hint), style = MaterialTheme.typography.subtitle1, color = Color.LightGray)
-                        },
-                        singleLine = true,
-                        textStyle = MaterialTheme.typography.h6,
-                    )
-                }
-                Card(modifier = Modifier
+                TextField(modifier = Modifier
                     .weight(1f)
-                    .padding(end = 16.dp)
-                    .height(48.dp),
-                    onClick = { viewModel.onEvent(AddEditWordEvent.MoreCategory) },
-                    shape = RoundedCornerShape(10.dp),
-                    backgroundColor = Color.DarkGray
-                ) {
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Row(Modifier, Arrangement.Center) {
-                        /*Text(modifier = Modifier
-                            .align(Alignment.CenterVertically),
-                            text = categoryState.translation,
-                            color = MaterialTheme.colors.primary,
-                            overflow = TextOverflow.Ellipsis,
-                            maxLines = 1)*/
-                        Icon(modifier = Modifier
-                            .padding(start = 8.dp)
-                            .align(Alignment.CenterVertically),
-                            imageVector = ImageVector.vectorResource(categoryState.icon),
-                            contentDescription = "",
-                            tint = MaterialTheme.colors.primary)
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp),
+                    value = emoteState,
+                    onValueChange = {
+                        viewModel.onEvent(AddEditWordEvent.EnteredEmote(it))
+                    },
+                    label = {
+                        Text(text = stringResource(R.string.add_edit_word_emote_hint), style = MaterialTheme.typography.subtitle1, color = Color.LightGray)
+                    },
+                    singleLine = true,
+                    textStyle = MaterialTheme.typography.h6,
+                )
+
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        //.padding(end = 16.dp)
+                        //.clickable { expanded = !expanded },
+                    ){
+                    Button(
+                        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
+                        elevation = ButtonDefaults.elevation(
+                            defaultElevation = 0.dp,
+                            pressedElevation = 0.dp,
+                            focusedElevation = 0.dp
+                        ),
+                        onClick = { expanded = !expanded }
+                    ) {
+                        TextField(
+                            value = stringResource(id = categoryState.text),
+                            readOnly = true,
+                            singleLine = true,
+                            textStyle = MaterialTheme.typography.h6,
+                            onValueChange = {  },
+                            label = {
+                                Text(
+                                    text = stringResource(id = R.string.add_edit_word_category_hint),
+                                    style = MaterialTheme.typography.subtitle1,
+                                    color = Color.LightGray
+                                )
+                                DropdownMenu(
+                                    expanded = expanded,
+                                    onDismissRequest = { expanded = false }
+                                ) {
+                                    categoryListState.forEach { item ->
+                                        DropdownMenuItem(onClick = {
+                                            viewModel.onEvent(AddEditWordEvent.OnCategorySelected(item.id))
+                                            expanded = false
+                                        }) {
+                                            Icon(
+                                                imageVector = ImageVector.vectorResource(item.icon),
+                                                contentDescription = ""
+                                            )
+                                            Spacer(modifier = Modifier.width(8.dp))
+                                            Text(text = stringResource(id = item.text))
+                                        }
+                                    }
+                                }
+                            }
+                        )
+                        Icon(
+                            //modifier = Modifier.align(Alignment.End).padding(end = 8.dp),
+                            imageVector = Icons.Filled.ArrowDropDown,
+                            contentDescription = ""
+                        )
                     }
-                    Spacer(modifier = Modifier.height(16.dp))
+
                 }
             }
 

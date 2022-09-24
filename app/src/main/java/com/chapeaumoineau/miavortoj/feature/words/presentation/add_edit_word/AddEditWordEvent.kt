@@ -6,9 +6,7 @@ sealed class AddEditWordEvent{
     data class EnteredDescription(val value: String): AddEditWordEvent()
     data class EnteredEmote(val value: String): AddEditWordEvent()
     data class EnteredSearch(val value: String): AddEditWordEvent()
-    data class GetCategoryTranslation(val listOfIndex: ArrayList<Int>, val listOfTranslation: ArrayList<String>): AddEditWordEvent()
-    object MoreCategory: AddEditWordEvent()
-    data class OnNewCategorySelected(val category: Int): AddEditWordEvent()
+    data class OnCategorySelected(val category: Int): AddEditWordEvent()
     object DismissCategoryDialog: AddEditWordEvent()
     object SaveWord: AddEditWordEvent()
 }

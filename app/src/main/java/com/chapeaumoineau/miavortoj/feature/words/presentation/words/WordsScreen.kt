@@ -110,7 +110,7 @@ fun WordsScreen(navController: NavController,
                 Box(modifier = Modifier.padding(start = 16.dp)) {
                     OrderWordsSection(modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 16.dp), wordOrder = state.wordOrder, onOrderChange = {
+                        .padding(vertical = 8.dp), wordOrder = state.wordOrder, onOrderChange = {
                         viewModel.onEvent(WordsEvent.Order(it))
                     })
                 }

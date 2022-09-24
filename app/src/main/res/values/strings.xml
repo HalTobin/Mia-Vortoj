@@ -37,6 +37,7 @@
     <string name="add_edit_word_target_hint">Cible</string>
     <string name="add_edit_word_emote_hint">Emote</string>
     <string name="add_edit_word_notes_hint">Notes</string>
+    <string name="add_edit_word_category_hint">Catégorie</string>
 
     <string name="word_card_play">Écouter</string>
 
