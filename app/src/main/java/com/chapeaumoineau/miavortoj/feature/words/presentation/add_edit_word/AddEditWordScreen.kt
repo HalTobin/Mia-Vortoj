@@ -125,57 +125,50 @@ fun AddEditWordScreen(navController: NavController,
                 Box(
                     modifier = Modifier
                         .weight(1f)
-                        //.padding(end = 16.dp)
-                        //.clickable { expanded = !expanded },
-                    ){
-                    Button(
-                        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
-                        elevation = ButtonDefaults.elevation(
-                            defaultElevation = 0.dp,
-                            pressedElevation = 0.dp,
-                            focusedElevation = 0.dp
-                        ),
-                        onClick = { expanded = !expanded }
-                    ) {
-                        TextField(
-                            value = stringResource(id = categoryState.text),
-                            readOnly = true,
-                            singleLine = true,
-                            textStyle = MaterialTheme.typography.h6,
-                            onValueChange = {  },
-                            label = {
-                                Text(
-                                    text = stringResource(id = R.string.add_edit_word_category_hint),
-                                    style = MaterialTheme.typography.subtitle1,
-                                    color = Color.LightGray
-                                )
-                                DropdownMenu(
-                                    expanded = expanded,
-                                    onDismissRequest = { expanded = false }
-                                ) {
-                                    categoryListState.forEach { item ->
-                                        DropdownMenuItem(onClick = {
-                                            viewModel.onEvent(AddEditWordEvent.OnCategorySelected(item.id))
-                                            expanded = false
-                                        }) {
-                                            Icon(
-                                                imageVector = ImageVector.vectorResource(item.icon),
-                                                contentDescription = ""
-                                            )
-                                            Spacer(modifier = Modifier.width(8.dp))
-                                            Text(text = stringResource(id = item.text))
-                                        }
-                                    }
+                        .padding(end = 16.dp)
+                        .background(Color(0x11000000))
+                        .padding(start = 16.dp, top = 4.dp, bottom = 4.dp)
+                        .clickable { expanded = !expanded }
+                ) {
+                    Column {
+                        Text(
+                            text = stringResource(id = R.string.add_edit_word_category_hint),
+                            style = MaterialTheme.typography.subtitle1
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text(
+                            text = stringResource(id = categoryState.text),
+                            maxLines = 1,
+                            style = MaterialTheme.typography.h6,
+                            color = Color.LightGray
+                        )
+
+                        DropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false }
+                        ) {
+                            categoryListState.forEach { item ->
+                                DropdownMenuItem(onClick = {
+                                    viewModel.onEvent(AddEditWordEvent.OnCategorySelected(item.id))
+                                    expanded = false
+                                }) {
+                                    Icon(
+                                        imageVector = ImageVector.vectorResource(item.icon),
+                                        contentDescription = ""
+                                    )
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    Text(text = stringResource(id = item.text))
                                 }
                             }
-                        )
-                        Icon(
-                            //modifier = Modifier.align(Alignment.End).padding(end = 8.dp),
-                            imageVector = Icons.Filled.ArrowDropDown,
-                            contentDescription = ""
-                        )
+                        }
                     }
-
+                    Icon(
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd)
+                            .padding(end = 8.dp),
+                        imageVector = Icons.Filled.ArrowDropDown,
+                        contentDescription = ""
+                    )
                 }
             }
 
