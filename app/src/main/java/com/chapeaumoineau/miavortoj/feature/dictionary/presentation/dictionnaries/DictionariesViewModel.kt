@@ -11,6 +11,7 @@ import com.chapeaumoineau.miavortoj.feature.dictionary.util.DictionaryOrder
 import com.chapeaumoineau.miavortoj.util.OrderType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -81,10 +82,12 @@ class DictionariesViewModel @Inject constructor(private val dictionaryUseCases: 
         getDictionariesJob = dictionaryUseCases.getDictionaries(dictionaryOrder).onEach { dictionaries ->
             dictionaries.forEach { dictionary ->
 
-                getWordsJob?.cancel()
+                dictionary.nbWords = wordUseCases.getWordsFromDictionary(dictionary.id!!).first().size
+
+                /*getWordsJob?.cancel()
                 getWordsJob = wordUseCases.getWordsFromDictionary(dictionary.id!!).onEach { words ->
                     dictionary.nbWords = words.size
-                }.launchIn(viewModelScope)
+                }.launchIn(viewModelScope)*/
             }
 
             _state.value = state.value.copy(dictionaries = dictionaries, dictionaryOrder = dictionaryOrder)

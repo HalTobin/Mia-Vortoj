@@ -279,7 +279,8 @@ data class Language(
 
             // French-Based Creole
             Language("Kreyòl ayisyen", "HAT", R.drawable.flag_simple_ht,0xFF6877AF, 0xFF000E46,false),
-            Language("Kréyòl La Lwizyàn", "LOU", R.drawable.flag_simple_louisiane,0xFF648EB1, 0xFF002B4E,false),
+            // TODO - Make a .png of this resource, the vector too complicated to draw
+            // Language("Kréyòl La Lwizyàn", "LOU", R.drawable.flag_simple_louisiane,0xFF648EB1, 0xFF002B4E,false),
             Language("Kwéyòl, Patois", "GCF", R.drawable.flag_simple_antilles,0xFF7288BB, 0xFF0F2047,false),
 
         )
