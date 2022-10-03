@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -23,6 +24,9 @@ import com.chapeaumoineau.miavortoj.feature.dictionary.presentation.dictionnarie
 import com.chapeaumoineau.miavortoj.feature.dictionary.presentation.dictionnaries.components.DictionaryItem
 import com.chapeaumoineau.miavortoj.feature.dictionary.presentation.dictionnaries.components.OrderDictionariesSection
 import com.chapeaumoineau.miavortoj.presentation.Screen
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -31,29 +35,47 @@ fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewM
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
+    val listState = rememberLazyListState()
+
+    val isFloatingButtonVisible by remember {
+        derivedStateOf {
+            listState.firstVisibleItemIndex == 0 && listState.firstVisibleItemScrollOffset == 0
+        }
+    }
+
     val deleteTextToEnter = stringResource(R.string.dictionary_screen_delete_to_enter)
 
     BackHandler(enabled = (state.dictionaryEdit != -1)) {
         if(state.dictionaryEdit!=-1) viewModel.onEvent(DictionariesEvent.ToggleEditMode(-1))
     }
 
-    Scaffold(floatingActionButton = {
-        FloatingActionButton(onClick = {
-            navController.navigate(Screen.AddEditDictionaryScreen.route)
-        }, backgroundColor = MaterialTheme.colors.primary) {
-            Icon(imageVector = Icons.Default.Add, contentDescription = "Add dictionary")
-        }
-    }, scaffoldState = scaffoldState) {
+    Scaffold(
+        floatingActionButton = {
+            AnimatedVisibility(visible = isFloatingButtonVisible, enter = scaleIn(), exit = scaleOut()) {
+                FloatingActionButton(
+                    onClick = {
+                        navController.navigate(Screen.AddEditDictionaryScreen.route)
+                    },
+                    backgroundColor = MaterialTheme.colors.primary,
+                ) {
+                    Icon(imageVector = Icons.Default.Add, contentDescription = "Add dictionary")
+                }
+            }
+    },
+        scaffoldState = scaffoldState
+    ) {
         state.dictionaryDelete?.let { it1 ->
             DeleteDialog(isVisible = state.isDeleteDialogVisible, it1)
         }
 
         Column(modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)) {
-            Row(modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically) {
+            .padding(start = 16.dp, end = 16.dp, top = 16.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text(text = stringResource(R.string.dictionary_screen_title),
                     style = MaterialTheme.typography.h4)
                 IconButton(onClick = {
@@ -71,8 +93,13 @@ fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewM
                     viewModel.onEvent(DictionariesEvent.Order(it))
                 })
             }
+
             Spacer(modifier = Modifier.height(16.dp))
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
+
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                state = listState
+            ) {
                 items(state.dictionaries, key = { it.id!! } ) { dictionary ->
                     DictionaryItem(
                         dictionary = dictionary,

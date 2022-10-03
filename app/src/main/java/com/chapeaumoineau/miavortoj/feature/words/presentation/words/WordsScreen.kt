@@ -7,6 +7,7 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -14,8 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Sort
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,6 +41,8 @@ import kotlinx.coroutines.launch
 fun WordsScreen(navController: NavController,
                 viewModel:WordsViewModel = hiltViewModel()) {
 
+    val listState = rememberLazyListState()
+
     val state = viewModel.state.value
 
     val dictionaryId = viewModel.dictionary.value.id
@@ -56,15 +58,25 @@ fun WordsScreen(navController: NavController,
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
+    val isFloatingButtonVisible by remember {
+        derivedStateOf {
+            listState.firstVisibleItemIndex == 0 && listState.firstVisibleItemScrollOffset == 0
+        }
+    }
+
     BackHandler(enabled = (state.wordEdit != -1)) {
         if(state.wordEdit!=-1) viewModel.onEvent(WordsEvent.ToggleEditMode(-1))
     }
 
     Scaffold(floatingActionButton = {
-        FloatingActionButton(onClick = {
-            navController.navigate(Screen.AddEditWordScreen.route + "?dictionaryId=${dictionaryId}&dictionaryLanguage=${dictionaryLanguageId}")
-        }, backgroundColor = MaterialTheme.colors.primary) {
-            Icon(imageVector = Icons.Default.Add, contentDescription = "Add word")
+        AnimatedVisibility(visible = isFloatingButtonVisible, enter = scaleIn(), exit = scaleOut()) {
+            FloatingActionButton(
+                onClick = {
+                    navController.navigate(Screen.AddEditWordScreen.route + "?dictionaryId=${dictionaryId}&dictionaryLanguage=${dictionaryLanguageId}")
+                },
+                backgroundColor = MaterialTheme.colors.primary) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add word")
+            }
         }
     }, scaffoldState = scaffoldState) {
         state.wordDelete?.let { it1 ->
@@ -159,7 +171,10 @@ fun WordsScreen(navController: NavController,
                 maxLines = 1
             )
 
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                state = listState
+            ) {
                 itemsIndexed(state.words) { index, word ->
                     WordItem(
                         word = word,
