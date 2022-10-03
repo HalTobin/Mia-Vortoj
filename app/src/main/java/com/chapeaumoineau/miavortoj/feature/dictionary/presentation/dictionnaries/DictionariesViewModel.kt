@@ -30,7 +30,7 @@ class DictionariesViewModel @Inject constructor(private val dictionaryUseCases: 
     private var recentlyDeletedDictionary: Dictionary? = null
 
     private var getDictionariesJob: Job? = null
-    private var getWordsJob: Job? = null
+    private var getWordsJobs = mutableListOf<Job?>()
 
     init {
         getDictionaries(DictionaryOrder.Words(OrderType.Ascending))
@@ -80,17 +80,8 @@ class DictionariesViewModel @Inject constructor(private val dictionaryUseCases: 
     private fun getDictionaries(dictionaryOrder: DictionaryOrder) {
         getDictionariesJob?.cancel()
         getDictionariesJob = dictionaryUseCases.getDictionaries(dictionaryOrder).onEach { dictionaries ->
-            dictionaries.forEach { dictionary ->
-
-                dictionary.nbWords = wordUseCases.getWordsFromDictionary(dictionary.id!!).first().size
-
-                /*getWordsJob?.cancel()
-                getWordsJob = wordUseCases.getWordsFromDictionary(dictionary.id!!).onEach { words ->
-                    dictionary.nbWords = words.size
-                }.launchIn(viewModelScope)*/
-            }
-
             _state.value = state.value.copy(dictionaries = dictionaries, dictionaryOrder = dictionaryOrder)
         }.launchIn(viewModelScope)
+
     }
 }

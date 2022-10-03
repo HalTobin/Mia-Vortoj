@@ -100,20 +100,20 @@ fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewM
                 modifier = Modifier.fillMaxSize(),
                 state = listState
             ) {
-                items(state.dictionaries, key = { it.id!! } ) { dictionary ->
+                items(state.dictionaries, key = { it.dictionary.id!! } ) { dictionary ->
                     DictionaryItem(
-                        dictionary = dictionary,
+                        dictionary = dictionary.dictionary,
                         dictionaryEdited = state.dictionaryEdit,
                         onMoreClick = {
-                            viewModel.onEvent(DictionariesEvent.ToggleEditMode(dictionary.id))
+                            viewModel.onEvent(DictionariesEvent.ToggleEditMode(dictionary.dictionary.id))
 
                         },
                         onEditClick = {
                             viewModel.onEvent(DictionariesEvent.ToggleEditMode(-1))
-                            navController.navigate(Screen.AddEditDictionaryScreen.route + "?dictionaryId=${dictionary.id}")
+                            navController.navigate(Screen.AddEditDictionaryScreen.route + "?dictionaryId=${dictionary.dictionary.id}")
                         },
                         onDeleteClick = {
-                            viewModel.onEvent(DictionariesEvent.ToggleDeleteDialog(dictionary, deleteTextToEnter))
+                            viewModel.onEvent(DictionariesEvent.ToggleDeleteDialog(dictionary.dictionary, deleteTextToEnter))
                         },
                         onBackClick = {
                             viewModel.onEvent(DictionariesEvent.ToggleEditMode(-1))
@@ -124,7 +124,7 @@ fun DictionariesScreen(navController: NavController, viewModel:DictionariesViewM
                             .clickable(
                                 onClick = {
                                     viewModel.onEvent(DictionariesEvent.ToggleEditMode(-1))
-                                    navController.navigate(Screen.WordsScreen.route + "?dictionaryId=${dictionary.id}")
+                                    navController.navigate(Screen.WordsScreen.route + "?dictionaryId=${dictionary.dictionary.id}")
                                 }
                             )
                     )
