@@ -126,16 +126,15 @@ fun AddEditWordScreen(navController: NavController,
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 16.dp)
-                        .background(Color(0x11000000))
-                        .padding(start = 16.dp, top = 4.dp, bottom = 4.dp)
+                        .background(Color(0x14000000))
                         .clickable { expanded = !expanded }
                 ) {
-                    Column {
+                    Column(modifier = Modifier.padding(start = 16.dp, top = 4.dp, bottom = 4.dp)) {
                         Text(
                             text = stringResource(id = R.string.add_edit_word_category_hint),
                             style = MaterialTheme.typography.subtitle1
                         )
-                        Spacer(modifier = Modifier.height(4.dp))
+                        Spacer(modifier = Modifier.height(2.dp))
                         Text(
                             text = stringResource(id = categoryState.text),
                             maxLines = 1,
@@ -168,6 +167,13 @@ fun AddEditWordScreen(navController: NavController,
                             .padding(end = 8.dp),
                         imageVector = Icons.Filled.ArrowDropDown,
                         contentDescription = ""
+                    )
+                    Spacer(
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .fillMaxWidth()
+                            .height(1.dp)
+                            .background(Color(0x33000000))
                     )
                 }
             }
